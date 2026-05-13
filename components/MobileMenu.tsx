@@ -55,14 +55,13 @@ export function MobileMenu() {
         />
         <aside
           id="mobile-menu"
-          className={`absolute bottom-0 right-0 top-0 flex w-[min(88vw,360px)] flex-col overflow-hidden border-l border-white/70 bg-white/96 p-5 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[min(88vw,360px)] flex-col overflow-y-auto overflow-x-hidden border-l border-white/70 bg-white/96 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(0,209,209,0.12),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.96),rgba(243,248,252,0.9))]" />
 
           <div className="relative z-10 flex items-center justify-between gap-4">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.18em] text-teal">Menu</p>
-              <p className="mt-1 text-sm font-semibold text-navy/60">dealshare</p>
             </div>
             <button
               type="button"
@@ -75,12 +74,12 @@ export function MobileMenu() {
             </button>
           </div>
 
-          <nav className="relative z-10 mt-8 grid gap-3" aria-label="Nawigacja mobilna">
+          <nav className="relative z-10 mt-6 grid gap-2.5 sm:mt-8 sm:gap-3" aria-label="Nawigacja mobilna">
             {siteConfig.nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="group flex items-center justify-between rounded-md border border-slate-200 bg-white/88 px-4 py-3 text-base font-bold text-navy shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-electric/25 hover:bg-electric/5 hover:text-electric hover:shadow-card"
+                className="group flex items-center justify-between rounded-md border border-slate-200 bg-white/88 px-4 py-2.5 text-sm font-bold text-navy shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-electric/25 hover:bg-electric/5 hover:text-electric hover:shadow-card sm:py-3 sm:text-base"
               >
                 {item.label}
                 <span aria-hidden="true" className="transition group-hover:translate-x-1">
@@ -92,7 +91,7 @@ export function MobileMenu() {
 
           <Link
             href="/kontakt"
-            className="button-glass relative z-10 isolate mt-auto inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow"
+            className="button-glass relative z-10 isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow sm:mt-auto"
           >
             <span className="relative z-10">Porozmawiajmy</span>
           </Link>
