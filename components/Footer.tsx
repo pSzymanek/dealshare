@@ -1,0 +1,45 @@
+import Image from "next/image";
+import Link from "next/link";
+import { siteConfig } from "@/lib/site";
+import { Container } from "./Container";
+
+export function Footer() {
+  return (
+    <footer className="bg-navy text-white">
+      <Container className="grid gap-10 py-14 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
+        <div>
+          <Image src="/logo-dark.svg" alt="dealshare" width={220} height={55} className="h-12 w-auto" />
+          <p className="mt-5 max-w-md text-sm leading-7 text-white/68">
+            Platforma B2B pomagająca firmom odkrywać wybrane oferty, partnerów i rozwiązania biznesowe w bardziej uporządkowany sposób.
+          </p>
+        </div>
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Nawigacja</h2>
+          <div className="mt-5 grid gap-3">
+            {siteConfig.nav.map((item) => (
+              <Link key={item.href} href={item.href} className="inline-flex text-sm text-white/70 transition hover:translate-x-1 hover:text-white">
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Social media</h2>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {siteConfig.socials.map((item) => (
+              <Link key={item.label} href={item.href} className="soft-lift rounded border border-white/15 px-3 py-2 text-sm text-white/75 transition hover:border-cyan hover:bg-white/5 hover:text-white">
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </Container>
+      <div className="border-t border-white/10">
+        <Container className="flex flex-col gap-3 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} dealshare. Wszystkie prawa zastrzeżone.</p>
+          <p>Informacje na stronie mają charakter ogólny i biznesowy.</p>
+        </Container>
+      </div>
+    </footer>
+  );
+}
