@@ -34,7 +34,10 @@ export default function AboutPage() {
       <section className="bg-navy-gradient py-20 text-white">
         <Container>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">O nas</p>
-          <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Platforma dla firm, które chcą widzieć więcej konkretnych możliwości.</h1>
+          <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">
+            Platforma dla firm, <br />
+            które chcą <span className="text-cyan">widzieć więcej</span>
+          </h1>
           <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
             Nie jesteśmy doradcą inwestycyjnym ani instytucją finansową. Budujemy środowisko, które pomaga firmom odkrywać wybrane oferty, partnerów i rozwiązania B2B.
           </p>

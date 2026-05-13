@@ -1,0 +1,106 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { siteConfig } from "@/lib/site";
+
+export function MobileMenu() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  return (
+    <div className="shrink-0 lg:hidden">
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls="mobile-menu"
+        onClick={() => setIsOpen(true)}
+        className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-navy shadow-sm transition hover:border-electric/30 hover:bg-electric/5 hover:text-electric"
+      >
+        <span className="relative flex h-5 w-5 items-center justify-center rounded bg-electric/8 text-electric" aria-hidden="true">
+          <span className="absolute h-0.5 w-3.5 -translate-y-1.5 rounded-full bg-current" />
+          <span className="absolute h-0.5 w-3.5 rounded-full bg-current" />
+          <span className="absolute h-0.5 w-3.5 translate-y-1.5 rounded-full bg-current" />
+        </span>
+        <span className="hidden min-[380px]:inline">Menu</span>
+      </button>
+
+      {isMounted
+        ? createPortal(
+            <div className={`fixed inset-0 z-[100] transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+        <button
+          type="button"
+          aria-label="Zamknij menu"
+          onClick={() => setIsOpen(false)}
+          className={`absolute inset-0 bg-navy/30 backdrop-blur-sm transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
+        />
+        <aside
+          id="mobile-menu"
+          className={`absolute bottom-0 right-0 top-0 flex w-[min(88vw,360px)] flex-col overflow-hidden border-l border-white/70 bg-white/96 p-5 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(0,209,209,0.12),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.96),rgba(243,248,252,0.9))]" />
+
+          <div className="relative z-10 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-teal">Menu</p>
+              <p className="mt-1 text-sm font-semibold text-navy/60">dealshare</p>
+            </div>
+            <button
+              type="button"
+              aria-label="Zamknij menu"
+              onClick={() => setIsOpen(false)}
+              className="relative inline-flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 bg-white text-electric shadow-sm transition hover:border-electric/30 hover:bg-electric/5"
+            >
+              <span className="absolute h-0.5 w-4 rotate-45 rounded-full bg-current" />
+              <span className="absolute h-0.5 w-4 -rotate-45 rounded-full bg-current" />
+            </button>
+          </div>
+
+          <nav className="relative z-10 mt-8 grid gap-3" aria-label="Nawigacja mobilna">
+            {siteConfig.nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group flex items-center justify-between rounded-md border border-slate-200 bg-white/88 px-4 py-3 text-base font-bold text-navy shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-electric/25 hover:bg-electric/5 hover:text-electric hover:shadow-card"
+              >
+                {item.label}
+                <span aria-hidden="true" className="transition group-hover:translate-x-1">
+                  &rarr;
+                </span>
+              </Link>
+            ))}
+          </nav>
+
+          <Link
+            href="/kontakt"
+            className="button-glass relative z-10 isolate mt-auto inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow"
+          >
+            <span className="relative z-10">Porozmawiajmy</span>
+          </Link>
+        </aside>
+            </div>,
+            document.body
+          )
+        : null}
+    </div>
+  );
+}

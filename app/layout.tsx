@@ -15,7 +15,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "dealshare | Wybrane możliwości dla firm",
+    default: "dealshare | Nowoczesna platforma ofertowa dla biznesu",
     template: "%s | dealshare"
   },
   description: siteConfig.description,

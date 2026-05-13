@@ -28,7 +28,7 @@ export default function OffersPage({ searchParams }: OffersPageProps) {
         <Container>
           <div className="max-w-4xl">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Oferty i kategorie</p>
-            <h1 className="heading-title-enter mt-4 text-4xl font-black tracking-tight sm:text-6xl">Wybrane możliwości biznesowe w uporządkowanej formie.</h1>
+            <h1 className="heading-title-enter mt-4 text-4xl font-black tracking-tight sm:text-6xl">Najlepsze możliwości biznesowe w uporządkowanej formie.</h1>
             <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
               Przeglądaj kategorie, porównuj kontekst i przechodź do szczegółów ofert przygotowanych z myślą o firmach B2B.
             </p>

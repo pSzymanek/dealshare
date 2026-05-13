@@ -29,7 +29,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Blog</p>
           <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Wiedza i kontekst dla decyzji B2B.</h1>
           <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
-            Artykuły, inspiracje i komentarze dla firm szukających sensownych możliwości biznesowych.
+            Artykuły, inspiracje i komentarze dla firm szukających możliwości.
           </p>
         </Container>
       </section>
