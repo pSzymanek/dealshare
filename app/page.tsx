@@ -43,7 +43,7 @@ export default async function HomePage() {
           <div className="reveal-on-load reveal-delay-1 relative">
             <div className="absolute -inset-8 rounded-full bg-cyan/10 blur-3xl" />
             <div className="hero-panel relative rounded-lg border border-white/12 bg-white/8 p-6 shadow-glow backdrop-blur">
-              <div className="logo-mark-glow mb-8">
+              <div className="logo-mark-plate mb-8">
                 <Image src="/sygnet.png" alt="" width={120} height={120} className="relative z-10" />
               </div>
               <div className="grid gap-4">
