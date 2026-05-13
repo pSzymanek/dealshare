@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/ContactForm";
 import { Container } from "@/components/Container";
@@ -50,6 +51,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="card-glass soft-lift mt-8 rounded-lg border border-electric/20 bg-electric/5 p-5 hover:border-electric/30 hover:shadow-card">
+                <Image src="/sygnet.png" alt="" width={42} height={42} className="mb-4" />
                 <h2 className="text-lg font-black text-navy">Dla firm z ofertą B2B</h2>
                 <p className="mt-3 text-sm leading-7 text-slate-600">
                   Jeśli chcesz zaprezentować swoją ofertę przedsiębiorcom, opisz krótko kategorię, profil klienta i model współpracy.

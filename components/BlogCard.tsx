@@ -19,7 +19,7 @@ export function BlogCard({ post }: BlogCardProps) {
             <Image src={post.featuredImage} alt={post.featuredImageAlt ?? post.title} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
           ) : (
             <div className="flex h-full items-center justify-center">
-              <Image src="/sygnet.svg" alt="" width={86} height={86} className="opacity-80" />
+              <Image src="/sygnet.png" alt="" width={86} height={86} className="opacity-80" />
             </div>
           )}
         </div>
