@@ -12,12 +12,43 @@ const initialState = {
 
 export function ContactForm() {
   const [values, setValues] = useState(initialState);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
 
-  function submitForm(event: FormEvent<HTMLFormElement>) {
+  async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const isValid = values.name.trim() && values.email.includes("@") && values.message.trim().length >= 10;
-    setStatus(isValid ? "success" : "error");
+
+    if (!isValid) {
+      setStatus("error");
+      setFeedback("Uzupełnij imię, poprawny e-mail i wiadomość minimum 10 znaków.");
+      return;
+    }
+
+    setStatus("loading");
+    setFeedback("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(values)
+      });
+      const data = (await response.json()) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(data.message ?? "Nie udało się wysłać wiadomości.");
+      }
+
+      setStatus("success");
+      setFeedback(data.message ?? "Dziękujemy. Wiadomość została wysłana.");
+      setValues(initialState);
+    } catch (error) {
+      setStatus("error");
+      setFeedback(error instanceof Error ? error.message : "Nie udało się wysłać wiadomości.");
+    }
   }
 
   return (
@@ -40,16 +71,20 @@ export function ContactForm() {
       </label>
       {status === "success" ? (
         <p className="mt-5 rounded-md border border-teal/20 bg-teal/10 px-4 py-3 text-sm font-semibold text-teal">
-          Dziękujemy. Formularz jest gotowy pod przyszłą integrację API.
+          {feedback}
         </p>
       ) : null}
       {status === "error" ? (
         <p className="mt-5 rounded-md border border-electric/20 bg-electric/10 px-4 py-3 text-sm font-semibold text-electric">
-          Uzupełnij imię, poprawny e-mail i wiadomość minimum 10 znaków.
+          {feedback}
         </p>
       ) : null}
-      <button type="submit" className="button-glass relative isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-6 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5">
-        Wyślij wiadomość
+      <button
+        type="submit"
+        disabled={status === "loading"}
+        className="button-glass relative isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-6 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {status === "loading" ? "Wysyłanie..." : "Wyślij wiadomość"}
       </button>
     </form>
   );

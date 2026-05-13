@@ -64,7 +64,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
 
       <CTASection
         title="Chcesz sprawdzić, czy ta oferta pasuje do Twojej firmy?"
-        description="Napisz kilka zdań o sytuacji firmy. W kolejnym kroku można podpiąć ten formularz do API lub CRM."
+        description="Napisz kilka zdań o sytuacji firmy. Wrócimy z informacją, jak możemy pomóc."
         buttonLabel="Przejdź do kontaktu"
         buttonHref="/kontakt"
       />

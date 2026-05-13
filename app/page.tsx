@@ -78,7 +78,7 @@ export default async function HomePage() {
           <SectionHeading
             eyebrow="Kategorie"
             title="Obszary, w których firmy najczęściej szukają konkretnych możliwości"
-            description="Od finansowania i kontraktów po technologie, koszty i doradztwo. Każda kategoria jest przygotowana jako przyszły punkt integracji z API lub bazą danych."
+            description="Od finansowania i kontraktów po technologie, koszty i doradztwo. Wybierz obszar, który najlepiej pasuje do aktualnych potrzeb firmy."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {offerCategories.map((category) => (
@@ -107,7 +107,7 @@ export default async function HomePage() {
       <section className="bg-white py-20">
         <Container>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="Blog" title="Najnowsze wpisy z WordPress" description="Treści blogowe są pobierane wyłącznie z WordPress REST API." />
+            <SectionHeading eyebrow="Blog" title="Najnowsze wpisy" description="Praktyczne materiały, inspiracje i kontekst dla firm. Kolejne publikacje już wkrótce." />
             <Link href="/blog" className="arrow-link text-sm font-bold text-electric transition hover:text-teal">
               Przejdź do bloga <span aria-hidden="true" className="arrow-mark ml-1">&rarr;</span>
             </Link>

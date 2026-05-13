@@ -8,7 +8,7 @@ import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Artykuły dealshare pobierane z WordPress REST API."
+  description: "Artykuły dealshare dla firm szukających kontekstu, ofert i partnerstw B2B."
 };
 
 type BlogPageProps = {
@@ -29,14 +29,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Blog</p>
           <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Wiedza i kontekst dla decyzji B2B.</h1>
           <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
-            Lista wpisów jest pobierana z WordPressa przez REST API, a frontend pozostaje częścią aplikacji Next.js.
+            Artykuły, inspiracje i komentarze dla firm szukających sensownych możliwości biznesowych.
           </p>
         </Container>
       </section>
 
       <section className="bg-white py-16">
         <Container>
-          <SectionHeading title="Kategorie" description="Jeśli WordPress zwróci kategorie, pojawią się jako filtry prowadzące do przefiltrowanej listy wpisów." />
+          <SectionHeading title="Kategorie" description="Wybierz temat, który Cię interesuje. Kolejne kategorie pojawią się już wkrótce." />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/blog"

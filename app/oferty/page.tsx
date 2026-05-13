@@ -30,7 +30,7 @@ export default function OffersPage({ searchParams }: OffersPageProps) {
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Oferty i kategorie</p>
             <h1 className="heading-title-enter mt-4 text-4xl font-black tracking-tight sm:text-6xl">Wybrane możliwości biznesowe w uporządkowanej formie.</h1>
             <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
-              Przeglądaj kategorie, porównuj kontekst i przechodź do szczegółów ofert przygotowanych jako mock data pod przyszłą integrację.
+              Przeglądaj kategorie, porównuj kontekst i przechodź do szczegółów ofert przygotowanych z myślą o firmach B2B.
             </p>
           </div>
         </Container>
@@ -38,7 +38,7 @@ export default function OffersPage({ searchParams }: OffersPageProps) {
 
       <section className="bg-white py-16">
         <Container>
-          <SectionHeading title="Kategorie" description="Filtry wizualne pokazują docelowy kierunek platformy i pomagają szybko zawęzić obszar zainteresowania." />
+          <SectionHeading title="Kategorie" description="Wybierz obszar, który najlepiej odpowiada temu, czego aktualnie szukasz dla swojej firmy." />
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {offerCategories.map((category) => (
               <CategoryCard key={category.slug} category={category} />
@@ -52,7 +52,7 @@ export default function OffersPage({ searchParams }: OffersPageProps) {
           <SectionHeading
             eyebrow={selectedCategory ? "Przefiltrowane" : "Wszystkie"}
             title={selectedCategory ? "Oferty w wybranej kategorii" : "Aktualne oferty"}
-            description="Każda karta ma strukturę gotową do podmiany na dane z API, CRM lub CMS."
+            description="Sprawdź dostępne możliwości lub wróć wkrótce po kolejne propozycje."
           />
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredOffers.map((offer) => (

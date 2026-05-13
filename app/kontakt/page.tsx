@@ -28,13 +28,13 @@ export default function ContactPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <SectionHeading title="Dane kontaktowe" description="Poniższe dane są placeholderami gotowymi do zastąpienia docelowymi informacjami firmy." />
+              <SectionHeading title="Dane kontaktowe" description="Napisz do nas przez formularz lub skorzystaj z poniższych kanałów kontaktu." />
               <div className="mt-8 grid gap-4 text-sm leading-7 text-slate-700">
                 <p>
-                  <strong className="text-navy">E-mail:</strong> kontakt@dealshare.pl
+                  <strong className="text-navy">E-mail:</strong> biuro@dealshare.pl
                 </p>
                 <p>
-                  <strong className="text-navy">Telefon:</strong> +48 000 000 000
+                  <strong className="text-navy">Telefon:</strong> Już wkrótce
                 </p>
                 <p>
                   <strong className="text-navy">Współpraca:</strong> partnerzy@dealshare.pl

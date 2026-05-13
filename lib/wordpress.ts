@@ -46,7 +46,7 @@ export type BlogPost = {
 };
 
 const apiUrl = process.env.WORDPRESS_API_URL;
-const unavailableMessage = "Wpisy są chwilowo niedostępne.";
+const unavailableMessage = "Blog już wkrótce.";
 
 function stripHtml(value: string) {
   return value.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
