@@ -9,6 +9,8 @@ export function ScrollAnimations() {
   const pathname = usePathname();
 
   useEffect(() => {
+    document.documentElement.classList.add("has-scroll-animations");
+
     const elements = Array.from(document.querySelectorAll<HTMLElement>(revealSelector));
 
     if (!elements.length) {
