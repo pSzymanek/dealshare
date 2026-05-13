@@ -290,6 +290,23 @@ body {
   animation: panel-float 8s ease-in-out infinite;
 }
 
+.logo-mark-glow {
+  position: relative;
+  display: inline-flex;
+}
+
+.logo-mark-glow::before {
+  content: "";
+  position: absolute;
+  inset: -18px -20px -12px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 45% 18%, rgba(255, 255, 255, 0.34), transparent 34%),
+    radial-gradient(circle at 58% 54%, rgba(0, 209, 209, 0.18), transparent 48%);
+  filter: blur(12px);
+  opacity: 0.95;
+}
+
 @keyframes reveal-up {
   from {
     opacity: 0;
