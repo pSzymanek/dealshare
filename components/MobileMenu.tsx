@@ -46,7 +46,7 @@ export function MobileMenu() {
 
       {isMounted
         ? createPortal(
-            <div className={`fixed inset-0 z-[100] transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+            <div className={`fixed inset-0 z-[100] max-w-[100dvw] overflow-hidden transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
         <button
           type="button"
           aria-label="Zamknij menu"
@@ -55,7 +55,7 @@ export function MobileMenu() {
         />
         <aside
           id="mobile-menu"
-          className={`absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[min(88vw,360px)] flex-col overflow-y-auto overflow-x-hidden border-l border-white/70 bg-white/96 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[calc(100dvw-32px)] max-w-[340px] flex-col overflow-y-auto overflow-x-hidden border-l border-white/70 bg-white/96 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(0,209,209,0.12),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.96),rgba(243,248,252,0.9))]" />
 
