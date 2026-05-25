@@ -9,30 +9,52 @@ type HeroOfferTickerProps = {
 };
 
 const dragThreshold = 6;
+const scrollSpeed = 0.022;
+
+function wrapOffset(value: number, loopHeight: number) {
+  if (loopHeight <= 0) {
+    return 0;
+  }
+
+  return ((value % loopHeight) + loopHeight) % loopHeight;
+}
 
 export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const pointerIdRef = useRef<number | null>(null);
   const startYRef = useRef(0);
-  const startScrollTopRef = useRef(0);
+  const startOffsetRef = useRef(0);
+  const offsetRef = useRef(0);
+  const loopHeightRef = useRef(0);
   const isDraggingRef = useRef(false);
   const movedRef = useRef(false);
-  const resumeTimerRef = useRef<number>();
   const [isDragging, setIsDragging] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const loopedOffers = [...offers, ...offers];
 
   useEffect(() => {
-    return () => window.clearTimeout(resumeTimerRef.current);
-  }, []);
-
-  useEffect(() => {
-    const ticker = scrollRef.current;
-
-    if (!ticker || isPaused || isDragging) {
+    if (!trackRef.current) {
       return;
     }
 
+    const trackElement: HTMLDivElement = trackRef.current;
+
+    function measure() {
+      loopHeightRef.current = trackElement.scrollHeight / 2;
+      offsetRef.current = wrapOffset(offsetRef.current, loopHeightRef.current);
+      trackElement.style.transform = `translate3d(0, -${offsetRef.current}px, 0)`;
+    }
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(trackElement);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
     let frameId = 0;
     let lastTime = performance.now();
 
@@ -40,13 +62,9 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
       const elapsed = time - lastTime;
       lastTime = time;
 
-      if (ticker) {
-        ticker.scrollTop += elapsed * 0.022;
-        const loopPoint = ticker.scrollHeight / 2;
-
-        if (ticker.scrollTop >= loopPoint) {
-          ticker.scrollTop -= loopPoint;
-        }
+      if (track && !isDraggingRef.current) {
+        offsetRef.current = wrapOffset(offsetRef.current + elapsed * scrollSpeed, loopHeightRef.current);
+        track.style.transform = `translate3d(0, -${offsetRef.current}px, 0)`;
       }
 
       frameId = window.requestAnimationFrame(tick);
@@ -54,39 +72,28 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
 
     frameId = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frameId);
-  }, [isDragging, isPaused]);
-
-  function pauseBriefly() {
-    window.clearTimeout(resumeTimerRef.current);
-    setIsPaused(true);
-    resumeTimerRef.current = window.setTimeout(() => setIsPaused(false), 1200);
-  }
+  }, []);
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
-    if (event.pointerType !== "mouse") {
-      return;
-    }
+    const viewport = viewportRef.current;
 
-    const ticker = scrollRef.current;
-
-    if (!ticker) {
+    if (!viewport) {
       return;
     }
 
     pointerIdRef.current = event.pointerId;
     startYRef.current = event.clientY;
-    startScrollTopRef.current = ticker.scrollTop;
+    startOffsetRef.current = offsetRef.current;
     isDraggingRef.current = true;
     movedRef.current = false;
     setIsDragging(true);
-    setIsPaused(true);
-    ticker.setPointerCapture(event.pointerId);
+    viewport.setPointerCapture(event.pointerId);
   }
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
-    const ticker = scrollRef.current;
+    const track = trackRef.current;
 
-    if (!ticker || !isDraggingRef.current || pointerIdRef.current !== event.pointerId) {
+    if (!track || !isDraggingRef.current || pointerIdRef.current !== event.pointerId) {
       return;
     }
 
@@ -96,24 +103,24 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
       movedRef.current = true;
     }
 
-    ticker.scrollTop = startScrollTopRef.current - deltaY;
+    offsetRef.current = wrapOffset(startOffsetRef.current - deltaY, loopHeightRef.current);
+    track.style.transform = `translate3d(0, -${offsetRef.current}px, 0)`;
   }
 
   function stopDragging(event: PointerEvent<HTMLDivElement>) {
-    const ticker = scrollRef.current;
+    const viewport = viewportRef.current;
 
-    if (!ticker || pointerIdRef.current !== event.pointerId) {
+    if (!viewport || pointerIdRef.current !== event.pointerId) {
       return;
     }
 
-    if (ticker.hasPointerCapture(event.pointerId)) {
-      ticker.releasePointerCapture(event.pointerId);
+    if (viewport.hasPointerCapture(event.pointerId)) {
+      viewport.releasePointerCapture(event.pointerId);
     }
 
     pointerIdRef.current = null;
     isDraggingRef.current = false;
     setIsDragging(false);
-    pauseBriefly();
   }
 
   function handleClickCapture(event: React.MouseEvent<HTMLDivElement>) {
@@ -128,14 +135,8 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
 
   return (
     <div
-      ref={scrollRef}
-      className={`hero-offer-ticker relative mt-6 h-[370px] overflow-y-auto pr-1 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
-      onWheel={pauseBriefly}
-      onTouchStart={() => setIsPaused(true)}
-      onTouchEnd={pauseBriefly}
-      onTouchCancel={pauseBriefly}
+      ref={viewportRef}
+      className={`hero-offer-ticker relative mt-6 h-[370px] overflow-hidden ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
@@ -143,7 +144,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
       onClickCapture={handleClickCapture}
       aria-label="Najnowsze oferty"
     >
-      <div className="grid gap-4">
+      <div ref={trackRef} className="grid gap-4 will-change-transform">
         {loopedOffers.map((offer, index) => {
           const isDuplicate = index >= offers.length;
 
