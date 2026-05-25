@@ -17,9 +17,14 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   const startScrollTopRef = useRef(0);
   const isDraggingRef = useRef(false);
   const movedRef = useRef(false);
+  const resumeTimerRef = useRef<number>();
   const [isDragging, setIsDragging] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const loopedOffers = [...offers, ...offers];
+
+  useEffect(() => {
+    return () => window.clearTimeout(resumeTimerRef.current);
+  }, []);
 
   useEffect(() => {
     const ticker = scrollRef.current;
@@ -50,6 +55,12 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     frameId = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frameId);
   }, [isDragging, isPaused]);
+
+  function pauseBriefly() {
+    window.clearTimeout(resumeTimerRef.current);
+    setIsPaused(true);
+    resumeTimerRef.current = window.setTimeout(() => setIsPaused(false), 1200);
+  }
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType !== "mouse") {
@@ -102,7 +113,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     pointerIdRef.current = null;
     isDraggingRef.current = false;
     setIsDragging(false);
-    window.setTimeout(() => setIsPaused(false), 1200);
+    pauseBriefly();
   }
 
   function handleClickCapture(event: React.MouseEvent<HTMLDivElement>) {
@@ -119,14 +130,12 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     <div
       ref={scrollRef}
       className={`hero-offer-ticker relative mt-6 h-[370px] overflow-y-auto pr-1 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => {
-        if (!isDraggingRef.current) {
-          setIsPaused(false);
-        }
-      }}
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
+      onWheel={pauseBriefly}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={pauseBriefly}
+      onTouchCancel={pauseBriefly}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
