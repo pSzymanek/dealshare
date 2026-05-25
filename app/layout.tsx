@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ContactPrompt } from "@/components/ContactPrompt";
+import { CookieBanner } from "@/components/CookieBanner";
 import { Footer } from "@/components/Footer";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Header } from "@/components/Header";
 import { ScrollAnimations } from "@/components/ScrollAnimations";
 import { siteConfig } from "@/lib/site";
@@ -39,6 +42,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         {children}
         <Footer />
+        <ContactPrompt />
+        <CookieBanner />
+        <GoogleAnalytics />
         <ScrollAnimations />
       </body>
     </html>

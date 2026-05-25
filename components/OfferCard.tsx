@@ -11,7 +11,18 @@ export function OfferCard({ offer }: OfferCardProps) {
     <article className="card-glass soft-lift group rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
       <div className="absolute right-5 top-5 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
       <div className="relative flex items-start justify-between gap-4">
-        <p className="text-sm font-bold text-teal">{offer.category}</p>
+        <div className="flex flex-wrap gap-2">
+          {offer.categories.map((category) => (
+            <span
+              key={category.slug}
+              className={`inline-flex rounded px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${
+                category.slug === "inne-indywidualne" ? "border border-fuchsia-400/25 bg-fuchsia-500/10 text-fuchsia-700" : "text-teal"
+              }`}
+            >
+              {category.name}
+            </span>
+          ))}
+        </div>
         <Badge tone={offer.status === "Premium" ? "blue" : offer.status === "Nowe" ? "teal" : "dark"}>{offer.status}</Badge>
       </div>
       <h3 className="relative mt-5 text-xl font-black tracking-tight text-navy">{offer.title}</h3>

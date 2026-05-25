@@ -39,11 +39,11 @@ export default function AboutPage() {
             które chcą <span className="text-cyan">widzieć więcej</span>
           </h1>
           <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
-            Nie jesteśmy doradcą inwestycyjnym ani instytucją finansową. Budujemy środowisko, które pomaga firmom odkrywać wybrane oferty, partnerów i rozwiązania B2B.
+            Budujemy środowisko, które pomaga firmom odkrywać wybrane oferty, partnerów i rozwiązania B2B.
           </p>
           <div className="mt-8">
             <Button href="/kontakt" variant="secondary">
-              Porozmawiajmy
+              Porozmawiajmy!
             </Button>
           </div>
         </Container>

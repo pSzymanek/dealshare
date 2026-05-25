@@ -37,7 +37,11 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
         <Container>
           <div className="max-w-4xl">
             <div className="flex flex-wrap items-center gap-3">
-              <Badge tone="teal">{offer.category}</Badge>
+              {offer.categories.map((category) => (
+                <Badge key={category.slug} tone={category.slug === "inne-indywidualne" ? "dark" : "teal"}>
+                  {category.name}
+                </Badge>
+              ))}
               <Badge tone="blue">{offer.status}</Badge>
             </div>
             <h1 className="heading-title-enter mt-6 text-4xl font-black tracking-tight sm:text-6xl">{offer.title}</h1>

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
+    "webd:start": "node server.js",
     "start": "next start",
     "lint": "next lint"
   },

@@ -5,15 +5,12 @@ export const siteConfig = {
   nav: [
     { label: "Start", href: "/" },
     { label: "Oferty", href: "/oferty" },
-    { label: "Blog", href: "/blog" },
     { label: "O nas", href: "/o-nas" },
     { label: "Kontakt", href: "/kontakt" }
   ],
   socials: [
-    { label: "Instagram", href: "https://instagram.com/" },
-    { label: "TikTok", href: "https://tiktok.com/" },
-    { label: "Facebook", href: "https://facebook.com/" },
-    { label: "X / Twitter", href: "https://x.com/" },
-    { label: "LinkedIn", href: "https://linkedin.com/" }
+    { label: "Instagram", href: "https://www.instagram.com/dealshare.pl" },
+    { label: "TikTok", href: "https://www.tiktok.com/@dealshare.pl" },
+    { label: "X", href: "https://x.com/dealshare_pl" }
   ]
 };

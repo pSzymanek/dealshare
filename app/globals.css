@@ -311,6 +311,27 @@ body {
   animation: panel-float 8s ease-in-out infinite;
 }
 
+.hero-offer-ticker {
+  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+  overscroll-behavior: contain;
+  scrollbar-color: rgba(0, 209, 209, 0.52) transparent;
+  scrollbar-width: thin;
+  touch-action: pan-y;
+}
+
+.hero-offer-ticker::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hero-offer-ticker::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hero-offer-ticker::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(0, 209, 209, 0.52);
+}
+
 .cta-mark-bg {
   position: absolute;
   right: 7%;

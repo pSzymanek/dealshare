@@ -9,37 +9,37 @@ export const offerCategories: OfferCategory[] = [
   {
     slug: "finansowanie",
     name: "Finansowanie",
-    description: "Dostęp do rozwiązań wspierających płynność, rozwój i realizację projektów.",
+    description: "Kredyty i rozwiązania wspierające płynność, rozwój oraz realizację projektów.",
     accent: "blue"
+  },
+  {
+    slug: "inwestycje",
+    name: "Inwestycje",
+    description: "Wybrane projekty infrastrukturalne, energetyczne i technologiczne.",
+    accent: "cyan"
   },
   {
     slug: "kontrakty-b2b",
     name: "Kontrakty B2B",
-    description: "Wybrane zapytania, współprace i możliwości sprzedażowe dla firm.",
+    description: "Zapytania, współprace i możliwości kontraktowe dla firm.",
     accent: "teal"
   },
   {
-    slug: "obsluga-firm",
-    name: "Obsługa firm",
-    description: "Partnerzy wspierający procesy operacyjne, prawne, księgowe i administracyjne.",
-    accent: "cyan"
-  },
-  {
-    slug: "technologie",
-    name: "Rozwiązania technologiczne",
-    description: "Narzędzia SaaS, automatyzacje i wdrożenia podnoszące efektywność organizacji.",
+    slug: "obsluga-prawna",
+    name: "Obsługa Prawna",
+    description: "Partnerzy wspierający sprawy prawne, restrukturyzacyjne i organizacyjne.",
     accent: "blue"
   },
   {
     slug: "energia",
     name: "Energia i optymalizacja kosztów",
-    description: "Usługi i partnerstwa pomagające analizować oraz porządkować koszty firmowe.",
+    description: "Usługi pomagające analizować oraz porządkować koszty energii.",
     accent: "teal"
   },
   {
-    slug: "doradztwo",
-    name: "Doradztwo biznesowe",
-    description: "Wsparcie eksperckie w rozwoju, partnerstwach i decyzjach operacyjnych.",
+    slug: "inne-indywidualne",
+    name: "Inne/Indywidualne",
+    description: "Sprawy spoza standardowego B2B, kierowane także do osób fizycznych.",
     accent: "cyan"
   }
 ];

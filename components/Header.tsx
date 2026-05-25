@@ -21,7 +21,7 @@ export function Header() {
         </nav>
         <div className="hidden lg:block">
           <Button href="/kontakt" variant="ghost">
-            Porozmawiajmy
+            Porozmawiajmy!
           </Button>
         </div>
         <MobileMenu />

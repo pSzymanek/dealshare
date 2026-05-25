@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CookieConsentLink } from "@/components/CookieConsentLink";
 import { siteConfig } from "@/lib/site";
 import { Container } from "./Container";
 
@@ -32,12 +33,22 @@ export function Footer() {
               </Link>
             ))}
           </div>
+          <div className="mt-7 grid gap-3">
+            <Link href="/polityka-prywatnosci" className="inline-flex text-sm text-white/70 transition hover:translate-x-1 hover:text-white">
+              Polityka prywatności
+            </Link>
+            <Link href="/regulamin" className="inline-flex text-sm text-white/70 transition hover:translate-x-1 hover:text-white">
+              Regulamin
+            </Link>
+          </div>
         </div>
       </Container>
       <div className="border-t border-white/10">
         <Container className="flex flex-col gap-3 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} dealshare. Wszystkie prawa zastrzeżone.</p>
-          <p>Informacje na stronie mają charakter ogólny i biznesowy.</p>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <CookieConsentLink />
+          </div>
         </Container>
       </div>
     </footer>

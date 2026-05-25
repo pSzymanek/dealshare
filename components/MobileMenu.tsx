@@ -93,7 +93,7 @@ export function MobileMenu() {
             href="/kontakt"
             className="button-glass relative z-10 isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow sm:mt-auto"
           >
-            <span className="relative z-10">Porozmawiajmy</span>
+            <span className="relative z-10">Porozmawiajmy!</span>
           </Link>
         </aside>
             </div>,
