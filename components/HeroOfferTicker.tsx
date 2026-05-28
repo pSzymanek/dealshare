@@ -30,6 +30,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   const isDraggingRef = useRef(false);
   const movedRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const loopedOffers = [...offers, ...offers];
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
       const elapsed = time - lastTime;
       lastTime = time;
 
-      if (track && !isDraggingRef.current) {
+      if (track && !isPaused && !isDraggingRef.current) {
         offsetRef.current = wrapOffset(offsetRef.current + elapsed * scrollSpeed, loopHeightRef.current);
         track.style.transform = `translate3d(0, -${offsetRef.current}px, 0)`;
       }
@@ -72,7 +73,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
 
     frameId = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frameId);
-  }, []);
+  }, [isPaused]);
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
     const viewport = viewportRef.current;
@@ -136,7 +137,11 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   return (
     <div
       ref={viewportRef}
-      className={`hero-offer-ticker relative mt-6 h-[370px] overflow-hidden ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
+      className={`hero-offer-ticker relative mt-6 h-[370px] overflow-hidden px-1 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
