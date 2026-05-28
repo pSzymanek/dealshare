@@ -7,6 +7,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const promptStorageKey = "dealshare-contact-prompt-shown";
 const cookieConsentKey = "dealshare-cookie-consent";
+const desktopScrollThreshold = 320;
+const mobileScrollThreshold = 900;
+const desktopPromptDelay = 9000;
+const mobilePromptDelay = 14000;
 
 export function ContactPrompt() {
   const [isVisible, setIsVisible] = useState(false);
@@ -57,6 +61,10 @@ export function ContactPrompt() {
       return;
     }
 
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const scrollThreshold = isMobile ? mobileScrollThreshold : desktopScrollThreshold;
+    const promptDelay = isMobile ? mobilePromptDelay : desktopPromptDelay;
+
     const showPrompt = () => {
       if (!isCookieBannerVisible && !sessionStorage.getItem(promptStorageKey)) {
         sessionStorage.setItem(promptStorageKey, "true");
@@ -68,12 +76,12 @@ export function ContactPrompt() {
     };
 
     const handleScroll = () => {
-      if (window.scrollY > 320) {
+      if (window.scrollY > scrollThreshold) {
         showPrompt();
       }
     };
 
-    const timer = window.setTimeout(showPrompt, 9000);
+    const timer = window.setTimeout(showPrompt, promptDelay);
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 

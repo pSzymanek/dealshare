@@ -313,7 +313,13 @@ body {
 
 .hero-offer-ticker {
   mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-  touch-action: none;
+  touch-action: pan-y;
+}
+
+@media (min-width: 768px) {
+  .hero-offer-ticker {
+    touch-action: none;
+  }
 }
 
 .cta-mark-bg {
@@ -335,6 +341,19 @@ body {
 .card-glass:hover .cta-mark-bg,
 .card-glass:focus-within .cta-mark-bg {
   transform: translateY(-18px);
+}
+
+.offer-card:hover .offer-card-icon,
+.offer-card:focus-within .offer-card-icon {
+  animation: offer-icon-hop 430ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-offer-hint-arrow-up {
+  animation: offer-hint-arrow-up 720ms ease-in-out infinite;
+}
+
+.hero-offer-hint-arrow-down {
+  animation: offer-hint-arrow-down 720ms ease-in-out infinite;
 }
 
 @keyframes reveal-up {
@@ -371,6 +390,36 @@ body {
   }
 }
 
+@keyframes offer-icon-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  46% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes offer-hint-arrow-up {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes offer-hint-arrow-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
 @keyframes hero-word-slide {
   0% {
     opacity: 0;
@@ -404,6 +453,7 @@ body {
   }
 
   .soft-lift,
+  .offer-card-icon,
   .heading-title-enter,
   .heading-copy-enter,
   .arrow-link,
@@ -428,5 +478,15 @@ body {
   .hero-word-rotator span:first-child {
     opacity: 1;
     transform: translateX(0);
+  }
+
+  .offer-card:hover .offer-card-icon,
+  .offer-card:focus-within .offer-card-icon {
+    animation: none;
+  }
+
+  .hero-offer-hint-arrow-up,
+  .hero-offer-hint-arrow-down {
+    animation: none;
   }
 }

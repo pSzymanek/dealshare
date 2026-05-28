@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Polityka prywatności i informacje o plikach cookies w serwisie dealshare."
 };
 
-const administrator = "Michał Szwankowski, ul. Narutowicza 15, 41-503 Chorzów, NIP: 6272468482";
+const administrator = "dealshare.pl";
 
 const sections = [
   {

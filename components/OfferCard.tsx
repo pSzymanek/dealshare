@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Offer } from "@/lib/offers";
 import { Badge } from "./Badge";
@@ -6,11 +7,26 @@ type OfferCardProps = {
   offer: Offer;
 };
 
+const offerIcons: Record<string, string> = {
+  "farmy-energii": "/dealshare_farmy_energii_panel.svg",
+  "infrastruktura-gpu": "/dealshare_infrastruktura_gpu_serwer.svg",
+  "kontrakty-flotowe": "/dealshare_kontrakty_flotowe_fleet.svg",
+  "kredyty-dla-firm": "/dealshare_kredyty_dla_firm_banknot.svg",
+  restrukturyzacje: "/dealshare_restrukturyzacje_naprawa.svg",
+  "umowy-na-energie": "/dealshare_umowy_na_energie_bolt.svg",
+  "uniewaznienia-kredytow": "/dealshare_uniewaznienia_kredytow_cancel.svg"
+};
+
 export function OfferCard({ offer }: OfferCardProps) {
+  const icon = offerIcons[offer.slug];
+
   return (
-    <article className="card-glass soft-lift group rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
-      <div className="absolute right-5 top-5 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
-      <div className="relative flex items-start justify-between gap-4">
+    <article className="card-glass offer-card soft-lift group rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
+      <div className="pointer-events-none !absolute bottom-4 right-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
+      {icon ? (
+        <Image src={icon} alt="" width={80} height={80} className="offer-card-icon relative h-20 w-20 object-contain" />
+      ) : null}
+      <div className="relative mt-3 flex items-start justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           {offer.categories.map((category) => (
             <span

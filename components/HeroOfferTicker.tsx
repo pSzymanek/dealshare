@@ -10,6 +10,8 @@ type HeroOfferTickerProps = {
 
 const dragThreshold = 6;
 const scrollSpeed = 0.022;
+const hintStorageKey = "dealshare-offer-ticker-hint-shown";
+const mobileHintDuration = 4000;
 
 function wrapOffset(value: number, loopHeight: number) {
   if (loopHeight <= 0) {
@@ -20,8 +22,8 @@ function wrapOffset(value: number, loopHeight: number) {
 }
 
 export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
-  const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const captureElementRef = useRef<HTMLDivElement | null>(null);
   const pointerIdRef = useRef<number | null>(null);
   const startYRef = useRef(0);
   const startOffsetRef = useRef(0);
@@ -29,8 +31,10 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   const loopHeightRef = useRef(0);
   const isDraggingRef = useRef(false);
   const movedRef = useRef(false);
+  const hintTimerRef = useRef<number>();
   const [isDragging, setIsDragging] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [showMobileHint, setShowMobileHint] = useState(false);
   const loopedOffers = [...offers, ...offers];
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
       return;
     }
 
-    const trackElement: HTMLDivElement = trackRef.current;
+    const trackElement = trackRef.current;
 
     function measure() {
       loopHeightRef.current = trackElement.scrollHeight / 2;
@@ -75,20 +79,68 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     return () => window.cancelAnimationFrame(frameId);
   }, [isPaused]);
 
-  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
-    const viewport = viewportRef.current;
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
-    if (!viewport) {
+    if (!isMobile || sessionStorage.getItem(hintStorageKey)) {
       return;
     }
+
+    let previousScrollY = window.scrollY;
+
+    function showHintOnce() {
+      sessionStorage.setItem(hintStorageKey, "true");
+      setShowMobileHint(true);
+      window.clearTimeout(hintTimerRef.current);
+      hintTimerRef.current = window.setTimeout(() => setShowMobileHint(false), mobileHintDuration);
+      window.removeEventListener("scroll", handleScroll);
+    }
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 80 && currentScrollY > previousScrollY + 12) {
+        showHintOnce();
+      }
+
+      previousScrollY = currentScrollY;
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.clearTimeout(hintTimerRef.current);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  function startDragging(event: PointerEvent<HTMLDivElement>) {
+    const captureElement = event.currentTarget;
 
     pointerIdRef.current = event.pointerId;
     startYRef.current = event.clientY;
     startOffsetRef.current = offsetRef.current;
+    captureElementRef.current = captureElement;
     isDraggingRef.current = true;
     movedRef.current = false;
     setIsDragging(true);
-    viewport.setPointerCapture(event.pointerId);
+    setIsPaused(true);
+    captureElement.setPointerCapture(event.pointerId);
+  }
+
+  function handleViewportPointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== "mouse") {
+      return;
+    }
+
+    startDragging(event);
+  }
+
+  function handleMobileHandlePointerDown(event: PointerEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    setShowMobileHint(false);
+    startDragging(event);
   }
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
@@ -109,19 +161,21 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   }
 
   function stopDragging(event: PointerEvent<HTMLDivElement>) {
-    const viewport = viewportRef.current;
+    const captureElement = captureElementRef.current;
 
-    if (!viewport || pointerIdRef.current !== event.pointerId) {
+    if (!captureElement || pointerIdRef.current !== event.pointerId) {
       return;
     }
 
-    if (viewport.hasPointerCapture(event.pointerId)) {
-      viewport.releasePointerCapture(event.pointerId);
+    if (captureElement.hasPointerCapture(event.pointerId)) {
+      captureElement.releasePointerCapture(event.pointerId);
     }
 
     pointerIdRef.current = null;
+    captureElementRef.current = null;
     isDraggingRef.current = false;
     setIsDragging(false);
+    setIsPaused(false);
   }
 
   function handleClickCapture(event: React.MouseEvent<HTMLDivElement>) {
@@ -136,13 +190,12 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
 
   return (
     <div
-      ref={viewportRef}
       className={`hero-offer-ticker relative mt-6 h-[370px] overflow-hidden px-1 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
-      onPointerDown={handlePointerDown}
+      onPointerDown={handleViewportPointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
       onPointerCancel={stopDragging}
@@ -176,6 +229,26 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
             </Link>
           );
         })}
+      </div>
+
+      <div
+        className="hero-offer-mobile-handle absolute inset-y-8 left-0 z-10 flex w-12 touch-none items-center justify-center md:hidden"
+        onPointerDown={handleMobileHandlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={stopDragging}
+        onPointerCancel={stopDragging}
+        aria-label="Przesuwaj najnowsze oferty"
+        role="button"
+        tabIndex={-1}
+      >
+        <span
+          className={`grid h-full w-full items-center justify-center gap-3 rounded-r-lg border text-2xl font-black leading-none backdrop-blur transition duration-300 ${
+            showMobileHint ? "border-white/45 bg-white/24 text-white opacity-100 shadow-[0_10px_35px_rgba(255,255,255,0.24)]" : "border-transparent bg-transparent text-transparent opacity-0"
+          }`}
+        >
+          <span aria-hidden="true" className={showMobileHint ? "hero-offer-hint-arrow-up drop-shadow" : ""}>↑</span>
+          <span aria-hidden="true" className={showMobileHint ? "hero-offer-hint-arrow-down drop-shadow" : ""}>↓</span>
+        </span>
       </div>
     </div>
   );

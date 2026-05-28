@@ -10,10 +10,26 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { offers } from "@/lib/offers";
 
 const benefits = [
-  "Wyselekcjonowane oferty",
-  "Mniej chaosu, więcej konkretów",
-  "Partnerzy B2B",
-  "Rozwiązania dopasowane do firmy"
+  {
+    title: "Wyselekcjonowane oferty",
+    icon: "/dealshare_icon_wyselekcjonowane_oferty.svg",
+    description: "Wybrane propozycje biznesowe w jednym miejscu, bez przypadkowego przeglądania niepasujących rozwiązań."
+  },
+  {
+    title: "Mniej chaosu, więcej konkretów",
+    icon: "/dealshare_icon_mniej_chaosu_wiecej_konkretow.svg",
+    description: "Krótsza droga do rozmów, które mają jasny kontekst biznesowy i lepsze dopasowanie do potrzeb firmy."
+  },
+  {
+    title: "Partnerzy B2B",
+    icon: "/dealshare_icon_partnerzy_b2b.svg",
+    description: "Dostęp do partnerów, usługodawców i projektów, które mogą realnie wspierać rozwój przedsiębiorstwa."
+  },
+  {
+    title: "Rozwiązania dopasowane do firmy",
+    icon: "/dealshare_ikona_suwaki.svg",
+    description: "Oferty porządkowane według kategorii, profilu współpracy i sytuacji, w której znajduje się firma."
+  }
 ];
 
 const heroOffers = offers.slice(0, 7);
@@ -61,12 +77,12 @@ export default function HomePage() {
       <section className="py-20">
         <Container>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {benefits.map((benefit, index) => (
-              <div key={benefit} className="card-glass soft-lift rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/20 hover:shadow-card">
-                <p className="text-sm font-black text-teal">0{index + 1}</p>
-                <h2 className="mt-4 text-lg font-black tracking-tight text-navy">{benefit}</h2>
+            {benefits.map((benefit) => (
+              <div key={benefit.title} className="card-glass soft-lift rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/20 hover:shadow-card">
+                <Image src={benefit.icon} alt="" width={52} height={52} className="h-12 w-12 object-contain" />
+                <h2 className="mt-5 flex min-h-[3.5rem] items-start text-lg font-black tracking-tight text-navy">{benefit.title}</h2>
                 <p className="mt-3 text-sm leading-7 text-slate-600">
-                  Krótsza droga do rozmów, które mają jasny kontekst biznesowy i lepsze dopasowanie do potrzeb firmy.
+                  {benefit.description}
                 </p>
               </div>
             ))}

@@ -30,7 +30,7 @@ export default function OffersPage() {
           <SectionHeading
             eyebrow="Aktualne oferty"
             title="Dostępne możliwości"
-            description="Większość ofert dotyczy firm B2B. Kafelki oznaczone jako Inne/Indywidualne wyróżniają sprawy kierowane także do osób fizycznych."
+            description="Większość ofert dotyczy firm B2B. Oferty oznaczone jako Inne/Indywidualne wyróżniają sprawy kierowane także do osób fizycznych."
           />
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {offers.map((offer) => (
