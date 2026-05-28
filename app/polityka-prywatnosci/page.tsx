@@ -6,12 +6,14 @@ export const metadata: Metadata = {
   description: "Polityka prywatności i informacje o plikach cookies w serwisie dealshare."
 };
 
+const administrator = "Michał Szwankowski, ul. Narutowicza 15, 41-503 Chorzów, NIP: 6272468482";
+
 const sections = [
   {
     title: "1. Administrator danych",
     content: [
-      "Administratorem danych osobowych przetwarzanych w serwisie dealshare jest Dealshare. Kontakt w sprawach związanych z ochroną danych osobowych: biuro@dealshare.pl.",
-      "Jeżeli serwis będzie prowadzony przez konkretną spółkę albo działalność gospodarczą, dane administratora, w tym adres, NIP lub KRS, powinny zostać uzupełnione w tym dokumencie."
+      `Administratorem danych osobowych przetwarzanych w serwisie dealshare jest ${administrator}.`,
+      "Kontakt w sprawach związanych z ochroną danych osobowych: biuro@dealshare.pl."
     ]
   },
   {
@@ -85,7 +87,7 @@ export default function PrivacyPolicyPage() {
         <Container>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Dokumenty</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Polityka prywatności i cookies</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">Ostatnia aktualizacja: 16 maja 2026 r.</p>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">Ostatnia aktualizacja: 28 maja 2026 r.</p>
         </Container>
       </section>
       <section className="py-16">

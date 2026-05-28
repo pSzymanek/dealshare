@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Regulamin korzystania z serwisu dealshare."
 };
 
+const operator = "Michał Szwankowski, ul. Narutowicza 15, 41-503 Chorzów, NIP: 6272468482";
+
 const sections = [
   {
     title: "1. Postanowienia ogólne",
@@ -17,8 +19,8 @@ const sections = [
   {
     title: "2. Operator serwisu",
     content: [
-      "Operatorem serwisu jest Dealshare. Kontakt z operatorem jest możliwy pod adresem: biuro@dealshare.pl.",
-      "Jeżeli serwis będzie prowadzony przez konkretną spółkę albo działalność gospodarczą, pełne dane operatora powinny zostać uzupełnione w tym regulaminie."
+      `Operatorem serwisu jest ${operator}.`,
+      "Kontakt z operatorem jest możliwy pod adresem: biuro@dealshare.pl."
     ]
   },
   {
@@ -79,7 +81,7 @@ export default function TermsPage() {
         <Container>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Dokumenty</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Regulamin serwisu</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">Ostatnia aktualizacja: 16 maja 2026 r.</p>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">Ostatnia aktualizacja: 28 maja 2026 r.</p>
         </Container>
       </section>
       <section className="py-16">
