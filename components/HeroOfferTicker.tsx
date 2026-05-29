@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { PointerEvent, useEffect, useRef, useState } from "react";
+import { FocusEvent, PointerEvent, useEffect, useRef, useState } from "react";
 import type { Offer } from "@/lib/offers";
 
 type HeroOfferTickerProps = {
@@ -21,6 +21,10 @@ function wrapOffset(value: number, loopHeight: number) {
   return ((value % loopHeight) + loopHeight) % loopHeight;
 }
 
+function isInteractiveTarget(target: EventTarget | null) {
+  return target instanceof Element && Boolean(target.closest("a, button"));
+}
+
 export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const captureElementRef = useRef<HTMLDivElement | null>(null);
@@ -30,8 +34,11 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   const offsetRef = useRef(0);
   const loopHeightRef = useRef(0);
   const isDraggingRef = useRef(false);
+  const isFocusedWithinRef = useRef(false);
+  const isHoveringRef = useRef(false);
   const movedRef = useRef(false);
   const hintTimerRef = useRef<number>();
+  const linkPauseTimerRef = useRef<number>();
   const [isDragging, setIsDragging] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [showMobileHint, setShowMobileHint] = useState(false);
@@ -114,6 +121,14 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     };
   }, []);
 
+  useEffect(() => {
+    return () => window.clearTimeout(linkPauseTimerRef.current);
+  }, []);
+
+  function updatePausedState() {
+    setIsPaused(Boolean(isDraggingRef.current || isFocusedWithinRef.current || isHoveringRef.current || linkPauseTimerRef.current));
+  }
+
   function startDragging(event: PointerEvent<HTMLDivElement>) {
     const captureElement = event.currentTarget;
 
@@ -124,12 +139,17 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     isDraggingRef.current = true;
     movedRef.current = false;
     setIsDragging(true);
-    setIsPaused(true);
+    updatePausedState();
     captureElement.setPointerCapture(event.pointerId);
   }
 
   function handleViewportPointerDown(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType !== "mouse") {
+      return;
+    }
+
+    if (isInteractiveTarget(event.target)) {
+      movedRef.current = false;
       return;
     }
 
@@ -175,7 +195,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     captureElementRef.current = null;
     isDraggingRef.current = false;
     setIsDragging(false);
-    setIsPaused(false);
+    updatePausedState();
   }
 
   function handleClickCapture(event: React.MouseEvent<HTMLDivElement>) {
@@ -188,13 +208,48 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
     movedRef.current = false;
   }
 
+  function pauseForLinkTap() {
+    window.clearTimeout(linkPauseTimerRef.current);
+    linkPauseTimerRef.current = window.setTimeout(() => {
+      linkPauseTimerRef.current = undefined;
+      updatePausedState();
+    }, 300);
+    updatePausedState();
+  }
+
+  function handleMouseEnter() {
+    isHoveringRef.current = true;
+    updatePausedState();
+  }
+
+  function handleMouseLeave() {
+    isHoveringRef.current = false;
+    updatePausedState();
+  }
+
+  function handleFocus() {
+    isFocusedWithinRef.current = true;
+    updatePausedState();
+  }
+
+  function handleBlur(event: FocusEvent<HTMLDivElement>) {
+    const nextFocusedElement = event.relatedTarget;
+
+    if (nextFocusedElement instanceof Node && event.currentTarget.contains(nextFocusedElement)) {
+      return;
+    }
+
+    isFocusedWithinRef.current = false;
+    updatePausedState();
+  }
+
   return (
     <div
       className={`hero-offer-ticker relative mt-6 h-[370px] overflow-hidden px-1 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       onPointerDown={handleViewportPointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
@@ -207,12 +262,9 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
           const isDuplicate = index >= offers.length;
 
           return (
-            <Link
+            <article
               key={`${offer.slug}-${index}`}
-              href={`/oferty/${offer.slug}`}
               aria-hidden={isDuplicate}
-              tabIndex={isDuplicate ? -1 : undefined}
-              draggable={false}
               className="group rounded-md border border-white/14 bg-white/8 p-4 text-white shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-cyan/45 hover:bg-white/12"
             >
               <div className="flex items-start justify-between gap-4">
@@ -223,10 +275,20 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
                 <span className="shrink-0 rounded border border-white/12 bg-white/10 px-2 py-1 text-xs font-bold text-white/72">{offer.status}</span>
               </div>
               <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/68">{offer.description}</p>
-              <span className="mt-3 inline-flex text-sm font-bold text-cyan transition group-hover:text-white">
+              <Link
+                href={`/oferty/${offer.slug}`}
+                tabIndex={isDuplicate ? -1 : undefined}
+                draggable={false}
+                onPointerDown={(event) => {
+                  event.stopPropagation();
+                  movedRef.current = false;
+                  pauseForLinkTap();
+                }}
+                className="mt-3 inline-flex text-sm font-bold text-cyan transition hover:text-white focus-visible:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+              >
                 Sprawdź szczegóły <span aria-hidden="true" className="arrow-mark ml-2 transition group-hover:translate-x-1">&rarr;</span>
-              </span>
-            </Link>
+              </Link>
+            </article>
           );
         })}
       </div>

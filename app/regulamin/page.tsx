@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Regulamin korzystania z serwisu dealshare."
 };
 
-const operator = "dealshare.pl";
+const operator = "Michał Szwankowski, 41-503 Chorzów, ul. Narutowicza 15, NIP: 6272468482";
 
 const sections = [
   {

@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   description: "Skontaktuj się z dealshare w sprawie ofert, partnerstw i współpracy B2B."
 };
 
+const contactPeople = [
+  { email: "zaneta@dealshare.pl", whatsappHref: "https://wa.me/48500320055" },
+  { email: "michal@dealshare.pl", whatsappHref: "https://wa.me/48694942645" },
+  { email: "piotr@dealshare.pl", whatsappHref: "https://wa.me/48512782456" }
+];
+
 export default function ContactPage() {
   return (
     <main>
@@ -30,7 +36,20 @@ export default function ContactPage() {
             <div>
               <SectionHeading title="Dane kontaktowe" description="Napisz do nas przez formularz lub skorzystaj z poniższych kanałów kontaktu." />
               <div className="mt-8 grid gap-4 text-sm leading-7 text-slate-700">
-                <p>biuro@dealshare.pl</p>
+                {contactPeople.map((person) => (
+                  <div key={person.email} className="soft-lift rounded-md border border-slate-200 bg-white p-5 transition hover:border-electric/40 hover:shadow-card">
+                    <Link href={`mailto:${person.email}`} className="flex w-fit items-center gap-3 font-black text-navy transition hover:text-electric">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center text-base font-black leading-none text-teal">@</span>
+                      <span className="break-all">{person.email}</span>
+                    </Link>
+                    <Link href={person.whatsappHref} target="_blank" rel="noreferrer" className="mt-3 flex w-fit items-center gap-3 font-black text-navy transition hover:text-teal">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center">
+                        <Image src="/whatsapp-icon.svg" alt="" width={18} height={18} className="h-[18px] w-[18px]" />
+                      </span>
+                      <span>Napisz na WhatsApp</span>
+                    </Link>
+                  </div>
+                ))}
               </div>
               <div className="mt-8">
                 <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-teal">Social media</h2>
