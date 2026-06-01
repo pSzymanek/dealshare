@@ -165,7 +165,7 @@ export const offers: Offer[] = [
     risksTitle: "Co zabezpiecza proces",
     risks: [{ title: "Najpierw kwalifikacja", text: "Analiza celu, dokumentów i profilu firmy pozwala dobrać bank oraz produkt przed złożeniem wniosku." }],
     faq: [
-      { question: "Czy analiza jest płatna?", answer: "Wstępna analiza może być wykonana przed decyzją o dalszym procesie. Zakres i warunki są ustalane indywidualnie." },
+      { question: "Czy analiza jest płatna?", answer: "Nie. Wstępna analiza jest w pełni darmowa dla każdego produktu Dealshare. Najpierw sprawdzamy sytuację, dokumenty albo projekt, a dopiero później pokazujemy możliwe kolejne kroki." },
       { question: "Czy muszę mieć idealną historię kredytową?", answer: "Nie zawsze. Ważniejszy jest pełny obraz sytuacji: przychody, historia rachunku, obecne zobowiązania, cel finansowania i sposób obsługi rat. Dlatego najpierw analizujemy dokumenty i dopiero potem dobieramy kierunek." },
       { question: "Czy obsługujecie JDG?", answer: "Tak, oferta może dotyczyć zarówno jednoosobowych działalności, jak i spółek." },
       { question: "Czy obecne kredyty przekreślają szanse?", answer: "Nie. Obecne zobowiązania mogą być argumentem do konsolidacji albo uporządkowania struktury finansowania. Sprawdzamy ich wysokość, terminowość i wpływ na płynność firmy." }
