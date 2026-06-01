@@ -79,7 +79,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
               <Button href="/kontakt" className="mt-6 w-full">
                 {offer.sidePanel.cta}
               </Button>
-              <p className="mt-4 rounded-md border border-cyan/20 bg-cyan/10 px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-teal">Wstępna analiza jest w pełni darmowa</p>
+              <p className="mt-3 text-center text-xs font-semibold text-slate-500">Wstępna analiza jest całkowicie darmowa</p>
               <p className="mt-4 text-xs leading-6 text-slate-500">{offer.sidePanel.note}</p>
             </aside>
           </div>
