@@ -31,7 +31,7 @@ export function OfferCard({ offer }: OfferCardProps) {
             <span
               key={category.slug}
               className={`inline-flex rounded px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${
-                offer.isIndividual ? "border border-fuchsia-400/25 bg-fuchsia-500/10 text-fuchsia-700" : "text-teal"
+                category.slug === "inne-indywidualne" ? "border border-fuchsia-400/25 bg-fuchsia-500/10 text-fuchsia-700" : "text-teal"
               }`}
             >
               {category.name}
@@ -55,7 +55,7 @@ export function OfferCard({ offer }: OfferCardProps) {
       </ul>
 
       <Link href={`/oferty/${offer.slug}`} className="arrow-link relative mt-auto inline-flex pt-6 text-sm font-bold text-electric transition hover:text-teal">
-        Sprawdź ofertę
+        Sprawdź szczegóły
         <span aria-hidden="true" className="arrow-mark ml-2">
           →
         </span>

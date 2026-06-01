@@ -152,7 +152,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
 
       {offer.risks?.length ? (
         <ContentBand>
-          <SectionTitle title={offer.risksTitle ?? "Ryzyka i nota ostrożności"} />
+          <SectionTitle title={offer.risksTitle ?? "Co warto sprawdzić przed decyzją"} />
           <CardGrid items={offer.risks} />
         </ContentBand>
       ) : null}
