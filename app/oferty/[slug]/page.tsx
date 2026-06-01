@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import { CTASection } from "@/components/CTASection";
-import { getOfferBySlug, offers } from "@/lib/offers";
+import { getOfferBySlug, offerStaticSlugs, offers, type Offer, type OfferCardItem } from "@/lib/offers";
 
 type OfferDetailPageProps = {
   params: {
@@ -13,14 +13,15 @@ type OfferDetailPageProps = {
 };
 
 export function generateStaticParams() {
-  return offers.map((offer) => ({ slug: offer.slug }));
+  return offerStaticSlugs.map((slug) => ({ slug }));
 }
 
 export function generateMetadata({ params }: OfferDetailPageProps): Metadata {
   const offer = getOfferBySlug(params.slug);
+
   return {
-    title: offer?.title ?? "Oferta",
-    description: offer?.description ?? "Szczegóły oferty na platformie dealshare."
+    title: offer?.seo.title ?? "Oferta",
+    description: offer?.seo.description ?? "Szczegóły oferty na platformie dealshare."
   };
 }
 
@@ -32,58 +33,236 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
   }
 
   return (
-    <main>
-      <section className="bg-navy-gradient py-20 text-white">
+    <main className="bg-white text-ink">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white py-12 sm:py-16">
+        <div className="pointer-events-none absolute inset-y-10 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_center,rgba(0,91,255,0.08),transparent_56%)] lg:block" />
         <Container>
-          <div className="max-w-4xl">
-            <div className="flex flex-wrap items-center gap-3">
-              {offer.categories.map((category) => (
-                <Badge key={category.slug} tone={category.slug === "inne-indywidualne" ? "dark" : "teal"}>
-                  {category.name}
-                </Badge>
-              ))}
-              <Badge tone="blue">{offer.status}</Badge>
+          <Breadcrumbs offer={offer} />
+          <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px] lg:items-center">
+            <div className="max-w-3xl">
+              <div className="flex flex-wrap items-center gap-3">
+                {offer.categories.map((category) => (
+                  <Badge key={category.slug} tone={offer.isIndividual ? "dark" : "blue"}>
+                    {category.name}
+                  </Badge>
+                ))}
+                <Badge tone="teal">{offer.status}</Badge>
+              </div>
+              <h1 className="mt-5 text-4xl font-black tracking-tight text-navy sm:text-6xl">{offer.title}</h1>
+              <p className="mt-5 max-w-2xl text-xl font-semibold leading-8 text-slate-700">{offer.headline}</p>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">{offer.lead}</p>
+              <ul className="mt-7 grid gap-3">
+                {offer.heroBenefits.map((benefit) => (
+                  <li key={benefit} className="flex items-center gap-3 text-sm font-bold text-slate-700">
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-electric/30 text-electric">✓</span>
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button href="/kontakt">{offer.ctaPrimary}</Button>
+                <Button href="#proces" variant="ghost">
+                  {offer.ctaSecondary} <span className="ml-2">→</span>
+                </Button>
+              </div>
             </div>
-            <h1 className="heading-title-enter mt-6 text-4xl font-black tracking-tight sm:text-6xl">{offer.title}</h1>
-            <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">{offer.intro}</p>
-            <div className="mt-8">
-              <Button href="/kontakt" variant="secondary">
-                Zapytaj o ofertę
+            <aside className="rounded-lg border border-slate-200 bg-white p-6 shadow-card">
+              <h2 className="text-2xl font-black tracking-tight text-navy">{offer.sidePanel.title}</h2>
+              <ul className="mt-5 grid gap-4">
+                {offer.sidePanel.items.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm font-semibold leading-6 text-slate-700">
+                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-electric/30 text-xs text-electric">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Button href="/kontakt" className="mt-6 w-full">
+                {offer.sidePanel.cta}
               </Button>
-            </div>
+              <p className="mt-4 text-xs leading-6 text-slate-500">{offer.sidePanel.note}</p>
+            </aside>
           </div>
         </Container>
       </section>
 
-      <section className="bg-white py-20">
+      <ContentBand>
+        <SplitIntro title={offer.problemTitle} paragraphs={offer.problemText} />
+        <CardGrid items={offer.problemCards} />
+      </ContentBand>
+
+      <ContentBand muted>
+        <SplitIntro title={offer.solutionTitle} paragraphs={offer.solutionText} />
+        <CardGrid items={offer.solutionCards} columns="4" />
+      </ContentBand>
+
+      <section className="border-y border-slate-200 bg-white py-12">
+        <Container>
+          <div className="grid gap-6 lg:grid-cols-[240px_1fr] lg:items-center">
+            <div>
+              <h2 className="text-3xl font-black tracking-tight text-navy">{offer.forWhomTitle}</h2>
+              <p className="mt-3 text-sm leading-7 text-slate-600">Sprawdź, czy sytuacja pasuje do tej oferty.</p>
+            </div>
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {offer.forWhom.map((item) => (
+                <li key={item} className="flex gap-2 text-sm font-semibold text-slate-700">
+                  <span className="mt-0.5 text-electric">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
+      <ContentBand>
+        <SectionTitle title={offer.scopeTitle} />
+        <CardGrid items={offer.scope} columns="5" />
+      </ContentBand>
+
+      {offer.valueTitle && (offer.valueCards || offer.valueText) ? (
+        <ContentBand muted>
+          <SplitIntro title={offer.valueTitle} paragraphs={offer.valueText ?? []} />
+          {offer.valueCards ? <CardGrid items={offer.valueCards} /> : null}
+        </ContentBand>
+      ) : null}
+
+      <section id="proces" className="bg-white py-14">
+        <Container>
+          <SectionTitle title={offer.processTitle} />
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+            {offer.process.map((step) => (
+              <article key={`${step.step}-${step.title}`} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="grid h-11 w-11 place-items-center rounded-full border border-electric/30 bg-electric/5 text-lg font-black text-electric">{step.step}</div>
+                <h3 className="mt-4 text-base font-black text-navy">{step.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{step.text}</p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-mist py-14">
         <Container>
           <div className="grid gap-6 lg:grid-cols-2">
-            <InfoBlock title="Dla kogo?" items={offer.audience} />
-            <InfoBlock title="Co obejmuje?" items={offer.scope} />
-            <InfoBlock title="Jak wygląda proces?" items={offer.process} />
-            <InfoBlock title="Najważniejsze korzyści" items={offer.benefits} />
+            <InfoPanel title={offer.documentsTitle} items={offer.documents} tone="blue" />
+            <InfoPanel title={offer.checkpointTitle} paragraphs={offer.checkpointText} items={offer.checkpoints} tone="amber" />
           </div>
         </Container>
       </section>
 
-      <CTASection
-        title="Chcesz sprawdzić, czy ta oferta pasuje do Twojej firmy?"
-        description="Napisz kilka zdań o sytuacji firmy. Wrócimy z informacją, jak możemy pomóc."
-        buttonLabel="Przejdź do kontaktu"
-        buttonHref="/kontakt"
-      />
+      {offer.risks?.length ? (
+        <ContentBand>
+          <SectionTitle title={offer.risksTitle ?? "Ryzyka i nota ostrożności"} />
+          <CardGrid items={offer.risks} />
+        </ContentBand>
+      ) : null}
+
+      <section className="bg-white py-14">
+        <Container>
+          <SectionTitle title="Najczęściej zadawane pytania" />
+          <div className="mt-6 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+            {offer.faq.map((item) => (
+              <details key={item.question} className="group p-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-black text-navy">
+                  {item.question}
+                  <span className="text-electric transition group-open:rotate-180">⌄</span>
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-white pb-16">
+        <Container>
+          <div className="rounded-lg bg-navy-gradient p-8 text-white shadow-glow sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-black tracking-tight">{offer.finalCta.title}</h2>
+              <p className="mt-3 text-base leading-8 text-white/72">{offer.finalCta.text}</p>
+            </div>
+            <Button href="/kontakt" variant="secondary" className="mt-7 lg:mt-0">
+              {offer.finalCta.buttonLabel} <span className="ml-2">→</span>
+            </Button>
+          </div>
+        </Container>
+      </section>
     </main>
   );
 }
 
-function InfoBlock({ title, items }: { title: string; items: string[] }) {
+function Breadcrumbs({ offer }: { offer: Offer }) {
   return (
-    <section className="card-glass soft-lift rounded-lg border border-slate-200 bg-mist p-7 hover:border-electric/20 hover:shadow-card">
+    <nav className="flex flex-wrap gap-2 text-sm font-semibold text-slate-500" aria-label="Breadcrumb">
+      <Link href="/" className="hover:text-electric">
+        Strona główna
+      </Link>
+      <span>/</span>
+      <Link href="/oferty" className="hover:text-electric">
+        Oferty
+      </Link>
+      <span>/</span>
+      <span className="text-electric">{offer.title}</span>
+    </nav>
+  );
+}
+
+function ContentBand({ children, muted = false }: { children: React.ReactNode; muted?: boolean }) {
+  return (
+    <section className={`${muted ? "bg-mist" : "bg-white"} py-14`}>
+      <Container>{children}</Container>
+    </section>
+  );
+}
+
+function SplitIntro({ title, paragraphs }: { title: string; paragraphs: string[] }) {
+  return (
+    <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+      <SectionTitle title={title} />
+      <div className="max-w-3xl space-y-4 text-sm leading-7 text-slate-600">
+        {paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SectionTitle({ title }: { title: string }) {
+  return <h2 className="text-3xl font-black tracking-tight text-navy">{title}</h2>;
+}
+
+function CardGrid({ items, columns = "3" }: { items: OfferCardItem[]; columns?: "3" | "4" | "5" }) {
+  const gridClass = columns === "5" ? "lg:grid-cols-5" : columns === "4" ? "lg:grid-cols-4" : "lg:grid-cols-3";
+
+  return (
+    <div className={`mt-8 grid gap-5 sm:grid-cols-2 ${gridClass}`}>
+      {items.map((item) => (
+        <article key={item.title} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="grid h-10 w-10 place-items-center rounded-full border border-electric/25 bg-electric/5 text-lg font-black text-electric">{item.icon ?? "✓"}</div>
+          <h3 className="mt-4 text-base font-black text-navy">{item.title}</h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">{item.text}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function InfoPanel({ title, paragraphs, items, tone }: { title: string; paragraphs?: string[]; items: string[]; tone: "blue" | "amber" }) {
+  const toneClasses = tone === "amber" ? "border-amber-300/60 bg-amber-50 text-amber-700" : "border-electric/20 bg-white text-electric";
+
+  return (
+    <section className={`rounded-lg border p-6 shadow-sm ${toneClasses}`}>
       <h2 className="text-2xl font-black tracking-tight text-navy">{title}</h2>
-      <ul className="mt-5 grid gap-3">
+      {paragraphs?.map((paragraph) => (
+        <p key={paragraph} className="mt-3 text-sm leading-7 text-slate-600">
+          {paragraph}
+        </p>
+      ))}
+      <ul className="mt-5 grid gap-2 text-sm font-semibold text-slate-700">
         {items.map((item) => (
-          <li key={item} className="flex gap-3 text-sm leading-7 text-slate-700">
-            <span className="mt-2 h-2 w-2 shrink-0 rounded-sm bg-deal-gradient" />
+          <li key={item} className="flex gap-2">
+            <span className="mt-0.5 text-electric">✓</span>
             {item}
           </li>
         ))}
