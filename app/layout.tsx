@@ -22,6 +22,13 @@ export const metadata: Metadata = {
     template: "%s | dealshare"
   },
   description: siteConfig.description,
+  alternates: {
+    canonical: "/"
+  },
+  robots: {
+    index: true,
+    follow: true
+  },
   openGraph: {
     title: "dealshare",
     description: siteConfig.description,
@@ -29,6 +36,11 @@ export const metadata: Metadata = {
     siteName: "dealshare",
     locale: "pl_PL",
     type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "dealshare",
+    description: siteConfig.description
   },
   icons: {
     icon: "/favicon.png"

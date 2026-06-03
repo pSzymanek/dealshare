@@ -21,7 +21,10 @@ export function generateMetadata({ params }: OfferDetailPageProps): Metadata {
 
   return {
     title: offer?.seo.title ?? "Oferta",
-    description: offer?.seo.description ?? "Szczegóły oferty na platformie dealshare."
+    description: offer?.seo.description ?? "Szczegóły oferty na platformie dealshare.",
+    alternates: {
+      canonical: offer ? `/oferty/${offer.slug}` : "/oferty"
+    }
   };
 }
 

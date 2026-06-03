@@ -3,7 +3,10 @@ import { Container } from "@/components/Container";
 
 export const metadata: Metadata = {
   title: "Regulamin",
-  description: "Regulamin korzystania z serwisu dealshare."
+  description: "Regulamin korzystania z serwisu dealshare.",
+  alternates: {
+    canonical: "/regulamin"
+  }
 };
 
 const operator = "Michał Szwankowski, 41-503 Chorzów, ul. Narutowicza 15, NIP: 6272468482";

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
@@ -33,6 +34,12 @@ const benefits = [
 ];
 
 const heroOffers = offers.slice(0, 7);
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/"
+  }
+};
 
 export default function HomePage() {
   return (

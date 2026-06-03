@@ -6,7 +6,10 @@ import { SectionHeading } from "@/components/SectionHeading";
 
 export const metadata: Metadata = {
   title: "O nas",
-  description: "dealshare jako nowoczesna platforma B2B dla firm szukających możliwości i partnerów."
+  description: "dealshare jako nowoczesna platforma B2B dla firm szukających możliwości i partnerów.",
+  alternates: {
+    canonical: "/o-nas"
+  }
 };
 
 const sections = [

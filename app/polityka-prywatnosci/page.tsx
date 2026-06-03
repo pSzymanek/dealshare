@@ -3,7 +3,10 @@ import { Container } from "@/components/Container";
 
 export const metadata: Metadata = {
   title: "Polityka prywatności",
-  description: "Polityka prywatności i informacje o plikach cookies w serwisie dealshare."
+  description: "Polityka prywatności i informacje o plikach cookies w serwisie dealshare.",
+  alternates: {
+    canonical: "/polityka-prywatnosci"
+  }
 };
 
 const administrator = "Michał Szwankowski, 41-503 Chorzów, ul. Narutowicza 15, NIP: 6272468482";

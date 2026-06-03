@@ -7,6 +7,21 @@ const nextConfig = {
         hostname: "**"
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.dealshare.pl"
+          }
+        ],
+        destination: "https://dealshare.pl/:path*",
+        permanent: true
+      }
+    ];
   }
 };
 

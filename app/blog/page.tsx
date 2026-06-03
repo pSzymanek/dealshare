@@ -8,7 +8,10 @@ import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Artykuły dealshare dla firm szukających kontekstu, ofert i partnerstw B2B."
+  description: "Artykuły dealshare dla firm szukających kontekstu, ofert i partnerstw B2B.",
+  alternates: {
+    canonical: "/blog"
+  }
 };
 
 type BlogPageProps = {

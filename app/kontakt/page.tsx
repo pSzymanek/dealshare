@@ -8,7 +8,10 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description: "Skontaktuj się z dealshare w sprawie ofert, partnerstw i współpracy B2B."
+  description: "Skontaktuj się z dealshare w sprawie ofert, partnerstw i współpracy B2B.",
+  alternates: {
+    canonical: "/kontakt"
+  }
 };
 
 const contactPeople = [

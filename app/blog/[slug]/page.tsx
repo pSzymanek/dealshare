@@ -17,7 +17,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const post = await getPostBySlug(params.slug);
   return {
     title: post?.title ?? "Wpis blogowy",
-    description: post?.excerpt ?? "Wpis blogowy dealshare."
+    description: post?.excerpt ?? "Wpis blogowy dealshare.",
+    alternates: {
+      canonical: `/blog/${params.slug}`
+    }
   };
 }
 

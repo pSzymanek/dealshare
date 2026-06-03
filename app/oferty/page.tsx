@@ -7,7 +7,10 @@ import { offers } from "@/lib/offers";
 
 export const metadata: Metadata = {
   title: "Oferty biznesowe",
-  description: "Oferty biznesowe Dealshare: finansowanie, inwestycje, energia, restrukturyzacja, kontrakty i sprawy kredytowe."
+  description: "Oferty biznesowe Dealshare: finansowanie, inwestycje, energia, restrukturyzacja, kontrakty i sprawy kredytowe.",
+  alternates: {
+    canonical: "/oferty"
+  }
 };
 
 export default function OffersPage() {
