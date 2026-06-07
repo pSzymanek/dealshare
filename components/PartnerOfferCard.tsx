@@ -14,21 +14,20 @@ export function PartnerOfferCard() {
   if (!config) return null;
 
   return (
-    <article className="relative isolate flex min-h-full flex-col overflow-hidden rounded-lg border border-cyan/35 bg-navy-gradient p-6 text-white shadow-glow transition duration-300 hover:-translate-y-1 hover:shadow-card">
+    <article className="group relative isolate flex min-h-full flex-col overflow-hidden rounded-lg border border-cyan/35 bg-navy-gradient p-6 text-white shadow-glow transition duration-300 hover:-translate-y-1 hover:shadow-card">
       <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-cyan/25 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 left-8 h-48 w-48 rounded-full bg-electric/25 blur-3xl" />
       <Image
         src="/sygnet-white.png"
         alt=""
-        width={86}
-        height={86}
-        className="pointer-events-none absolute bottom-5 right-5 z-0 opacity-10"
+        width={80}
+        height={80}
+        className="pointer-events-none absolute right-4 top-4 z-0 h-20 w-20 object-contain opacity-10 transition group-hover:opacity-15"
         aria-hidden="true"
       />
 
       <div className="relative z-10 flex items-start justify-between gap-4">
         <p className="text-xs font-black uppercase tracking-[0.2em] text-cyan">DLA PARTNERÓW</p>
-        <span className="rounded bg-white/15 px-2.5 py-1 text-xs font-black uppercase tracking-wide text-white ring-1 ring-white/25">WYRÓŻNIONE</span>
       </div>
 
       <div className="relative z-10 mt-7">
