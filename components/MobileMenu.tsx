@@ -91,9 +91,13 @@ export function MobileMenu() {
 
           <Link
             href="/kontakt"
-            className="button-glass relative z-10 isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow sm:mt-auto"
+            className="button-glass relative z-10 isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow"
           >
             <span className="relative z-10">Porozmawiajmy!</span>
+          </Link>
+
+          <Link href="/" aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
+            <span className="block h-[42px] w-[178px] bg-white opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)] [mask-image:url('/logo.svg')] [mask-position:center] [mask-repeat:no-repeat] [mask-size:contain]" />
           </Link>
         </aside>
             </div>,
