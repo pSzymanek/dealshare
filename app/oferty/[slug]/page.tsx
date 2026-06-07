@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
+import { BriefModal } from "@/components/BriefModal";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { getBriefConfig } from "@/lib/briefs";
 import { getOfferBySlug, offerStaticSlugs, offers, type Offer, type OfferCardItem } from "@/lib/offers";
 
 type OfferDetailPageProps = {
@@ -35,6 +37,8 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
     notFound();
   }
 
+  const briefConfig = getBriefConfig(offer.slug);
+
   return (
     <main className="bg-white text-ink">
       <section className="relative overflow-hidden border-b border-slate-200 bg-white py-12 sm:py-16">
@@ -63,7 +67,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button href="/kontakt">{offer.ctaPrimary}</Button>
+                {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} /> : <Button href="/kontakt">{offer.ctaPrimary}</Button>}
                 <Button href="#proces" variant="ghost">
                   {offer.ctaSecondary} <span className="ml-2">→</span>
                 </Button>
@@ -79,9 +83,13 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
                   </li>
                 ))}
               </ul>
-              <Button href="/kontakt" className="mt-6 w-full">
-                {offer.sidePanel.cta}
-              </Button>
+              {briefConfig ? (
+                <BriefModal config={briefConfig} buttonLabel={offer.sidePanel.cta} buttonClassName="mt-6 w-full" />
+              ) : (
+                <Button href="/kontakt" className="mt-6 w-full">
+                  {offer.sidePanel.cta}
+                </Button>
+              )}
               <p className="mt-3 text-center text-xs font-semibold text-slate-500">Wstępna analiza jest całkowicie darmowa</p>
               <p className="mt-4 text-xs leading-6 text-slate-500">{offer.sidePanel.note}</p>
             </aside>
@@ -185,9 +193,13 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
               <h2 className="text-3xl font-black tracking-tight">{offer.finalCta.title}</h2>
               <p className="mt-3 text-base leading-8 text-white/72">{offer.finalCta.text}</p>
             </div>
-            <Button href="/kontakt" variant="secondary" className="mt-7 lg:mt-0">
-              {offer.finalCta.buttonLabel} <span className="ml-2">→</span>
-            </Button>
+            {briefConfig ? (
+              <BriefModal config={briefConfig} buttonLabel={offer.finalCta.buttonLabel} buttonVariant="secondary" buttonClassName="mt-7 lg:mt-0" />
+            ) : (
+              <Button href="/kontakt" variant="secondary" className="mt-7 lg:mt-0">
+                {offer.finalCta.buttonLabel} <span className="ml-2">→</span>
+              </Button>
+            )}
           </div>
         </Container>
       </section>

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BriefModal } from "@/components/BriefModal";
+import { getBriefConfig } from "@/lib/briefs";
 import { Offer } from "@/lib/offers";
 import { Badge } from "./Badge";
 
@@ -19,6 +21,7 @@ const offerIcons: Record<string, string> = {
 
 export function OfferCard({ offer }: OfferCardProps) {
   const icon = offerIcons[offer.slug];
+  const briefConfig = getBriefConfig(offer.slug);
 
   return (
     <article className="card-glass offer-card soft-lift group flex min-h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
@@ -54,12 +57,15 @@ export function OfferCard({ offer }: OfferCardProps) {
         ))}
       </ul>
 
-      <Link href={`/oferty/${offer.slug}`} className="arrow-link relative mt-auto inline-flex pt-6 text-sm font-bold text-electric transition hover:text-teal">
-        Sprawdź szczegóły
-        <span aria-hidden="true" className="arrow-mark ml-2">
-          →
-        </span>
-      </Link>
+      <div className="relative mt-auto flex flex-col gap-3 pt-6">
+        {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} buttonClassName="w-full px-4 py-2.5" /> : null}
+        <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex text-sm font-bold text-electric transition hover:text-teal">
+          Sprawdź szczegóły
+          <span aria-hidden="true" className="arrow-mark ml-2">
+            →
+          </span>
+        </Link>
+      </div>
     </article>
   );
 }
