@@ -77,6 +77,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
   const isContactStep = stepIndex === contactStepIndex;
   const totalSteps = config.steps.length + 1;
   const progress = Math.round(((stepIndex + 1) / totalSteps) * 100);
+  const showIntro = stepIndex === 0;
   const currentStep = config.steps[stepIndex];
   const activeStepSelectedOptions = currentStep ? answers[currentStep.question] ?? [] : [];
   const canGoNext = isContactStep || activeStepSelectedOptions.length > 0;
@@ -251,18 +252,19 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
                   </div>
                 ) : (
                   <form onSubmit={submitBrief} className="flex min-h-0 flex-1 flex-col">
-                    <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
-                      <p className="text-sm leading-7 text-slate-600">{config.description}</p>
-                      <p className="mt-3 text-sm font-bold leading-6 text-navy">{config.microcopy}</p>
-                      <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
-                        <div className="h-full rounded-full bg-deal-gradient transition-all" style={{ width: `${progress}%` }} />
-                      </div>
-                      <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
-                        Krok {stepIndex + 1} z {totalSteps}
-                      </p>
-                    </div>
-
                     <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-6">
+                      {showIntro ? (
+                        <div className="mb-5 border-b border-slate-200 pb-5">
+                          <p className="text-sm leading-7 text-slate-600">{config.description}</p>
+                          <p className="mt-3 text-sm font-bold leading-6 text-navy">{config.microcopy}</p>
+                          <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
+                            <div className="h-full rounded-full bg-deal-gradient transition-all" style={{ width: `${progress}%` }} />
+                          </div>
+                          <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                            Krok {stepIndex + 1} z {totalSteps}
+                          </p>
+                        </div>
+                      ) : null}
                       {isContactStep ? (
                         <ContactStep
                           values={contact}
