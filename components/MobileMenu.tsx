@@ -34,12 +34,12 @@ export function MobileMenu() {
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
         onClick={() => setIsOpen(true)}
-        className="button-glass inline-flex min-h-11 items-center gap-2 rounded-md bg-deal-gradient px-3 py-2 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
+        className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-sm font-bold text-navy transition hover:-translate-y-0.5 hover:text-electric"
       >
-        <span className="relative flex h-5 w-5 items-center justify-center text-white" aria-hidden="true">
-          <span className="absolute h-0.5 w-3.5 -translate-y-1.5 rounded-full bg-current" />
-          <span className="absolute h-0.5 w-3.5 rounded-full bg-current" />
-          <span className="absolute h-0.5 w-3.5 translate-y-1.5 rounded-full bg-current" />
+        <span className="relative flex h-5 w-5 items-center justify-center" aria-hidden="true">
+          <span className="absolute h-0.5 w-3.5 -translate-y-1.5 rounded-full bg-deal-gradient" />
+          <span className="absolute h-0.5 w-3.5 rounded-full bg-deal-gradient" />
+          <span className="absolute h-0.5 w-3.5 translate-y-1.5 rounded-full bg-deal-gradient" />
         </span>
         <span className="hidden min-[380px]:inline">Menu</span>
       </button>
