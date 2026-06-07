@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -97,7 +98,7 @@ export function MobileMenu() {
           </Link>
 
           <Link href="/" aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
-            <span className="block h-[42px] w-[178px] bg-white opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)] [mask-image:url('/logo.svg')] [mask-position:center] [mask-repeat:no-repeat] [mask-size:contain]" />
+            <Image src="/logo-white.svg" alt="dealshare" width={204} height={48} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
           </Link>
         </aside>
             </div>,
