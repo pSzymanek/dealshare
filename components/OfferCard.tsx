@@ -25,7 +25,7 @@ export function OfferCard({ offer }: OfferCardProps) {
 
   return (
     <article className="card-glass offer-card soft-lift group flex min-h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
-      <div className="pointer-events-none !absolute bottom-4 right-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
+      <div className="pointer-events-none !absolute right-4 top-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
       {icon ? <Image src={icon} alt="" width={72} height={72} className="offer-card-icon relative h-16 w-16 object-contain" /> : null}
 
       <div className="relative mt-4 flex items-start justify-between gap-4">
@@ -59,9 +59,9 @@ export function OfferCard({ offer }: OfferCardProps) {
         </ul>
       </div>
 
-      <div className="relative mt-auto flex flex-col gap-3 pt-6">
-        {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} buttonClassName="w-full px-4 py-2.5" /> : null}
-        <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex text-sm font-bold text-electric transition hover:text-teal">
+      <div className="relative mt-auto flex min-h-[104px] flex-col justify-end gap-3 pt-6">
+        {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} buttonClassName="w-full px-4 py-2.5 leading-5" /> : null}
+        <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex min-h-5 items-center text-sm font-bold leading-5 text-electric transition hover:text-teal">
           Sprawdź szczegóły
           <span aria-hidden="true" className="arrow-mark ml-2">
             →
