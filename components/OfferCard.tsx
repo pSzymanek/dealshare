@@ -21,7 +21,7 @@ export function OfferCard({ offer }: OfferCardProps) {
   const icon = offerIcons[offer.slug];
 
   return (
-    <article className="card-glass offer-card soft-lift group grid h-full grid-rows-[auto_auto_1fr_auto] rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
+    <article className="card-glass offer-card soft-lift group flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 pb-20 shadow-sm hover:border-electric/30 hover:shadow-card">
       <div className="pointer-events-none !absolute right-4 top-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
       {icon ? <Image src={icon} alt="" width={72} height={72} className="offer-card-icon relative h-16 w-16 object-contain" /> : null}
 
@@ -41,7 +41,7 @@ export function OfferCard({ offer }: OfferCardProps) {
         <Badge tone={offer.status === "Premium" || offer.status === "Nowe" ? "blue" : "dark"}>{offer.status}</Badge>
       </div>
 
-      <div className="relative flex min-h-0 flex-col">
+      <div className="relative flex flex-col">
         <h3 className="mt-5 text-xl font-black tracking-tight text-navy">{offer.title}</h3>
         <p className="mt-2 text-base font-black leading-7 text-ink">{offer.headline}</p>
         <p className="mt-3 text-sm leading-7 text-slate-600">{offer.description}</p>
@@ -56,7 +56,7 @@ export function OfferCard({ offer }: OfferCardProps) {
         </ul>
       </div>
 
-      <div className="relative flex min-h-11 flex-col justify-end self-end pt-6">
+      <div className="absolute bottom-6 left-6 right-6 z-[2] flex min-h-5 items-center">
         <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex min-h-5 items-center text-sm font-bold leading-5 text-electric transition hover:text-teal">
           Sprawdź szczegóły
           <span aria-hidden="true" className="arrow-mark ml-2">
