@@ -226,12 +226,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
       {isMounted && isOpen
         ? createPortal(
             <div className={cx("fixed inset-0 z-[120] transition", isOpen ? "pointer-events-auto" : "pointer-events-none")}>
-              <button
-                type="button"
-                aria-label="Zamknij formularz briefu"
-                onClick={closeModal}
-                className={cx("absolute inset-0 bg-navy/55 backdrop-blur-sm transition-opacity", isOpen ? "opacity-100" : "opacity-0")}
-              />
+              <div className={cx("absolute inset-0 bg-navy/55 backdrop-blur-sm transition-opacity", isOpen ? "opacity-100" : "opacity-0")} />
               <div className="absolute inset-x-3 top-4 mx-auto flex max-h-[calc(100dvh-2rem)] max-w-3xl flex-col overflow-hidden rounded-lg border border-white/50 bg-white shadow-glow transition sm:top-8 sm:max-h-[calc(100dvh-4rem)]">
                 <div className="flex items-start justify-between gap-4 border-b border-slate-200 bg-mist px-5 py-4 sm:px-6">
                   <div>
