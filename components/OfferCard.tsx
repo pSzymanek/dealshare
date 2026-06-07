@@ -21,7 +21,7 @@ export function OfferCard({ offer }: OfferCardProps) {
   const icon = offerIcons[offer.slug];
 
   return (
-    <article className="card-glass offer-card soft-lift group flex h-full flex-col rounded-lg border border-slate-200 bg-white p-6 pb-20 shadow-sm hover:border-electric/30 hover:shadow-card">
+    <article className="card-glass offer-card soft-lift group flex min-h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
       <div className="pointer-events-none !absolute right-4 top-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
       {icon ? <Image src={icon} alt="" width={72} height={72} className="offer-card-icon relative h-16 w-16 object-contain" /> : null}
 
@@ -56,8 +56,8 @@ export function OfferCard({ offer }: OfferCardProps) {
         </ul>
       </div>
 
-      <div className="absolute bottom-6 left-6 right-6 z-[2] flex min-h-5 items-center">
-        <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex min-h-5 items-center text-sm font-bold leading-5 text-electric transition hover:text-teal">
+      <div className="relative mt-auto flex flex-col pt-6">
+        <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex text-sm font-bold text-electric transition hover:text-teal">
           Sprawdź szczegóły
           <span aria-hidden="true" className="arrow-mark ml-2">
             →
