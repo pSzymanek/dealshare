@@ -201,7 +201,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
         <span className="relative z-10">{buttonLabel ?? config.cta}</span>
       </button>
 
-      {isMounted
+      {isMounted && isOpen
         ? createPortal(
             <div className={cx("fixed inset-0 z-[120] transition", isOpen ? "pointer-events-auto" : "pointer-events-none")}>
               <button
