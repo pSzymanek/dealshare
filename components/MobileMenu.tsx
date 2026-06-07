@@ -34,9 +34,9 @@ export function MobileMenu() {
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
         onClick={() => setIsOpen(true)}
-        className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-navy shadow-sm transition hover:border-electric/30 hover:bg-electric/5 hover:text-electric"
+        className="button-glass inline-flex min-h-11 items-center gap-2 rounded-md bg-deal-gradient px-3 py-2 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
       >
-        <span className="relative flex h-5 w-5 items-center justify-center rounded bg-electric/8 text-electric" aria-hidden="true">
+        <span className="relative flex h-5 w-5 items-center justify-center text-white" aria-hidden="true">
           <span className="absolute h-0.5 w-3.5 -translate-y-1.5 rounded-full bg-current" />
           <span className="absolute h-0.5 w-3.5 rounded-full bg-current" />
           <span className="absolute h-0.5 w-3.5 translate-y-1.5 rounded-full bg-current" />
@@ -67,7 +67,7 @@ export function MobileMenu() {
               type="button"
               aria-label="Zamknij menu"
               onClick={() => setIsOpen(false)}
-              className="relative inline-flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 bg-white text-electric shadow-sm transition hover:border-electric/30 hover:bg-electric/5"
+              className="button-glass relative inline-flex h-11 w-11 items-center justify-center rounded-md bg-deal-gradient text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
             >
               <span className="absolute h-0.5 w-4 rotate-45 rounded-full bg-current" />
               <span className="absolute h-0.5 w-4 -rotate-45 rounded-full bg-current" />
