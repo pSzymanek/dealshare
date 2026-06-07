@@ -44,18 +44,20 @@ export function OfferCard({ offer }: OfferCardProps) {
         <Badge tone={offer.status === "Premium" || offer.status === "Nowe" ? "blue" : "dark"}>{offer.status}</Badge>
       </div>
 
-      <h3 className="relative mt-5 text-xl font-black tracking-tight text-navy">{offer.title}</h3>
-      <p className="relative mt-2 text-base font-black leading-7 text-ink">{offer.headline}</p>
-      <p className="relative mt-3 text-sm leading-7 text-slate-600">{offer.description}</p>
+      <div className="relative flex flex-1 flex-col">
+        <h3 className="mt-5 text-xl font-black tracking-tight text-navy">{offer.title}</h3>
+        <p className="mt-2 text-base font-black leading-7 text-ink">{offer.headline}</p>
+        <p className="mt-3 text-sm leading-7 text-slate-600">{offer.description}</p>
 
-      <ul className="relative mt-5 grid gap-2 text-sm font-semibold text-slate-700">
-        {offer.highlights.map((highlight) => (
-          <li key={highlight} className="flex gap-2">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" />
-            <span>{highlight}</span>
-          </li>
-        ))}
-      </ul>
+        <ul className="mt-5 grid flex-1 content-start gap-2 text-sm font-semibold text-slate-700">
+          {offer.highlights.map((highlight) => (
+            <li key={highlight} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" />
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="relative mt-auto flex flex-col gap-3 pt-6">
         {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} buttonClassName="w-full px-4 py-2.5" /> : null}
