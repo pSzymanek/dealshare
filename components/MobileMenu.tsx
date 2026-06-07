@@ -98,7 +98,7 @@ export function MobileMenu() {
           </Link>
 
           <Link href="/" aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
-            <Image src="/logo-white.svg" alt="dealshare" width={204} height={48} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
+            <Image src="/logo-dark.svg" alt="dealshare" width={204} height={48} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
           </Link>
         </aside>
             </div>,
