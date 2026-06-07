@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BriefModal } from "@/components/BriefModal";
-import { getBriefConfig } from "@/lib/briefs";
 import { Offer } from "@/lib/offers";
 import { Badge } from "./Badge";
 
@@ -21,7 +19,6 @@ const offerIcons: Record<string, string> = {
 
 export function OfferCard({ offer }: OfferCardProps) {
   const icon = offerIcons[offer.slug];
-  const briefConfig = getBriefConfig(offer.slug);
 
   return (
     <article className="card-glass offer-card soft-lift group grid h-full grid-rows-[auto_auto_1fr_auto] rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
@@ -59,8 +56,7 @@ export function OfferCard({ offer }: OfferCardProps) {
         </ul>
       </div>
 
-      <div className="relative flex min-h-[104px] flex-col justify-end gap-3 self-end pt-6">
-        {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} buttonClassName="w-full px-4 py-2.5 leading-5" /> : null}
+      <div className="relative flex min-h-11 flex-col justify-end self-end pt-6">
         <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex min-h-5 items-center text-sm font-bold leading-5 text-electric transition hover:text-teal">
           Sprawdź szczegóły
           <span aria-hidden="true" className="arrow-mark ml-2">
