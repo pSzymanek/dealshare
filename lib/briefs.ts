@@ -19,6 +19,52 @@ const amountOptions = ["Do 50 000 zł", "50 000-150 000 zł", "150 000-300 000 z
 const investmentOptions = ["Do 100 000 zł", "100 000-250 000 zł", "250 000-500 000 zł", "500 000-1 mln zł", "Powyżej 1 mln zł", "Chcę poznać dostępne pakiety"];
 
 export const briefConfigs: Record<string, BriefConfig> = {
+  "dodaj-oferte": {
+    offerId: "dodaj-oferte",
+    offerTitle: "Pozyskaj klientów przez Dealshare",
+    heading: "Zgłoś swoją ofertę do Dealshare",
+    description: "Odpowiedz na kilka pytań, a my sprawdzimy najlepszy sposób zaprezentowania Twojej oferty na Dealshare i skontaktujemy się z konkretną propozycją współpracy.",
+    microcopy: "Zaznacz, czego potrzebujesz, a my dobierzemy najlepszy kierunek działania i przeprowadzimy Cię przez kolejne kroki.",
+    cta: "Chcę dodać ofertę →",
+    steps: [
+      {
+        stepTitle: "Typ oferty",
+        question: "Jakiego typu ofertę chcesz dodać?",
+        type: "multi",
+        options: ["Finansowanie dla firm", "Obsługa prawna", "Restrukturyzacje / zadłużenie", "Inwestycje", "Energia / prąd / OZE", "Floty / leasing / pojazdy", "Technologie / AI / digital", "Usługi B2B", "Inne"]
+      },
+      {
+        stepTitle: "Odbiorcy",
+        question: "Do kogo kierujesz ofertę?",
+        type: "multi",
+        options: ["JDG", "Spółki", "Firmy z sektora MŚP", "Większe przedsiębiorstwa", "Firmy z problemami finansowymi", "Firmy szukające inwestycji", "Firmy chcące obniżyć koszty", "Inwestorzy", "Klienci indywidualni"]
+      },
+      {
+        stepTitle: "Cel",
+        question: "Co chcesz osiągnąć przez Dealshare?",
+        type: "multi",
+        options: ["Pozyskać leady", "Przetestować zainteresowanie ofertą", "Zwiększyć sprzedaż", "Zbudować rozpoznawalność", "Nawiązać współpracę partnerską", "Lepiej przedstawić ofertę klientom", "Zbierać zapytania w uporządkowanej formie"]
+      },
+      {
+        stepTitle: "Etap oferty",
+        question: "Na jakim etapie jest Twoja oferta?",
+        type: "multi",
+        options: ["Oferta jest gotowa", "Mam stronę / landing page", "Mam materiały sprzedażowe", "Mam opis, ale wymaga poprawy", "Mam pomysł, ale trzeba go uporządkować", "Potrzebuję pomocy w przygotowaniu przekazu"]
+      },
+      {
+        stepTitle: "Materiały",
+        question: "Co możesz dostarczyć?",
+        type: "multi",
+        options: ["Opis oferty", "Logo / identyfikację wizualną", "Link do strony", "Materiały PDF", "Case study / przykłady realizacji", "Proces obsługi klienta", "Warunki współpracy", "Jeszcze nie wiem"]
+      },
+      {
+        stepTitle: "Model współpracy",
+        question: "Jaki model współpracy Cię interesuje?",
+        type: "multi",
+        options: ["Publikacja oferty", "Leady sprzedażowe", "Współpraca prowizyjna", "Wspólna obsługa klienta", "Partnerstwo długoterminowe", "Chcę poznać dostępne opcje"]
+      }
+    ]
+  },
   "kredyty-dla-firm": {
     offerId: "kredyty-dla-firm",
     offerTitle: "Kredyty dla firm",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { OfferCard } from "@/components/OfferCard";
+import { PartnerOfferCard } from "@/components/PartnerOfferCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { offers } from "@/lib/offers";
 
@@ -51,6 +52,7 @@ export default function OffersPage() {
             {offers.map((offer) => (
               <OfferCard key={offer.slug} offer={offer} />
             ))}
+            <PartnerOfferCard />
           </div>
         </Container>
       </section>

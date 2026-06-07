@@ -86,6 +86,8 @@ function createMailer() {
 function buildBriefEmail(payload: BriefPayload) {
   const offerTitle = clean(payload.offerTitle) || "Nie podano";
   const offerId = clean(payload.offerId) || "Nie podano";
+  const isPartnerOffer = clean(payload.offerId) === "dodaj-oferte";
+  const emailHeading = isPartnerOffer ? "Nowe zgłoszenie oferty partnera Dealshare" : "Nowy brief z formularza Dealshare";
   const sourceUrl = clean(payload.sourceUrl) || "Nie podano";
   const contact = payload.contact ?? {};
   const fullName = clean(contact.fullName);
@@ -98,11 +100,12 @@ function buildBriefEmail(payload: BriefPayload) {
   const sentAt = new Date().toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" });
   const preferredContactMethod = list(payload.preferredContactMethod);
   const preferredContactTime = list(payload.preferredContactTime);
-  const answers = (payload.answers ?? []).filter((answer) => list(answer.selectedOptions)[0] !== "Nie podano");
+  const answers = (payload.answers ?? []).filter((answer) => (answer.selectedOptions ?? []).some((option) => clean(option)));
 
   const text = [
-    "Nowy brief z formularza Dealshare",
+    emailHeading,
     "",
+    ...(isPartnerOffer ? ["Cel formularza:", "Zgłoszenie oferty do Dealshare", ""] : []),
     "Oferta:",
     `Nazwa oferty: ${offerTitle}`,
     "",
@@ -154,7 +157,8 @@ function buildBriefEmail(payload: BriefPayload) {
 
   const html = `
     <div style="font-family:Arial,sans-serif;color:#10233f;line-height:1.55;max-width:760px;">
-      <h1 style="margin:0 0 18px;color:#001f4d;">Nowy brief z formularza Dealshare</h1>
+      <h1 style="margin:0 0 18px;color:#001f4d;">${escapeHtml(emailHeading)}</h1>
+      ${isPartnerOffer ? '<h2 style="margin:24px 0 8px;color:#001f4d;">Cel formularza</h2><p style="margin:0;">Zgłoszenie oferty do Dealshare</p>' : ""}
       <h2 style="margin:24px 0 8px;color:#001f4d;">Oferta</h2>
       <p style="margin:0;"><strong>Nazwa oferty:</strong> ${escapeHtml(offerTitle)}</p>
 
@@ -185,7 +189,7 @@ function buildBriefEmail(payload: BriefPayload) {
     </div>
   `;
 
-  return { text, html, fullName, email, offerTitle };
+  return { text, html, fullName, email, offerTitle, isPartnerOffer };
 }
 
 export async function POST(request: Request) {
@@ -221,7 +225,7 @@ export async function POST(request: Request) {
         from: mailer.smtpFrom,
         to: contactEmail,
         replyTo: briefEmail.email,
-        subject: `[Dealshare] Nowy brief: ${briefEmail.offerTitle} — ${briefEmail.fullName}`,
+        subject: briefEmail.isPartnerOffer ? `[Dealshare] Nowe zgłoszenie oferty partnera — ${briefEmail.fullName}` : `[Dealshare] Nowy brief: ${briefEmail.offerTitle} — ${briefEmail.fullName}`,
         text: briefEmail.text,
         html: briefEmail.html
       });
