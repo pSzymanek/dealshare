@@ -45,11 +45,18 @@ function cx(...classes: Array<string | false | undefined>) {
 function validateContact(values: ContactValues, preferredContactMethod: string[], preferredContactTime: string[]) {
   const errors: ContactErrors = {};
 
-  if (!values.fullName.trim()) errors.fullName = "Podaj imię i nazwisko.";
-  if (!values.phone.trim()) errors.phone = "Podaj numer telefonu.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) errors.email = "Podaj poprawny adres e-mail.";
-  if (preferredContactMethod.length === 0) errors.preferredContactMethod = "Wybierz preferowaną formę kontaktu.";
-  if (preferredContactTime.length === 0) errors.preferredContactTime = "Wybierz preferowany czas kontaktu.";
+  if (!values.fullName.trim()) errors.fullName = "Wpisz imię i nazwisko.";
+  if (!values.phone.trim()) errors.phone = "Wpisz numer telefonu.";
+  if (!values.email.trim()) {
+    errors.email = "Wpisz adres e-mail.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+    errors.email = "Wpisz poprawny adres e-mail.";
+  }
+  if (preferredContactMethod.length === 0) errors.preferredContactMethod = "Wybierz przynajmniej jedną formę kontaktu.";
+  if (preferredContactTime.length === 0) errors.preferredContactTime = "Wybierz, kiedy najlepiej się odezwać.";
+  if (preferredContactTime.includes("Konkretna data i godzina") && !values.customContactDateTime.trim()) {
+    errors.customContactDateTime = "Wpisz preferowaną datę i godzinę kontaktu.";
+  }
 
   return errors;
 }
@@ -70,8 +77,12 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
   const isContactStep = stepIndex === contactStepIndex;
   const totalSteps = config.steps.length + 1;
   const progress = Math.round(((stepIndex + 1) / totalSteps) * 100);
-  const contactErrors = showErrors ? validateContact(contact, preferredContactMethod, preferredContactTime) : {};
   const currentStep = config.steps[stepIndex];
+  const activeStepSelectedOptions = currentStep ? answers[currentStep.question] ?? [] : [];
+  const canGoNext = isContactStep || activeStepSelectedOptions.length > 0;
+  const finalErrors = validateContact(contact, preferredContactMethod, preferredContactTime);
+  const canSubmit = Object.keys(finalErrors).length === 0 && status !== "loading";
+  const contactErrors = isContactStep || showErrors ? finalErrors : {};
 
   const buttonClasses: Record<ButtonVariant, string> = {
     primary: "button-glass bg-deal-gradient text-white shadow-glow hover:-translate-y-0.5 hover:shadow-card",
@@ -85,7 +96,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
         stepTitle: step.stepTitle,
         question: step.question,
         selectedOptions: answers[step.question] ?? []
-      })),
+      })).filter((answer) => answer.selectedOptions.length > 0),
     [answers, config.steps]
   );
 
@@ -111,7 +122,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
     const selected = answers[currentStep.question] ?? [];
 
     if (currentStep.type === "single") {
-      setAnswers({ ...answers, [currentStep.question]: selected.includes(option) ? [] : [option] });
+      setAnswers({ ...answers, [currentStep.question]: [option] });
       return;
     }
 
@@ -123,6 +134,16 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
 
   function toggleListValue(value: string, selected: string[], setter: (next: string[]) => void) {
     setter(selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value]);
+  }
+
+  function toggleContactMethod(value: string) {
+    if (value === "Wszystko jedno") {
+      setPreferredContactMethod(preferredContactMethod.includes(value) ? [] : [value]);
+      return;
+    }
+
+    const withoutAny = preferredContactMethod.filter((item) => item !== "Wszystko jedno");
+    setPreferredContactMethod(withoutAny.includes(value) ? withoutAny.filter((item) => item !== value) : [...withoutAny, value]);
   }
 
   function updateContact(name: keyof ContactValues, value: string) {
@@ -249,7 +270,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
                           preferredContactMethod={preferredContactMethod}
                           preferredContactTime={preferredContactTime}
                           onValueChange={updateContact}
-                          onMethodToggle={(value) => toggleListValue(value, preferredContactMethod, setPreferredContactMethod)}
+                          onMethodToggle={toggleContactMethod}
                           onTimeToggle={(value) => toggleListValue(value, preferredContactTime, setPreferredContactTime)}
                         />
                       ) : currentStep ? (
@@ -257,6 +278,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
                           <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan">{currentStep.stepTitle}</p>
                           <h3 className="mt-2 text-2xl font-black tracking-tight text-navy">{currentStep.question}</h3>
                           <p className="mt-2 text-sm leading-6 text-slate-500">{currentStep.type === "single" ? "Wybierz jedną odpowiedź." : "Możesz wybrać kilka odpowiedzi."}</p>
+                          {!canGoNext ? <p className="mt-3 text-sm font-bold text-teal">Wybierz przynajmniej jedną odpowiedź, żeby przejść dalej.</p> : null}
                           <div className="mt-6 flex flex-wrap gap-2.5">
                             {currentStep.options.map((option) => {
                               const isSelected = (answers[currentStep.question] ?? []).includes(option);
@@ -293,7 +315,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
                       {isContactStep ? (
                         <button
                           type="submit"
-                          disabled={status === "loading"}
+                          disabled={!canSubmit}
                           className="button-glass inline-flex min-h-11 items-center justify-center rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
                         >
                           {status === "loading" ? "Wysyłanie..." : "Wyślij brief do analizy"}
@@ -302,7 +324,8 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
                         <button
                           type="button"
                           onClick={() => setStepIndex(Math.min(contactStepIndex, stepIndex + 1))}
-                          className="button-glass inline-flex min-h-11 items-center justify-center rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5"
+                          disabled={!canGoNext}
+                          className="button-glass inline-flex min-h-11 items-center justify-center rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           Dalej
                         </button>

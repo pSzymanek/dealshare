@@ -93,12 +93,12 @@ function buildBriefEmail(payload: BriefPayload) {
   const email = clean(contact.email);
   const companyName = clean(contact.companyName) || "Nie podano";
   const nip = clean(contact.nip) || "Nie podano";
-  const additionalInfo = clean(payload.additionalInfo) || "Nie podano";
+  const additionalInfo = clean(payload.additionalInfo) || "Brak dodatkowych informacji.";
   const customContactDateTime = clean(payload.customContactDateTime) || "Nie podano";
   const sentAt = new Date().toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" });
   const preferredContactMethod = list(payload.preferredContactMethod);
   const preferredContactTime = list(payload.preferredContactTime);
-  const answers = payload.answers ?? [];
+  const answers = (payload.answers ?? []).filter((answer) => list(answer.selectedOptions)[0] !== "Nie podano");
 
   const text = [
     "Nowy brief z formularza Dealshare",
@@ -208,7 +208,9 @@ export async function POST(request: Request) {
     const phone = clean(payload.contact?.phone);
     const email = clean(payload.contact?.email);
 
-    if (!fullName || !phone || !isValidEmail(email) || !payload.preferredContactMethod?.length || !payload.preferredContactTime?.length) {
+    const needsCustomContactDateTime = payload.preferredContactTime?.includes("Konkretna data i godzina");
+
+    if (!fullName || !phone || !isValidEmail(email) || !payload.preferredContactMethod?.length || !payload.preferredContactTime?.length || (needsCustomContactDateTime && !clean(payload.customContactDateTime))) {
       return NextResponse.json({ message: "Uzupełnij dane kontaktowe, poprawny e-mail oraz preferowany kontakt." }, { status: 400 });
     }
 
