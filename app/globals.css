@@ -410,37 +410,13 @@ body {
   transform: translate(-50%, -18px);
 }
 
-.scroll-cue-ring {
-  position: relative;
-  display: grid;
-  width: 46px;
-  height: 46px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 14px 42px rgba(0, 91, 255, 0.22);
-  backdrop-filter: blur(12px);
-  animation: scroll-cue-pulse 1.6s ease-in-out infinite;
-}
-
-.scroll-cue-ring::before {
-  content: "";
-  position: absolute;
-  inset: -7px;
-  border: 1px solid rgba(0, 209, 209, 0.22);
-  border-radius: inherit;
-  opacity: 0.75;
-  animation: scroll-cue-halo 1.6s ease-in-out infinite;
-}
-
 .scroll-cue-arrow {
-  width: 12px;
-  height: 12px;
-  border-right: 3px solid #ffffff;
-  border-bottom: 3px solid #ffffff;
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid rgba(255, 255, 255, 0.82);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.82);
   transform: translateY(-2px) rotate(45deg);
-  animation: scroll-cue-arrow 1.1s ease-in-out infinite;
+  animation: scroll-cue-arrow 1.25s ease-in-out infinite;
 }
 
 @keyframes reveal-up {
@@ -507,35 +483,15 @@ body {
   }
 }
 
-@keyframes scroll-cue-pulse {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(4px) scale(1.03);
-  }
-}
-
-@keyframes scroll-cue-halo {
-  0%,
-  100% {
-    opacity: 0.28;
-    transform: scale(0.92);
-  }
-  50% {
-    opacity: 0.75;
-    transform: scale(1.08);
-  }
-}
-
 @keyframes scroll-cue-arrow {
   0%,
   100% {
-    transform: translateY(-3px) rotate(45deg);
+    opacity: 0.45;
+    transform: translateY(-4px) rotate(45deg);
   }
   50% {
-    transform: translateY(2px) rotate(45deg);
+    opacity: 1;
+    transform: translateY(4px) rotate(45deg);
   }
 }
 
@@ -608,8 +564,6 @@ body {
 
   .hero-offer-hint-arrow-up,
   .hero-offer-hint-arrow-down,
-  .scroll-cue-ring,
-  .scroll-cue-ring::before,
   .scroll-cue-arrow {
     animation: none;
   }

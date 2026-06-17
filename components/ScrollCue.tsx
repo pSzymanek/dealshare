@@ -31,20 +31,12 @@ export function ScrollCue({ targetId }: ScrollCueProps) {
     return () => observer.disconnect();
   }, [targetId]);
 
-  function scrollToTarget() {
-    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   return (
-    <button
-      type="button"
-      aria-label="Przewiń do statystyk"
-      onClick={scrollToTarget}
-      className={`scroll-cue absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transition duration-500 ${isHidden ? "scroll-cue-hidden pointer-events-none" : ""}`}
+    <div
+      aria-hidden="true"
+      className={`scroll-cue pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transition duration-500 ${isHidden ? "scroll-cue-hidden" : ""}`}
     >
-      <span className="scroll-cue-ring">
-        <span className="scroll-cue-arrow" aria-hidden="true" />
-      </span>
-    </button>
+      <span className="scroll-cue-arrow" />
+    </div>
   );
 }
