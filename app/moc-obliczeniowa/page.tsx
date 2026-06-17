@@ -142,7 +142,7 @@ export default function ComputePowerLandingPage() {
                   <a
                     href="/dealshare_informator_gpu.pdf"
                     download
-                    className="button-glass inline-flex min-h-12 items-center justify-center rounded-md bg-deal-gradient px-6 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
+                    className="button-glass relative isolate inline-flex min-h-12 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-6 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
                   >
                     Pobierz szczegółowy informator
                   </a>
@@ -243,7 +243,7 @@ export default function ComputePowerLandingPage() {
               <a
                 href="/dealshare_informator_gpu.pdf"
                 download
-                className="button-glass mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-deal-gradient px-5 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5"
+                className="button-glass relative isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5"
               >
                 Pobierz szczegółowy informator
               </a>
