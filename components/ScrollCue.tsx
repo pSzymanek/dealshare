@@ -6,25 +6,17 @@ type ScrollCueProps = {
   targetId: string;
 };
 
-const storageKey = "dealshare-compute-scroll-cue-hidden";
-
 export function ScrollCue({ targetId }: ScrollCueProps) {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem(storageKey)) {
-      setIsHidden(true);
-      return;
-    }
-
-    function hideForSession() {
-      sessionStorage.setItem(storageKey, "true");
+    function hideUntilRefresh() {
       setIsHidden(true);
     }
 
     function handleScroll() {
       if (window.scrollY > 48) {
-        hideForSession();
+        hideUntilRefresh();
       }
     }
 
@@ -37,7 +29,7 @@ export function ScrollCue({ targetId }: ScrollCueProps) {
       observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            hideForSession();
+            hideUntilRefresh();
             observer?.disconnect();
           }
         },
