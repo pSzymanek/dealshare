@@ -51,7 +51,7 @@ export function ScrollCue({ targetId }: ScrollCueProps) {
   return (
     <div
       aria-hidden="true"
-      className={`scroll-cue pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transition duration-700 ease-out ${isHidden ? "scroll-cue-hidden" : ""}`}
+      className={`scroll-cue pointer-events-none fixed bottom-5 left-1/2 z-[95] -translate-x-1/2 transition duration-700 ease-out sm:absolute sm:z-10 ${isHidden ? "scroll-cue-hidden" : ""}`}
     >
       <span className="scroll-cue-arrow" />
     </div>
