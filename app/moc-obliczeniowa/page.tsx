@@ -1,25 +1,34 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { AnimatedStatValue } from "@/components/AnimatedStatValue";
 import { Container } from "@/components/Container";
 
 const marketStats = [
   {
-    value: "26.5%",
+    target: 26.5,
+    suffix: "%",
+    decimals: 1,
     label: "CAGR rynku GPUaaS 2025-2030",
     source: "MarketsandMarkets [3]"
   },
   {
-    value: "~3x",
+    target: 3,
+    prefix: "~",
+    suffix: "x",
     label: "popytu na capacity data center do 2030",
     source: "McKinsey [1]"
   },
   {
-    value: "~$6.7T",
+    target: 6.7,
+    prefix: "~$",
+    suffix: "T",
+    decimals: 1,
     label: "globalny CAPEX data center do 2030",
     source: "McKinsey [2]"
   },
   {
-    value: "500 MW+",
+    target: 500,
+    suffix: " MW+",
     label: "możliwa moc data center w Polsce w 2030",
     source: "PAIH / PLDCA [5]"
   }
@@ -99,44 +108,53 @@ export const metadata: Metadata = {
 export default function ComputePowerLandingPage() {
   return (
     <main className="bg-white text-ink">
-      <section className="relative overflow-hidden bg-navy-gradient py-16 text-white sm:py-20">
-        <div className="pointer-events-none absolute -right-24 top-16 h-80 w-80 rounded-full bg-cyan/20 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-0 left-0 h-72 w-72 rounded-full bg-electric/20 blur-3xl" />
+      <section className="relative overflow-hidden bg-[#041127] py-14 text-white sm:py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,209,209,0.08)_1px,transparent_1px),linear-gradient(180deg,rgba(0,209,209,0.06)_1px,transparent_1px)] bg-[size:72px_72px] opacity-45" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-cyan/40" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-1/2 w-2/3 bg-[radial-gradient(circle_at_80%_100%,rgba(0,91,255,0.32),transparent_56%)]" />
         <Container className="relative">
-          <div className="grid gap-10 lg:grid-cols-[1fr_0.72fr] lg:items-center">
-            <div className="max-w-4xl">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-cyan">Informator inwestycyjny</p>
-              <p className="mt-3 text-sm font-semibold uppercase tracking-[0.16em] text-white/60">karta informacyjna w pigułce / 1 strona</p>
-              <h1 className="mt-6 text-4xl font-black leading-tight tracking-tight sm:text-6xl">
+          <div className="reveal-on-scroll flex items-center justify-between gap-4 border-b border-white/12 pb-6">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan">AI Compute Infrastructure</p>
+            <Image src="/sygnet-white.png" alt="" width={52} height={52} className="h-11 w-11 opacity-80" />
+          </div>
+
+          <div className="pt-10">
+            <div className="max-w-5xl">
+              <p className="heading-copy-enter text-sm font-black uppercase tracking-[0.2em] text-white/48">Informator inwestycyjny</p>
+              <h1 className="heading-title-enter mt-6 max-w-4xl text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
                 Moc obliczeniowa jako aktywo infrastrukturalne
               </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78">
-                Rynek AI potrzebuje fizycznego zaplecza: GPU, hostingu, energii, chłodzenia, sieci i sprawnego operatora. Model pokazuje,
-                jak kapitał może finansować zasób, którego rynek płaci za dostęp.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="/dealshare_informator_gpu.pdf"
-                  download
-                  className="button-glass inline-flex min-h-12 items-center justify-center rounded-md bg-deal-gradient px-6 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
-                >
-                  Pobierz szczegółowy informator
-                </a>
-                <a
-                  href="#scenariusze"
-                  className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:bg-white/15"
-                >
-                  Zobacz model poglądowy
-                </a>
+            </div>
+
+            <div className="mt-10 grid gap-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+              <div className="reveal-on-scroll reveal-delay-1 border-l-2 border-cyan pl-5">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-cyan">Teza</p>
+                <h2 className="mt-3 text-2xl font-black leading-tight tracking-tight sm:text-3xl">
+                  Kapitał finansuje zasób, którego rynek AI potrzebuje już teraz.
+                </h2>
+              </div>
+              <div className="reveal-on-scroll reveal-delay-2">
+                <p className="max-w-3xl text-lg leading-8 text-white/76">
+                  Rynek AI potrzebuje fizycznego zaplecza: GPU, hostingu, energii, chłodzenia, sieci i sprawnego operatora. Model pokazuje,
+                  jak kapitał może finansować zasób, którego rynek płaci za dostęp.
+                </p>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="/dealshare_informator_gpu.pdf"
+                    download
+                    className="button-glass inline-flex min-h-12 items-center justify-center rounded-md bg-deal-gradient px-6 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
+                  >
+                    Pobierz szczegółowy informator
+                  </a>
+                  <a
+                    href="#scenariusze"
+                    className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:bg-white/12"
+                  >
+                    Zobacz model poglądowy
+                  </a>
+                </div>
               </div>
             </div>
-            <aside className="relative overflow-hidden rounded-lg border border-white/16 bg-white/10 p-6 shadow-glow backdrop-blur">
-              <Image src="/sygnet-white.png" alt="" width={76} height={76} className="h-16 w-16 opacity-90" />
-              <p className="mt-8 text-xs font-black uppercase tracking-[0.2em] text-cyan">Teza</p>
-              <h2 className="mt-3 text-3xl font-black leading-tight tracking-tight">
-                Kapitał finansuje zasób, którego rynek AI potrzebuje już teraz.
-              </h2>
-            </aside>
           </div>
         </Container>
       </section>
@@ -144,9 +162,18 @@ export default function ComputePowerLandingPage() {
       <section className="border-b border-slate-200 bg-mist py-12">
         <Container>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {marketStats.map((stat) => (
-              <article key={stat.value} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <p className="text-3xl font-black tracking-tight text-electric">{stat.value}</p>
+            {marketStats.map((stat, index) => (
+              <article key={stat.label} className={`reveal-on-scroll rounded-lg border border-slate-200 bg-white p-5 shadow-sm ${index === 1 ? "reveal-delay-1" : index === 2 ? "reveal-delay-2" : index === 3 ? "reveal-delay-3" : ""}`}>
+                <p className="text-3xl font-black tracking-tight text-electric">
+                  <AnimatedStatValue
+                    target={stat.target}
+                    prefix={stat.prefix}
+                    suffix={stat.suffix}
+                    decimals={stat.decimals}
+                    delay={index * 520}
+                    duration={1300}
+                  />
+                </p>
                 <p className="mt-3 text-sm font-black leading-6 text-navy">{stat.label}</p>
                 <p className="mt-2 text-xs font-semibold text-slate-500">{stat.source}</p>
               </article>
@@ -158,13 +185,13 @@ export default function ComputePowerLandingPage() {
       <section className="py-16">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-            <div>
+            <div className="heading-title-enter">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Dlaczego to ma sens</p>
               <h2 className="mt-4 text-3xl font-black tracking-tight text-navy sm:text-4xl">AI nie skaluje się wyłącznie przez software.</h2>
             </div>
             <div className="grid gap-4">
-              {reasons.map((reason) => (
-                <p key={reason} className="rounded-lg border border-slate-200 bg-white p-5 text-base font-semibold leading-8 text-slate-700 shadow-sm">
+              {reasons.map((reason, index) => (
+                <p key={reason} className={`reveal-on-scroll rounded-lg border border-slate-200 bg-white p-5 text-base font-semibold leading-8 text-slate-700 shadow-sm ${index === 1 ? "reveal-delay-1" : index === 2 ? "reveal-delay-2" : ""}`}>
                   {reason}
                 </p>
               ))}
@@ -176,14 +203,14 @@ export default function ComputePowerLandingPage() {
       <section className="bg-mist py-16">
         <Container>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+            <div className="heading-title-enter">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Model przychodu</p>
               <h2 className="mt-4 text-3xl font-black tracking-tight text-navy sm:text-4xl">Od kapitału do cashflow</h2>
             </div>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {revenueModel.map((item) => (
-              <article key={item.step} className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            {revenueModel.map((item, index) => (
+              <article key={item.step} className={`reveal-on-scroll rounded-lg border border-slate-200 bg-white p-6 shadow-sm ${index === 1 ? "reveal-delay-1" : index === 2 ? "reveal-delay-2" : index === 3 ? "reveal-delay-3" : ""}`}>
                 <div className="grid h-11 w-11 place-items-center rounded-full border border-electric/30 bg-electric/5 text-lg font-black text-electric">{item.step}</div>
                 <h3 className="mt-5 text-lg font-black text-navy">{item.title}</h3>
                 <p className="mt-2 text-sm leading-7 text-slate-600">{item.text}</p>
@@ -196,7 +223,7 @@ export default function ComputePowerLandingPage() {
       <section className="py-16">
         <Container>
           <div className="grid gap-6 lg:grid-cols-2">
-            <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <article className="reveal-on-scroll rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Profil, ryzyka, checklista</p>
               <ul className="mt-5 grid gap-3 text-sm font-semibold leading-7 text-slate-700">
                 {checklist.map((item) => (
@@ -207,7 +234,7 @@ export default function ComputePowerLandingPage() {
                 ))}
               </ul>
             </article>
-            <article className="rounded-lg border border-electric/20 bg-electric/5 p-6 shadow-sm">
+            <article className="reveal-on-scroll reveal-delay-1 rounded-lg border border-electric/20 bg-electric/5 p-6 shadow-sm">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-electric">Kolejny krok</p>
               <h2 className="mt-4 text-2xl font-black tracking-tight text-navy">Analiza parametrów konkretnej umowy, sprzętu, operatora i zabezpieczeń.</h2>
               <p className="mt-4 text-sm leading-7 text-slate-600">
@@ -227,10 +254,10 @@ export default function ComputePowerLandingPage() {
 
       <section id="scenariusze" className="bg-white pb-16">
         <Container>
-          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-card">
+          <div className="reveal-on-scroll rounded-lg border border-slate-200 bg-white p-6 shadow-card">
             <div className="max-w-4xl">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Scenariusze finansowe - model poglądowy</p>
-              <h2 className="mt-4 text-3xl font-black tracking-tight text-navy">Warianty pokazują mechanikę potencjalnego przychodu brutto, a nie gwarancję wyniku.</h2>
+              <h2 className="mt-4 text-3xl font-black tracking-tight text-navy">Warianty pokazują mechanikę potencjalnego przychodu.</h2>
               <p className="mt-4 text-sm leading-7 text-slate-600">
                 Finalne parametry powinny wynikać z umowy, sprzętu i warunków operacyjnych.
               </p>

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const revealSelector = ".heading-title-enter, .heading-copy-enter";
+const revealSelector = ".heading-title-enter, .heading-copy-enter, .reveal-on-scroll";
 
 export function ScrollAnimations() {
   const pathname = usePathname();

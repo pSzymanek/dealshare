@@ -173,6 +173,12 @@ body {
   will-change: opacity, transform;
 }
 
+.reveal-on-scroll {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: opacity, transform;
+}
+
 .has-scroll-animations .heading-title-enter {
   opacity: 0;
   transform: translateX(-42px);
@@ -189,10 +195,23 @@ body {
     transform 820ms cubic-bezier(0.16, 1, 0.3, 1) 110ms;
 }
 
+.has-scroll-animations .reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 760ms ease,
+    transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .has-scroll-animations .heading-title-enter.is-visible,
-.has-scroll-animations .heading-copy-enter.is-visible {
+.has-scroll-animations .heading-copy-enter.is-visible,
+.has-scroll-animations .reveal-on-scroll.is-visible {
   opacity: 1;
   transform: translateX(0);
+}
+
+.has-scroll-animations .reveal-on-scroll.is-visible {
+  transform: translateY(0);
 }
 
 .reveal-delay-1 {
@@ -201,6 +220,22 @@ body {
 
 .reveal-delay-2 {
   animation-delay: 180ms;
+}
+
+.reveal-delay-3 {
+  animation-delay: 270ms;
+}
+
+.has-scroll-animations .reveal-delay-1 {
+  transition-delay: 90ms;
+}
+
+.has-scroll-animations .reveal-delay-2 {
+  transition-delay: 180ms;
+}
+
+.has-scroll-animations .reveal-delay-3 {
+  transition-delay: 270ms;
 }
 
 .soft-lift {
@@ -447,16 +482,18 @@ body {
   }
 
   .heading-title-enter,
-  .heading-copy-enter {
+  .heading-copy-enter,
+  .reveal-on-scroll {
     opacity: 1;
     transform: none;
   }
 
   .soft-lift,
-  .offer-card-icon,
-  .heading-title-enter,
-  .heading-copy-enter,
-  .arrow-link,
+    .offer-card-icon,
+    .heading-title-enter,
+    .heading-copy-enter,
+    .reveal-on-scroll,
+    .arrow-link,
   .back-link,
   .arrow-link .arrow-mark,
   .back-link .arrow-mark {
