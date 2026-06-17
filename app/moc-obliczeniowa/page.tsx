@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { AnimatedStatValue } from "@/components/AnimatedStatValue";
 import { Container } from "@/components/Container";
+import { ScrollCue } from "@/components/ScrollCue";
 
 const marketStats = [
   {
@@ -157,9 +158,10 @@ export default function ComputePowerLandingPage() {
             </div>
           </div>
         </Container>
+        <ScrollCue targetId="compute-market-stats" />
       </section>
 
-      <section className="border-b border-slate-200 bg-mist py-12">
+      <section id="compute-market-stats" className="border-b border-slate-200 bg-mist py-12">
         <Container>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {marketStats.map((stat, index) => (
