@@ -7,7 +7,7 @@ import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-[110] border-b border-slate-200 bg-white/95 shadow-sm lg:backdrop-blur">
       <Container className="flex min-h-20 items-center justify-between gap-3 py-2 sm:min-h-24 sm:gap-5 sm:py-3">
         <Link href="/" aria-label="dealshare - strona główna" className="flex items-center">
           <Image src="/logo-main-cropped.png" alt="dealshare" width={343} height={90} priority className="h-12 w-auto sm:h-16 lg:h-[72px]" />
