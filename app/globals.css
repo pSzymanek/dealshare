@@ -407,7 +407,7 @@ body {
 
 .scroll-cue-hidden {
   opacity: 0;
-  transform: translate(-50%, -18px);
+  transform: translate(-50%, -48px);
 }
 
 .scroll-cue-arrow {

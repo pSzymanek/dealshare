@@ -6,35 +6,60 @@ type ScrollCueProps = {
   targetId: string;
 };
 
+const storageKey = "dealshare-compute-scroll-cue-hidden";
+
 export function ScrollCue({ targetId }: ScrollCueProps) {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    const target = document.getElementById(targetId);
-    if (!target) return;
+    if (sessionStorage.getItem(storageKey)) {
+      setIsHidden(true);
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsHidden(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: "0px 0px -72% 0px",
-        threshold: 0.01
+    function hideForSession() {
+      sessionStorage.setItem(storageKey, "true");
+      setIsHidden(true);
+    }
+
+    function handleScroll() {
+      if (window.scrollY > 48) {
+        hideForSession();
       }
-    );
+    }
 
-    observer.observe(target);
+    const target = document.getElementById(targetId);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => observer.disconnect();
+    let observer: IntersectionObserver | null = null;
+
+    if (target) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            hideForSession();
+            observer?.disconnect();
+          }
+        },
+        {
+          rootMargin: "0px 0px -72% 0px",
+          threshold: 0.01
+        }
+      );
+      observer.observe(target);
+    }
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer?.disconnect();
+    };
   }, [targetId]);
 
   return (
     <div
       aria-hidden="true"
-      className={`scroll-cue pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transition duration-500 ${isHidden ? "scroll-cue-hidden" : ""}`}
+      className={`scroll-cue pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2 transition duration-700 ease-out ${isHidden ? "scroll-cue-hidden" : ""}`}
     >
       <span className="scroll-cue-arrow" />
     </div>
