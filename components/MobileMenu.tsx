@@ -4,17 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { siteConfig } from "@/lib/site";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -28,13 +22,21 @@ export function MobileMenu() {
     };
   }, [isOpen]);
 
+  function openMenu() {
+    setIsOpen(true);
+  }
+
   return (
     <div className="shrink-0 lg:hidden">
       <button
         type="button"
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
-        onClick={() => setIsOpen(true)}
+        onClick={openMenu}
+        onTouchEnd={(event) => {
+          event.preventDefault();
+          openMenu();
+        }}
         className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-sm font-bold text-navy transition hover:-translate-y-0.5 hover:text-electric"
       >
         <span className="relative flex h-5 w-5 items-center justify-center" aria-hidden="true">
@@ -45,9 +47,7 @@ export function MobileMenu() {
         <span className="hidden min-[380px]:inline">Menu</span>
       </button>
 
-      {isMounted
-        ? createPortal(
-            <div className={`fixed inset-0 z-[100] max-w-[100dvw] overflow-hidden transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+      <div className={`fixed inset-0 z-[100] max-w-[100dvw] overflow-hidden transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
         <button
           type="button"
           aria-label="Zamknij menu"
@@ -101,10 +101,7 @@ export function MobileMenu() {
             <Image src="/logo-dark.png" alt="dealshare" width={204} height={76} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
           </Link>
         </aside>
-            </div>,
-            document.body
-          )
-        : null}
+      </div>
     </div>
   );
 }
