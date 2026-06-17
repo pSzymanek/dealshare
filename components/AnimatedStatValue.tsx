@@ -23,6 +23,28 @@ export function AnimatedStatValue({ target, prefix = "", suffix = "", decimals =
   useEffect(() => {
     const element = ref.current;
     if (!element || hasStarted) return;
+    const revealParent = element.closest(".reveal-on-scroll");
+
+    if (revealParent) {
+      if (revealParent.classList.contains("is-visible")) {
+        setHasStarted(true);
+        return;
+      }
+
+      const mutationObserver = new MutationObserver(() => {
+        if (revealParent.classList.contains("is-visible")) {
+          setHasStarted(true);
+          mutationObserver.disconnect();
+        }
+      });
+
+      mutationObserver.observe(revealParent, {
+        attributes: true,
+        attributeFilter: ["class"]
+      });
+
+      return () => mutationObserver.disconnect();
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
