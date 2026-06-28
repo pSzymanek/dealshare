@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
+    "export:webd": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/export-webd.ps1",
     "webd:start": "node server.js",
     "start": "next start",
     "lint": "next lint"
