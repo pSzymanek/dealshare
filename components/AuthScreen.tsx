@@ -9,8 +9,15 @@ type Mode = "login" | "register" | "magic" | "forgot";
 const modeLabels: Record<Mode, string> = {
   login: "Zaloguj się",
   register: "Załóż konto",
-  magic: "Link do logowania",
+  magic: "Zaloguj się linkiem",
   forgot: "Odzyskaj hasło"
+};
+
+const modeErrors: Record<Mode, string> = {
+  login: "Nie udało się zalogować. Sprawdź e-mail i hasło.",
+  register: "Nie udało się utworzyć konta. Sprawdź podane dane.",
+  magic: "Nie udało się wysłać linku. Sprawdź adres e-mail.",
+  forgot: "Nie udało się wysłać wiadomości. Spróbuj ponownie."
 };
 
 export function AuthScreen() {
@@ -60,9 +67,9 @@ export function AuthScreen() {
       const result = await authClient.signIn.email({ email, password, callbackURL: "/panel" });
       if (result.error) throw new Error(result.error.message);
       window.location.assign("/panel");
-    } catch (error) {
+    } catch {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Nie udało się wykonać operacji.");
+      setMessage(modeErrors[mode]);
     }
   }
 
@@ -96,7 +103,7 @@ export function AuthScreen() {
         <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm font-semibold">
           {mode !== "magic" ? (
             <button type="button" onClick={() => changeMode("magic")} className="inline-flex items-center gap-2 text-electric hover:text-navy">
-              <Link2 size={16} /> Magic link
+              <Link2 size={16} /> Zaloguj się linkiem
             </button>
           ) : null}
           {mode !== "forgot" ? (

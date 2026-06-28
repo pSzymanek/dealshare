@@ -12,11 +12,11 @@ export default async function PanelPage() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-teal">Moje sprawy</p>
-          <h1 className="mt-2 text-3xl font-black text-navy">Sprawy prowadzone przez Dealshare</h1>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-teal">Moje konto</p>
+          <h1 className="mt-2 text-3xl font-black text-navy">Twoje zgłoszenia</h1>
         </div>
         <Link href="/panel/nowa-potrzeba" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-electric px-4 text-sm font-bold text-white hover:bg-navy">
-          <Plus size={18} /> Nowa potrzeba
+          <Plus size={18} /> Nowe zgłoszenie
         </Link>
       </div>
 
@@ -31,15 +31,15 @@ export default async function PanelPage() {
               </div>
               <span className="w-fit rounded bg-teal/10 px-2.5 py-1 text-xs font-bold text-teal">{getClientCaseStatus(item.status)}</span>
               <Link href={`/panel/sprawy/${item.caseNumber}`} className="inline-flex items-center gap-2 text-sm font-bold text-electric hover:text-navy">
-                Szczegóły <ArrowRight size={16} />
+                Sprawdź postęp <ArrowRight size={16} />
               </Link>
             </article>
           ))}
         </div>
       ) : (
         <div className="mt-8 border-y border-slate-200 py-12 text-center">
-          <h2 className="text-xl font-black text-navy">Nie masz jeszcze żadnej sprawy</h2>
-          <p className="mt-2 text-sm text-slate-600">Opisz potrzebę firmy, a utworzymy pierwszą sprawę i nadamy jej Case ID.</p>
+          <h2 className="text-xl font-black text-navy">Nie masz jeszcze żadnych zgłoszeń</h2>
+          <p className="mt-2 text-sm text-slate-600">Opowiedz nam o sytuacji firmy. Po wysłaniu formularza otrzymasz numer, pod którym sprawdzisz dalsze informacje.</p>
         </div>
       )}
     </div>

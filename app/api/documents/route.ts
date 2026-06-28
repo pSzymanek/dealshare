@@ -19,12 +19,12 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get("file");
   const caseNumber = String(formData.get("caseNumber") ?? "");
-  if (!(file instanceof File) || !caseNumber) return NextResponse.json({ message: "Nie wybrano dokumentu lub sprawy." }, { status: 400 });
+  if (!(file instanceof File) || !caseNumber) return NextResponse.json({ message: "Wybierz dokument i zgłoszenie, którego dotyczy." }, { status: 400 });
   const extension = allowedTypes[file.type];
   if (!extension || file.size <= 0 || file.size > maxFileSize) return NextResponse.json({ message: "Dozwolone są pliki PDF, JPG i PNG do 10 MB." }, { status: 400 });
 
   const [caseData] = await db.select().from(cases).where(and(eq(cases.caseNumber, caseNumber), eq(cases.userId, context.session.user.id))).limit(1);
-  if (!caseData) return NextResponse.json({ message: "Nie znaleziono sprawy." }, { status: 404 });
+  if (!caseData) return NextResponse.json({ message: "Nie znaleziono zgłoszenia." }, { status: 404 });
 
   const documentId = randomUUID();
   const root = path.resolve(/* turbopackIgnore: true */ uploadRoot);
@@ -35,5 +35,5 @@ export async function POST(request: Request) {
   await writeFile(/* turbopackIgnore: true */ storedPath, Buffer.from(await file.arrayBuffer()), { flag: "wx" });
   await db.insert(caseDocuments).values({ id: documentId, caseId: caseData.id, uploadedByUserId: context.session.user.id, filePath: storedPath, originalName: file.name.slice(0, 255), mimeType: file.type, fileSize: file.size, visibility: "client" });
 
-  return NextResponse.json({ message: "Dokument został bezpiecznie zapisany.", documentId }, { status: 201 });
+  return NextResponse.json({ message: "Dokument został dodany.", documentId }, { status: 201 });
 }

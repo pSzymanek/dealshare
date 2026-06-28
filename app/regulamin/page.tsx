@@ -16,7 +16,7 @@ const sections = [
     title: "1. Postanowienia ogólne",
     content: [
       "Regulamin określa zasady korzystania z serwisu internetowego dealshare dostępnego pod adresem dealshare.pl.",
-      "Serwis prezentuje oferty i umożliwia tworzenie spraw z Case ID, korzystanie z konta i panelu, zgłaszanie potrzeb firmy oraz ubieganie się o status zaakceptowanego oferenta."
+      "Serwis prezentuje oferty i umożliwia wysyłanie zgłoszeń, korzystanie z konta, opisywanie potrzeb firmy oraz przedstawianie propozycji współpracy."
     ]
   },
   {
@@ -29,7 +29,7 @@ const sections = [
   {
     title: "3. Korzystanie z serwisu",
     content: [
-      "Użytkownik może przeglądać treści, utworzyć konto, wysłać brief bez wcześniejszego logowania, śledzić własne sprawy oraz złożyć zgłoszenie oferenta.",
+      "Użytkownik może przeglądać treści, utworzyć konto, wysłać formularz bez wcześniejszego logowania, sprawdzać własne zgłoszenia oraz przedstawić ofertę swojej firmy.",
       "Użytkownik odpowiada za poprawność przekazywanych danych i bezpieczeństwo danych dostępowych do swojego konta.",
       "Użytkownik zobowiązuje się korzystać z serwisu zgodnie z prawem, dobrymi obyczajami oraz bez naruszania praw osób trzecich."
     ]
@@ -37,7 +37,7 @@ const sections = [
   {
     title: "4. Sprawy, formularze i konto",
     content: [
-      "Wysłanie briefu może spowodować utworzenie podstawowego konta użytkownika, sprawy oraz indywidualnego Case ID. Dostęp do konta odbywa się przez zweryfikowany e-mail, hasło albo jednorazowy link.",
+      "Wysłanie formularza może spowodować utworzenie podstawowego konta użytkownika, zgłoszenia oraz jego indywidualnego numeru. Dostęp do konta odbywa się przez zweryfikowany e-mail, hasło albo jednorazowy link.",
       "Status sprawy odzwierciedla etap obsługi i nie stanowi gwarancji przedstawienia oferty, zawarcia umowy ani osiągnięcia określonego rezultatu.",
       "W formularzu nie należy przesyłać treści bezprawnych, obraźliwych, naruszających prawa osób trzecich ani informacji poufnych, jeżeli nie zostało to wcześniej uzgodnione z operatorem.",
       "Przesłanie formularza nie oznacza zawarcia umowy ani gwarancji nawiązania współpracy."

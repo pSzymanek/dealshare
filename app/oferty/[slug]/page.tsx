@@ -196,8 +196,8 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
         <section id="zapytaj" className="scroll-mt-28 bg-mist py-14 sm:py-20">
           <Container className="max-w-4xl">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-teal">Zapytaj o ofertę</p>
-            <h2 className="mt-3 text-3xl font-black text-navy">Utwórz sprawę: {offer.title}</h2>
-            <p className="mb-8 mt-4 max-w-2xl text-sm leading-7 text-slate-600">Po wysłaniu formularza otrzymasz Case ID i dostęp do śledzenia sprawy w panelu.</p>
+            <h2 className="mt-3 text-3xl font-black text-navy">Porozmawiajmy o ofercie: {offer.title}</h2>
+            <p className="mb-8 mt-4 max-w-2xl text-sm leading-7 text-slate-600">Po wysłaniu formularza otrzymasz numer zgłoszenia i link do dalszych informacji.</p>
             <CaseForm pathType="public_offer" offerSlug={offer.slug} offerTitle={offer.title} defaultCategory={offer.category} />
           </Container>
         </section>

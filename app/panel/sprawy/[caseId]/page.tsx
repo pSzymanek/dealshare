@@ -24,12 +24,12 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ cas
 
       <div className="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div>
-          <h2 className="text-lg font-black text-navy">Opis potrzeby</h2>
+          <h2 className="text-lg font-black text-navy">Twoja wiadomość do Dealshare</h2>
           <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-slate-700">{caseData.description}</p>
 
           {caseData.answers.length ? (
             <div className="mt-8">
-              <h2 className="text-lg font-black text-navy">Informacje z briefu</h2>
+              <h2 className="text-lg font-black text-navy">Dodatkowe informacje</h2>
               <dl className="mt-4 divide-y divide-slate-100 border-y border-slate-200">
                 {caseData.answers.map((answer) => (
                   <div key={answer.id} className="grid gap-1 py-3 sm:grid-cols-[180px_1fr]">
@@ -42,18 +42,18 @@ export default async function CaseDetailPage({ params }: { params: Promise<{ cas
           ) : null}
           <div className="mt-8">
             <h2 className="text-lg font-black text-navy">Dokumenty</h2>
-            {caseData.documents.length ? <div className="mt-4 divide-y divide-slate-100 border-y border-slate-200">{caseData.documents.map(document => <Link key={document.id} href={`/api/documents/${document.id}`} className="flex items-center justify-between gap-4 py-3 text-sm font-bold text-navy hover:text-electric"><span className="truncate">{document.originalName}</span><Download size={17}/></Link>)}</div> : <p className="mt-3 text-sm text-slate-500">Brak dokumentów w tej sprawie.</p>}
+            {caseData.documents.length ? <div className="mt-4 divide-y divide-slate-100 border-y border-slate-200">{caseData.documents.map(document => <Link key={document.id} href={`/api/documents/${document.id}`} className="flex items-center justify-between gap-4 py-3 text-sm font-bold text-navy hover:text-electric"><span className="truncate">{document.originalName}</span><Download size={17}/></Link>)}</div> : <p className="mt-3 text-sm text-slate-500">Nie dodano jeszcze żadnych dokumentów.</p>}
             <DocumentUpload caseNumber={caseData.caseNumber} />
           </div>
           <div className="mt-8">
-            <h2 className="text-lg font-black text-navy">Wiadomości i uzupełnienia</h2>
-            {caseData.messages.length ? <div className="mt-4 divide-y divide-slate-100 border-y border-slate-200">{caseData.messages.map(message => <article key={message.id} className="py-4"><p className="whitespace-pre-wrap text-sm leading-7 text-slate-700">{message.body}</p><p className="mt-1 text-xs text-slate-500">{message.createdAt.toLocaleString("pl-PL")}</p></article>)}</div> : <p className="mt-3 text-sm text-slate-500">Brak wiadomości w tej sprawie.</p>}
+            <h2 className="text-lg font-black text-navy">Wiadomości</h2>
+            {caseData.messages.length ? <div className="mt-4 divide-y divide-slate-100 border-y border-slate-200">{caseData.messages.map(message => <article key={message.id} className="py-4"><p className="whitespace-pre-wrap text-sm leading-7 text-slate-700">{message.body}</p><p className="mt-1 text-xs text-slate-500">{message.createdAt.toLocaleString("pl-PL")}</p></article>)}</div> : <p className="mt-3 text-sm text-slate-500">Nie ma jeszcze żadnych wiadomości.</p>}
             <CaseMessageForm caseNumber={caseData.caseNumber} />
           </div>
         </div>
 
         <aside>
-          <h2 className="text-lg font-black text-navy">Historia sprawy</h2>
+          <h2 className="text-lg font-black text-navy">Co dzieje się ze zgłoszeniem</h2>
           <ol className="mt-4 border-l-2 border-slate-200 pl-5">
             {caseData.events.map((event) => (
               <li key={event.id} className="relative pb-6 last:pb-0">

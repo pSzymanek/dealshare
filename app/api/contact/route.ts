@@ -87,7 +87,7 @@ function buildBriefEmail(payload: BriefPayload) {
   const offerTitle = clean(payload.offerTitle) || "Nie podano";
   const offerId = clean(payload.offerId) || "Nie podano";
   const isPartnerOffer = clean(payload.offerId) === "dodaj-oferte";
-  const emailHeading = isPartnerOffer ? "Nowe zgłoszenie oferty partnera Dealshare" : "Nowy brief z formularza Dealshare";
+  const emailHeading = isPartnerOffer ? "Nowa propozycja współpracy z Dealshare" : "Nowe zgłoszenie z formularza Dealshare";
   const sourceUrl = clean(payload.sourceUrl) || "Nie podano";
   const contact = payload.contact ?? {};
   const fullName = clean(contact.fullName);
@@ -121,7 +121,7 @@ function buildBriefEmail(payload: BriefPayload) {
     `Wybrane godziny kontaktu: ${preferredContactTime.join(", ")}`,
     `Konkretna data i godzina: ${customContactDateTime}`,
     "",
-    "Odpowiedzi z briefu:",
+    "Informacje z formularza:",
     ...answers.flatMap((answer) => [
       "",
       clean(answer.stepTitle) || "Pytanie",
@@ -176,7 +176,7 @@ function buildBriefEmail(payload: BriefPayload) {
       <p><strong>Wybrane godziny kontaktu:</strong> ${escapeHtml(preferredContactTime.join(", "))}</p>
       <p><strong>Konkretna data i godzina:</strong> ${escapeHtml(customContactDateTime)}</p>
 
-      <h2 style="margin:24px 0 8px;color:#001f4d;">Odpowiedzi z briefu</h2>
+      <h2 style="margin:24px 0 8px;color:#001f4d;">Informacje z formularza</h2>
       ${answerHtml}
 
       <h2 style="margin:24px 0 8px;color:#001f4d;">Dodatkowe informacje</h2>
@@ -225,14 +225,14 @@ export async function POST(request: Request) {
         from: mailer.smtpFrom,
         to: contactEmail,
         replyTo: briefEmail.email,
-        subject: briefEmail.isPartnerOffer ? `[Dealshare] Nowe zgłoszenie oferty partnera — ${briefEmail.fullName}` : `[Dealshare] Nowy brief: ${briefEmail.offerTitle} — ${briefEmail.fullName}`,
+        subject: briefEmail.isPartnerOffer ? `[Dealshare] Nowa propozycja współpracy — ${briefEmail.fullName}` : `[Dealshare] Nowe zgłoszenie: ${briefEmail.offerTitle} — ${briefEmail.fullName}`,
         text: briefEmail.text,
         html: briefEmail.html
       });
 
-      return NextResponse.json({ message: "Dziękujemy — brief został wysłany. Skontaktujemy się z Tobą z konkretną strategią działania." });
+      return NextResponse.json({ message: "Dziękujemy. Otrzymaliśmy informacje i skontaktujemy się w sprawie kolejnego kroku." });
     } catch {
-      return NextResponse.json({ message: "Nie udało się wysłać briefu. Spróbuj ponownie później." }, { status: 500 });
+      return NextResponse.json({ message: "Nie udało się wysłać formularza. Spróbuj ponownie później." }, { status: 500 });
     }
   }
 

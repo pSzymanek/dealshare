@@ -69,6 +69,19 @@
 - Szczegolnie uwazaj na mobile, wysokosc viewportu, warstwy, przewijanie, hover states i podglady w aplikacjach typu webview.
 - UI nie moze miec nachodzacych elementow, niekontrolowanych efektow, skokow layoutu ani tekstu wychodzacego poza kontenery.
 
+## Jezyk UI i copywriting
+
+- Specyfikacja opisuje logike produktu, a nie gotowe teksty do interfejsu.
+- Pojecia robocze, architektoniczne, techniczne i strategiczne traktuj jako wskazowki koncepcyjne. Nie przenos ich automatycznie do naglowkow, CTA, etykiet, zakladek ani komunikatow.
+- Teksty publiczne pisz z perspektywy przedsiebiorcy, ktory nie zna wewnetrznej struktury Dealshare. Maja byc naturalne, proste, biznesowe i konkretne.
+- Teksty w koncie uzytkownika i obszarze wspolpracy maja szybko odpowiadac na trzy pytania: co sie dzieje, czy uzytkownik ma cos zrobic i jaki jest kolejny krok.
+- Nazwy elementow UI wyprowadzaj z intencji uzytkownika, nie z nazw modulow, rol, encji bazodanowych, statusow ani kategorii implementacyjnych.
+- Techniczne identyfikatory i wartosci statusow moga pozostac w kodzie, bazie danych i narzedziach administracyjnych, ale w interfejsie pokazuj ich zrozumiale odpowiedniki.
+- Unikaj sformulowan brzmiacych jak fragment prompta, dokumentacji produktowej albo opisu procesu wewnetrznego.
+- Nie zmieniaj znaczenia funkcji podczas redakcji copy. Upraszczaj sposob komunikacji, nie zachowanie systemu.
+- Po kazdej wiekszej zmianie wykonaj osobny przeglad wszystkich widocznych tekstow: menu, naglowkow, CTA, formularzy, pustych stanow, statusow, sukcesow, bledow, e-maili i komunikatow w panelu.
+- Copy Dealshare ma byc profesjonalne, nowoczesne i rzeczowe, bez nadmiernie korporacyjnego tonu.
+
 ## Branching
 
 - Kazda zmiana w projekcie powinna zaczynac sie od osobnego brancha.

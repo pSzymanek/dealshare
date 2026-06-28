@@ -15,14 +15,14 @@ export async function POST(request: Request) {
       await Promise.all([
         sendMail({
           to: submission.email,
-          subject: "[Dealshare] Zgłoszenie oferenta przyjęte do weryfikacji",
-          text: `Dzień dobry ${submission.fullName},\n\nTwoje zgłoszenie trafiło do weryfikacji Dealshare. Po akceptacji otrzymasz dostęp do funkcji oferenta w tym samym panelu.`,
-          html: `<div style="font-family:Arial,sans-serif;color:#10233f;line-height:1.6;max-width:620px"><p>Dzień dobry ${submission.fullName},</p><h1 style="color:#001f4d">Zgłoszenie przyjęte</h1><p>Twoje zgłoszenie trafiło do weryfikacji Dealshare. Po akceptacji otrzymasz dostęp do funkcji oferenta w tym samym panelu.</p></div>`
+          subject: "[Dealshare] Dziękujemy za przedstawienie oferty",
+          text: `Dzień dobry ${submission.fullName},\n\ndziękujemy za przedstawienie firmy i oferty. Zapoznamy się z informacjami i skontaktujemy się w sprawie możliwej współpracy.`,
+          html: `<div style="font-family:Arial,sans-serif;color:#10233f;line-height:1.6;max-width:620px"><p>Dzień dobry ${submission.fullName},</p><h1 style="color:#001f4d">Dziękujemy za kontakt</h1><p>Zapoznamy się z informacjami o firmie i ofercie. Skontaktujemy się w sprawie możliwej współpracy.</p></div>`
         }),
         sendMail({
           to: contactEmail,
           replyTo: submission.email,
-          subject: `[Dealshare] Nowe zgłoszenie oferenta: ${submission.companyName}`,
+          subject: `[Dealshare] Nowa propozycja współpracy: ${submission.companyName}`,
           text: `ID zgłoszenia: ${result.requestId}\nOsoba: ${submission.fullName}\nFirma: ${submission.companyName}\nNIP: ${submission.nip || "Nie podano"}\nE-mail: ${submission.email}\nTelefon: ${submission.phone}\nKategorie: ${submission.categories.join(", ")}\n\n${submission.offerDescription}`
         })
       ]);
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       {
         requestId: result.requestId,
         accessEmailSent,
-        message: "Dziękujemy. Twoje zgłoszenie trafiło do weryfikacji Dealshare. Po akceptacji otrzymasz dostęp do funkcji oferenta w panelu."
+        message: "Zapoznamy się z informacjami i skontaktujemy się w sprawie możliwej współpracy."
       },
       { status: 201 }
     );
@@ -57,6 +57,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Osiągnięto limit zgłoszeń. Spróbuj ponownie później." }, { status: 429 });
     }
     console.error("Partner request creation failed", error);
-    return NextResponse.json({ message: "Nie udało się zapisać zgłoszenia. Spróbuj ponownie później." }, { status: 503 });
+    return NextResponse.json({ message: "Nie udało się wysłać formularza. Spróbuj ponownie później." }, { status: 503 });
   }
 }

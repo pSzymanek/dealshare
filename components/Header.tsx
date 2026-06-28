@@ -21,11 +21,11 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
-          <Link href="/panel" aria-label="Panel użytkownika" title="Panel użytkownika" className="grid h-11 w-11 place-items-center rounded-md border border-slate-200 text-navy transition hover:border-electric/30 hover:text-electric">
+          <Link href="/panel" aria-label="Moje konto" title="Moje konto" className="grid h-11 w-11 place-items-center rounded-md border border-slate-200 text-navy transition hover:border-electric/30 hover:text-electric">
             <UserRound size={19} />
           </Link>
           <Button href="/potrzeba" variant="ghost">
-            Opisz potrzebę
+            Porozmawiajmy
           </Button>
         </div>
         <MobileMenu />

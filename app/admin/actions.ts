@@ -7,7 +7,7 @@ import { z } from "zod";
 import { db } from "@/db/client";
 import { caseAssignments, caseEvents, caseMessages, cases, offers, organizations, partnerOfferRequests, partnerProfiles, userRoles, users } from "@/db/schema";
 import { requireRole } from "@/lib/auth-guards";
-import { caseStatusOrder } from "@/lib/case-status";
+import { caseStatusOrder, getClientCaseStatus } from "@/lib/case-status";
 import { sendMail } from "@/lib/mail";
 
 const idSchema = z.string().min(1).max(64);
@@ -18,7 +18,7 @@ export async function updateCaseStatusAction(formData: FormData) {
   const status = z.enum(caseStatusOrder as [typeof caseStatusOrder[number], ...typeof caseStatusOrder]).parse(formData.get("status"));
   await db.transaction(async (tx) => {
     await tx.update(cases).set({ status }).where(eq(cases.id, caseId));
-    await tx.insert(caseEvents).values({ id: randomUUID(), caseId, actorUserId: session.user.id, eventType: "status_changed", message: `Status sprawy został zmieniony na: ${status}.` });
+    await tx.insert(caseEvents).values({ id: randomUUID(), caseId, actorUserId: session.user.id, eventType: "status_changed", message: getClientCaseStatus(status) });
   });
   revalidatePath("/admin/sprawy");
   revalidatePath("/panel");
@@ -31,7 +31,7 @@ export async function assignPartnerAction(formData: FormData) {
   await db.transaction(async (tx) => {
     await tx.insert(caseAssignments).values({ id: randomUUID(), caseId, partnerOrganizationId: organizationId, status: "pending" }).onDuplicateKeyUpdate({ set: { status: "pending", rejectedAt: null, rejectionReason: null } });
     await tx.update(cases).set({ status: "partner_pending" }).where(eq(cases.id, caseId));
-    await tx.insert(caseEvents).values({ id: randomUUID(), caseId, actorUserId: session.user.id, eventType: "partner_assigned", message: "Sprawa została przekazana partnerowi do akceptacji." });
+    await tx.insert(caseEvents).values({ id: randomUUID(), caseId, actorUserId: session.user.id, eventType: "partner_assigned", message: "Sprawdzamy dostępność właściwej firmy." });
   });
   revalidatePath("/admin/sprawy");
 }
@@ -54,7 +54,7 @@ export async function reviewPartnerRequestAction(formData: FormData) {
 
   try {
     const [{ email, name }] = await db.select({ email: users.email, name: users.name }).from(users).where(eq(users.id, request.userId));
-    await sendMail({ to: email, subject: decision === "approved" ? "[Dealshare] Konto oferenta zostało aktywowane" : "[Dealshare] Decyzja dotycząca zgłoszenia oferenta", text: decision === "approved" ? `Dzień dobry ${name},\n\nTwoje konto zostało rozszerzone o funkcje oferenta. Dodatkowe zakładki są już dostępne w panelu.` : `Dzień dobry ${name},\n\nNa tym etapie zgłoszenie oferenta nie zostało zaakceptowane. Skontaktuj się z Dealshare, jeśli chcesz uzupełnić informacje.` });
+    await sendMail({ to: email, subject: decision === "approved" ? "[Dealshare] Możemy rozpocząć współpracę" : "[Dealshare] Porozmawiajmy jeszcze o Twojej ofercie", text: decision === "approved" ? `Dzień dobry ${name},\n\nmożemy rozpocząć współpracę. W swoim koncie znajdziesz teraz miejsce na oferty i zapytania przekazywane przez Dealshare.` : `Dzień dobry ${name},\n\nna tym etapie potrzebujemy dodatkowych informacji, zanim rozpoczniemy współpracę. Skontaktuj się z Dealshare, aby omówić ofertę.` });
   } catch (error) {
     console.error("Partner review email failed", error);
   }
@@ -77,7 +77,7 @@ export async function addCaseMessageAction(formData: FormData) {
   const body = z.string().trim().min(2).max(5000).parse(formData.get("body"));
   await db.transaction(async tx => {
     await tx.insert(caseMessages).values({ id: randomUUID(), caseId, authorUserId: session.user.id, visibility, body });
-    if (visibility === "client") await tx.insert(caseEvents).values({ id: randomUUID(), caseId, actorUserId: session.user.id, eventType: "dealshare_message", message: "Dealshare dodał wiadomość do sprawy." });
+    if (visibility === "client") await tx.insert(caseEvents).values({ id: randomUUID(), caseId, actorUserId: session.user.id, eventType: "dealshare_message", message: "Masz nową wiadomość od Dealshare." });
   });
   revalidatePath("/admin/sprawy");
   revalidatePath("/panel");

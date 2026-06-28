@@ -108,7 +108,7 @@ export async function createCase(submission: CaseSubmission, request: Request) {
       caseId,
       actorUserId: userId,
       eventType: "case_created",
-      message: "Sprawa została utworzona i otrzymała Case ID."
+      message: "Otrzymaliśmy zgłoszenie. Zapoznamy się z informacjami i wrócimy z kolejnym krokiem."
     });
     await tx.insert(submissionRateLimits).values({
       ...rateLimit.record

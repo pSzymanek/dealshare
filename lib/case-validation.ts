@@ -11,7 +11,7 @@ export const caseSubmissionSchema = z
     phone: z.string().trim().min(6, "Podaj numer telefonu.").max(40),
     companyName: z.string().trim().min(2, "Podaj nazwę firmy.").max(200),
     nip: optionalText(20).refine((value) => !value || /^\d{10}$/.test(value.replace(/[\s-]/g, "")), "NIP powinien zawierać 10 cyfr."),
-    category: z.string().trim().min(2, "Wybierz kategorię potrzeby.").max(160),
+    category: z.string().trim().min(2, "Wybierz temat rozmowy.").max(160),
     description: z.string().trim().min(20, "Opisz sytuację w co najmniej 20 znakach.").max(8000),
     preferredContact: z.enum(["phone", "email", "whatsapp", "any"]),
     consent: z.literal(true, { error: "Zgoda na kontakt jest wymagana." }),

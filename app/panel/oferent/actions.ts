@@ -18,7 +18,7 @@ export async function createPartnerOfferAction(formData: FormData) {
   const organization = await getApprovedPartnerOrganization(session.user.id);
   if (!organization) return;
   const input = z.object({ title: z.string().trim().min(4).max(220), category: z.string().trim().min(2).max(160), shortDescription: z.string().trim().min(30).max(2000), visibilityMode: z.enum(["public_offer", "guided_matching"]) }).parse(Object.fromEntries(formData));
-  await db.insert(offers).values({ id: randomUUID(), partnerOrganizationId: organization.id, title: input.title, slug: `${slugify(input.title)}-${randomUUID().slice(0, 8)}`, category: input.category, shortDescription: input.shortDescription, description: input.shortDescription, status: "pending_review", visibilityMode: input.visibilityMode, ctaLabel: input.visibilityMode === "public_offer" ? "Zobacz ofertę" : "Opisz potrzebę" });
+  await db.insert(offers).values({ id: randomUUID(), partnerOrganizationId: organization.id, title: input.title, slug: `${slugify(input.title)}-${randomUUID().slice(0, 8)}`, category: input.category, shortDescription: input.shortDescription, description: input.shortDescription, status: "pending_review", visibilityMode: input.visibilityMode, ctaLabel: input.visibilityMode === "public_offer" ? "Sprawdź szczegóły" : "Porozmawiaj z nami" });
   revalidatePath("/panel/oferent/oferty");
   revalidatePath("/admin/oferty");
 }
@@ -35,7 +35,7 @@ export async function reviewAssignmentAction(formData: FormData) {
   await db.transaction(async tx => {
     await tx.update(caseAssignments).set(decision === "accepted" ? { status: "accepted", acceptedAt: new Date(), rejectedAt: null, rejectionReason: null } : { status: "rejected", rejectedAt: new Date(), rejectionReason: reason || "Brak uzasadnienia" }).where(eq(caseAssignments.id, assignmentId));
     await tx.update(cases).set({ status: decision === "accepted" ? "partner_accepted" : "matching" }).where(eq(cases.id, assignment.caseId));
-    await tx.insert(caseEvents).values({ id: randomUUID(), caseId: assignment.caseId, actorUserId: session.user.id, eventType: `partner_${decision}`, message: decision === "accepted" ? "Partner zaakceptował sprawę." : "Partner odrzucił przypisanie. Dealshare kontynuuje dobór rozwiązania." });
+    await tx.insert(caseEvents).values({ id: randomUUID(), caseId: assignment.caseId, actorUserId: session.user.id, eventType: `partner_${decision}`, message: decision === "accepted" ? "Znaleźliśmy firmę, z którą przygotowujemy kontakt." : "Nadal szukamy najlepszego rozwiązania dla Twojej firmy." });
   });
   revalidatePath("/panel/oferent/sprawy");
   revalidatePath("/admin/sprawy");

@@ -22,7 +22,7 @@ const sections = [
   {
     title: "2. Jakie dane zbieramy",
     content: [
-      "W związku z kontem, sprawami i formularzami możemy zbierać: imię i nazwisko, adres e-mail, numer telefonu, nazwę firmy, NIP, adres strony internetowej, opis potrzeby lub oferty, preferencje kontaktu i odpowiedzi udzielone w briefie.",
+      "W związku z kontem, zgłoszeniami i formularzami możemy zbierać: imię i nazwisko, adres e-mail, numer telefonu, nazwę firmy, NIP, adres strony internetowej, opis potrzeby lub oferty, preferencje kontaktu i informacje przekazane w formularzu.",
       "W panelu mogą być przetwarzane statusy spraw, historia działań, wiadomości, przypisania do partnerów oraz dokumenty przekazane w związku ze sprawą.",
       "Podanie danych jest dobrowolne, ale niezbędne do utworzenia konta, sprawy, zgłoszenia oferenta albo obsługi wybranej funkcji."
     ]
@@ -30,7 +30,7 @@ const sections = [
   {
     title: "3. Cele przetwarzania danych",
     content: [
-      "Dane przetwarzamy w celu prowadzenia konta użytkownika, utworzenia i obsługi sprawy z Case ID, indywidualnego doboru rozwiązania, obsługi zapytań o oferty, weryfikacji oferentów, komunikacji oraz zabezpieczenia ewentualnych roszczeń.",
+      "Dane przetwarzamy w celu prowadzenia konta użytkownika, przyjmowania i obsługi zgłoszeń, dopasowania rozwiązania, obsługi zapytań o oferty, oceny propozycji współpracy, komunikacji oraz zabezpieczenia ewentualnych roszczeń.",
       "Dane mogą być wykorzystywane także do obsługi newslettera albo systemu CRM, jeżeli użytkownik wyrazi wymaganą zgodę."
     ]
   },

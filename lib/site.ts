@@ -4,9 +4,9 @@ export const siteConfig = {
   description: "Platforma B2B łącząca przedsiębiorców z wybranymi ofertami, partnerami i rozwiązaniami biznesowymi.",
   nav: [
     { label: "Start", href: "/" },
-    { label: "Oferty", href: "/oferty" },
+    { label: "Możliwości", href: "/oferty" },
     { label: "Jak działa", href: "/jak-dziala" },
-    { label: "Dla partnerów", href: "/dla-partnerow" },
+    { label: "Współpraca", href: "/dla-partnerow" },
     { label: "Kontakt", href: "/kontakt" }
   ],
   socials: [

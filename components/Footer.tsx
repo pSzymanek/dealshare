@@ -11,7 +11,7 @@ export function Footer() {
         <div>
           <Image src="/logo-dark.png" alt="dealshare" width={172} height={64} />
           <p className="mt-5 max-w-md text-sm leading-7 text-white/68">
-            Platforma B2B prowadząca firmę od potrzeby lub jawnej oferty do właściwego rozwiązania, partnera i konkretnego wyniku.
+            Łączymy firmy z konkretnymi możliwościami, sprawdzonymi partnerami i rozwiązaniami, które pomagają iść dalej.
           </p>
         </div>
         <div>

@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { BriefcaseBusiness, FileText, LayoutDashboard, MessageSquare, Plus, Settings, Store } from "lucide-react";
 
 const baseItems = [
-  { href: "/panel", label: "Moje sprawy", icon: LayoutDashboard },
-  { href: "/panel/nowa-potrzeba", label: "Nowa potrzeba", icon: Plus },
+  { href: "/panel", label: "Moje zgłoszenia", icon: LayoutDashboard },
+  { href: "/panel/nowa-potrzeba", label: "Nowe zgłoszenie", icon: Plus },
   { href: "/panel/dokumenty", label: "Dokumenty", icon: FileText },
   { href: "/panel/wiadomosci", label: "Wiadomości", icon: MessageSquare },
   { href: "/panel/ustawienia", label: "Ustawienia", icon: Settings }
@@ -16,12 +16,12 @@ export function PanelNav({ isPartner, isAdmin }: { isPartner: boolean; isAdmin: 
   const pathname = usePathname();
   const items = [
     ...baseItems,
-    ...(isPartner ? [{ href: "/panel/oferent", label: "Panel oferenta", icon: Store }] : []),
+    ...(isPartner ? [{ href: "/panel/oferent", label: "Współpraca", icon: Store }] : []),
     ...(isAdmin ? [{ href: "/admin/sprawy", label: "Administracja", icon: BriefcaseBusiness }] : [])
   ];
 
   return (
-    <nav className="flex gap-2 overflow-x-auto pb-2 lg:grid lg:overflow-visible lg:pb-0" aria-label="Panel użytkownika">
+    <nav className="flex gap-2 overflow-x-auto pb-2 lg:grid lg:overflow-visible lg:pb-0" aria-label="Moje konto">
       {items.map((item) => {
         const active = item.href === "/panel" ? pathname === item.href : pathname.startsWith(item.href);
         const Icon = item.icon;

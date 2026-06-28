@@ -86,8 +86,8 @@ export function MobileMenu() {
           </nav>
 
           <div className="relative z-10 mt-6 grid grid-cols-2 gap-2">
-            <Link href="/panel" onClick={() => setIsOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-sm font-bold text-navy">Panel</Link>
-            <Link href="/potrzeba" onClick={() => setIsOpen(false)} className="button-glass isolate inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-3 text-sm font-bold text-white shadow-glow"><span className="relative z-10">Opisz potrzebę</span></Link>
+            <Link href="/panel" onClick={() => setIsOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-sm font-bold text-navy">Moje konto</Link>
+            <Link href="/potrzeba" onClick={() => setIsOpen(false)} className="button-glass isolate inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-3 text-sm font-bold text-white shadow-glow"><span className="relative z-10">Porozmawiajmy</span></Link>
           </div>
 
           <Link href="/" onClick={() => setIsOpen(false)} aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
