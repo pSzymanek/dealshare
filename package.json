@@ -2,30 +2,44 @@
   "name": "dealshare",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "admin:bootstrap": "node scripts/bootstrap-admin.mjs",
     "export:webd": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/export-webd.ps1",
     "webd:start": "node server.js",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
-    "next": "14.2.5",
-    "nodemailer": "^8.0.7",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "better-auth": "1.6.22",
+    "drizzle-orm": "0.45.2",
+    "lucide-react": "1.21.0",
+    "mysql2": "3.22.5",
+    "next": "16.2.9",
+    "nodemailer": "9.0.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "@types/node": "20.14.10",
-    "@types/nodemailer": "^8.0.0",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "autoprefixer": "10.4.19",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.5",
-    "postcss": "8.4.39",
+    "@types/node": "22.20.0",
+    "@types/nodemailer": "8.0.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "autoprefixer": "10.5.2",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.3",
+    "eslint-config-next": "16.2.9",
+    "postcss": "8.5.15",
     "tailwindcss": "3.4.4",
-    "typescript": "5.5.3"
+    "typescript": "5.9.3"
   }
 }

@@ -1,4 +1,5 @@
 export type OfferStatus = "Dostępne" | "Nowe" | "Premium" | "Analiza indywidualna" | "Dla osób fizycznych";
+export type OfferVisibility = "public_offer" | "guided_matching";
 
 export type OfferCategoryTag = {
   name: string;
@@ -439,6 +440,23 @@ export const offers: Offer[] = [
     benefits: ["Lepsza widoczność kosztów", "Priorytetyzacja działań", "Dostęp do właściwych specjalistów"]
   }
 ];
+
+export const offerVisibilityBySlug: Record<string, OfferVisibility> = {
+  "kredyty-dla-firm": "guided_matching",
+  restrukturyzacje: "guided_matching",
+  "infrastruktura-gpu": "public_offer",
+  "farma-pv-bess": "public_offer",
+  "kontrakty-flotowe": "public_offer",
+  "sankcja-kredytu-darmowego": "guided_matching",
+  "optymalizacja-kosztow-energii": "guided_matching"
+};
+
+export function getOfferVisibility(slug: string): OfferVisibility {
+  return offerVisibilityBySlug[slug] ?? "guided_matching";
+}
+
+export const publicOffers = offers.filter((offer) => getOfferVisibility(offer.slug) === "public_offer");
+export const guidedOffers = offers.filter((offer) => getOfferVisibility(offer.slug) === "guided_matching");
 
 export const offerStaticSlugs = offers.flatMap((offer) => [offer.slug, ...(offer.aliases ?? [])]);
 

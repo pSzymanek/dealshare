@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
-import { BriefModal } from "@/components/BriefModal";
 import { Button } from "@/components/Button";
+import { CaseForm } from "@/components/CaseForm";
 import { Container } from "@/components/Container";
-import { getBriefConfig } from "@/lib/briefs";
-import { getOfferBySlug, offerStaticSlugs, offers, type Offer, type OfferCardItem } from "@/lib/offers";
+import { getOfferBySlug, getOfferVisibility, offerStaticSlugs, type Offer, type OfferCardItem } from "@/lib/offers";
 
 type OfferDetailPageProps = {
   params: {
@@ -37,7 +36,8 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
     notFound();
   }
 
-  const briefConfig = getBriefConfig(offer.slug);
+  const isPublicOffer = getOfferVisibility(offer.slug) === "public_offer";
+  const primaryHref = isPublicOffer ? "#zapytaj" : `/potrzeba?category=${encodeURIComponent(offer.category)}&offer=${offer.slug}`;
 
   return (
     <main className="bg-white text-ink">
@@ -67,7 +67,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-4">
-                {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} /> : <Button href="/kontakt">{offer.ctaPrimary}</Button>}
+                <Button href={primaryHref}>{isPublicOffer ? "Porozmawiaj o tej ofercie" : "Opisz potrzebę"}</Button>
                 <Button href="#proces" variant="ghost">
                   {offer.ctaSecondary} <span className="ml-2">→</span>
                 </Button>
@@ -83,13 +83,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
                   </li>
                 ))}
               </ul>
-              {briefConfig ? (
-                <BriefModal config={briefConfig} buttonLabel={offer.sidePanel.cta} buttonClassName="mt-6 w-full" />
-              ) : (
-                <Button href="/kontakt" className="mt-6 w-full">
-                  {offer.sidePanel.cta}
-                </Button>
-              )}
+              <Button href={primaryHref} className="mt-6 w-full">{isPublicOffer ? "Zapytaj o ofertę" : "Opisz potrzebę"}</Button>
               <p className="mt-3 text-center text-xs font-semibold text-slate-500">Wstępna analiza jest całkowicie darmowa</p>
               <p className="mt-4 text-xs leading-6 text-slate-500">{offer.sidePanel.note}</p>
             </aside>
@@ -193,16 +187,21 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
               <h2 className="text-3xl font-black tracking-tight">{offer.finalCta.title}</h2>
               <p className="mt-3 text-base leading-8 text-white/72">{offer.finalCta.text}</p>
             </div>
-            {briefConfig ? (
-              <BriefModal config={briefConfig} buttonLabel={offer.finalCta.buttonLabel} buttonVariant="secondary" buttonClassName="mt-7 lg:mt-0" />
-            ) : (
-              <Button href="/kontakt" variant="secondary" className="mt-7 lg:mt-0">
-                {offer.finalCta.buttonLabel} <span className="ml-2">→</span>
-              </Button>
-            )}
+            <Button href={primaryHref} variant="secondary" className="mt-7 lg:mt-0">{isPublicOffer ? "Porozmawiaj o tej ofercie" : "Opisz potrzebę"} <span className="ml-2">→</span></Button>
           </div>
         </Container>
       </section>
+
+      {isPublicOffer ? (
+        <section id="zapytaj" className="scroll-mt-28 bg-mist py-14 sm:py-20">
+          <Container className="max-w-4xl">
+            <p className="text-sm font-black uppercase tracking-[0.18em] text-teal">Zapytaj o ofertę</p>
+            <h2 className="mt-3 text-3xl font-black text-navy">Utwórz sprawę: {offer.title}</h2>
+            <p className="mb-8 mt-4 max-w-2xl text-sm leading-7 text-slate-600">Po wysłaniu formularza otrzymasz Case ID i dostęp do śledzenia sprawy w panelu.</p>
+            <CaseForm pathType="public_offer" offerSlug={offer.slug} offerTitle={offer.title} defaultCategory={offer.category} />
+          </Container>
+        </section>
+      ) : null}
     </main>
   );
 }

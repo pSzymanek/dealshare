@@ -5,6 +5,9 @@ import { siteConfig } from "@/lib/site";
 const staticRoutes = [
   "",
   "/oferty",
+  "/jak-dziala",
+  "/dla-partnerow",
+  "/potrzeba",
   "/moc-obliczeniowa",
   "/o-nas",
   "/kontakt",

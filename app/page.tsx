@@ -1,119 +1,69 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/Button";
+import { ArrowRight, BriefcaseBusiness, Search, Users } from "lucide-react";
 import { Container } from "@/components/Container";
-import { CTASection } from "@/components/CTASection";
-import { HeroOfferTicker } from "@/components/HeroOfferTicker";
-import { HeroRotatingWord } from "@/components/HeroRotatingWord";
 import { OfferCard } from "@/components/OfferCard";
-import { SectionHeading } from "@/components/SectionHeading";
-import { offers } from "@/lib/offers";
+import { publicOffers } from "@/lib/offers";
 
-const benefits = [
-  {
-    title: "Wyselekcjonowane oferty",
-    icon: "/dealshare_icon_wyselekcjonowane_oferty.svg",
-    description: "Wybrane propozycje biznesowe w jednym miejscu, bez przypadkowego przeglądania niepasujących rozwiązań."
-  },
-  {
-    title: "Mniej chaosu, więcej konkretów",
-    icon: "/dealshare_icon_mniej_chaosu_wiecej_konkretow.svg",
-    description: "Krótsza droga do rozmów, które mają jasny kontekst biznesowy i lepsze dopasowanie do potrzeb firmy."
-  },
-  {
-    title: "Partnerzy B2B",
-    icon: "/dealshare_icon_partnerzy_b2b.svg",
-    description: "Dostęp do partnerów, usługodawców i projektów, które mogą realnie wspierać rozwój przedsiębiorstwa."
-  },
-  {
-    title: "Rozwiązania dopasowane do firmy",
-    icon: "/dealshare_ikona_suwaki.svg",
-    description: "Oferty porządkowane według kategorii, profilu współpracy i sytuacji, w której znajduje się firma."
-  }
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+const processSteps = [
+  "Wybierasz ofertę albo opisujesz potrzebę",
+  "Tworzymy sprawę i nadajemy Case ID",
+  "Analizujemy kontekst",
+  "Dobieramy rozwiązanie albo partnera",
+  "Prowadzimy sprawę do decyzji i wyniku"
 ];
-
-const heroOffers = offers.slice(0, 7);
-
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "/"
-  }
-};
 
 export default function HomePage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-navy-gradient text-white">
-        <Container className="relative grid min-h-[680px] items-center gap-12 py-20 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <h1 className="heading-title-enter max-w-4xl text-5xl font-black leading-[1.03] tracking-tight sm:text-6xl lg:text-7xl">
-              <HeroRotatingWord /> <br /> W jednym miejscu.
-            </h1>
-            <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/76">
-              dealshare pomaga przedsiębiorcom szybciej docierać do sprawdzonych ofert, partnerów, kontraktów i rozwiązań biznesowych.
-            </p>
+      <section className="bg-navy py-16 text-white sm:py-20 lg:py-24">
+        <Container>
+          <div className="max-w-5xl">
+            <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Biznes bez kompleksów</p>
+            <h1 className="mt-5 text-4xl font-black leading-tight sm:text-6xl lg:text-7xl">Jawne oferty albo indywidualny dobór.</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78 sm:text-xl">Dealshare pomaga firmom znaleźć właściwe rozwiązania i partnerów. Możesz sprawdzić konkretną ofertę albo opisać potrzebę firmy, a my dobierzemy właściwą ścieżkę.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button href="/oferty">Zobacz oferty</Button>
-              <Button href="/kontakt" variant="secondary">
-                Skontaktuj się
-              </Button>
-            </div>
-          </div>
-          <div className="reveal-on-load reveal-delay-1 relative">
-            <div className="absolute -inset-8 rounded-full bg-cyan/10 blur-3xl" />
-            <div className="hero-panel relative overflow-hidden rounded-lg border border-white/16 bg-white/8 p-5 shadow-glow backdrop-blur sm:p-6">
-              <div className="pointer-events-none absolute -right-10 -top-12 h-44 w-44 rounded-full bg-cyan/10 blur-3xl" />
-              <div className="relative flex items-center justify-between gap-5">
-                <div className="flex items-center gap-4">
-                  <Image src="/sygnet-white.png" alt="" width={72} height={72} className="h-14 w-14 opacity-88 sm:h-16 sm:w-16" />
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan">Najnowsze oferty</p>
-                  </div>
-                </div>
-                <Link href="/oferty" className="arrow-link hidden text-sm font-bold text-cyan transition hover:text-white sm:inline-flex">
-                  Sprawdź więcej <span aria-hidden="true" className="arrow-mark ml-1">&rarr;</span>
-                </Link>
-              </div>
-              <HeroOfferTicker offers={heroOffers} />
+              <Link href="/oferty#jawne-oferty" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-cyan px-6 text-sm font-black text-navy transition hover:bg-white">Zobacz jawne oferty <ArrowRight size={18} /></Link>
+              <Link href="/potrzeba" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/30 px-6 text-sm font-black text-white transition hover:bg-white/10">Opisz potrzebę firmy <ArrowRight size={18} /></Link>
             </div>
           </div>
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="border-b border-slate-200 bg-white py-14 sm:py-20">
         <Container>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {benefits.map((benefit) => (
-              <div key={benefit.title} className="card-glass soft-lift rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/20 hover:shadow-card">
-                <Image src={benefit.icon} alt="" width={52} height={52} className="h-12 w-12 object-contain" />
-                <h2 className="mt-5 flex min-h-[3.5rem] items-start text-lg font-black tracking-tight text-navy">{benefit.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-slate-600">
-                  {benefit.description}
-                </p>
-              </div>
-            ))}
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <PathBlock icon={Search} eyebrow="Droga 1" title="Jawne oferty" text="Konkretne propozycje, projekty i usługi partnerskie dostępne do sprawdzenia od razu." href="/oferty#jawne-oferty" action="Zobacz oferty" />
+            <PathBlock icon={Users} eyebrow="Droga 2" title="Indywidualny dobór" text="Nie musisz wiedzieć, którego partnera wybrać. Opisz sytuację firmy, a Dealshare dobierze właściwe rozwiązanie." href="/potrzeba" action="Opisz potrzebę" />
           </div>
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="bg-mist py-14 sm:py-20">
         <Container>
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading eyebrow="Wybrane oferty" title="Aktualne oferty dla przedsiębiorców" />
-            <Link href="/oferty" className="arrow-link text-sm font-bold text-electric transition hover:text-teal">
-              Wszystkie oferty <span aria-hidden="true" className="arrow-mark ml-1">&rarr;</span>
-            </Link>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div><p className="text-sm font-black uppercase tracking-[0.18em] text-teal">Jawne oferty</p><h2 className="mt-3 text-3xl font-black text-navy sm:text-4xl">Konkretne możliwości dostępne teraz</h2></div>
+            <Link href="/oferty" className="inline-flex items-center gap-2 text-sm font-bold text-electric">Wszystkie kierunki <ArrowRight size={17} /></Link>
           </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {offers.slice(0, 3).map((offer) => (
-              <OfferCard key={offer.slug} offer={offer} />
-            ))}
-          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{publicOffers.map((offer) => <OfferCard key={offer.slug} offer={offer} />)}</div>
         </Container>
       </section>
 
-      <CTASection title="Masz ofertę albo szukasz możliwości dla swojej firmy?" buttonLabel="Porozmawiajmy!" buttonHref="/kontakt" />
+      <section className="bg-white py-14 sm:py-20">
+        <Container>
+          <div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-teal">Jak działamy</p><h2 className="mt-3 text-3xl font-black text-navy sm:text-4xl">Od potrzeby do konkretnego następnego kroku</h2></div>
+          <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-slate-200 bg-slate-200 md:grid-cols-5">
+            {processSteps.map((step, index) => <li key={step} className="bg-white p-5"><span className="font-mono text-sm font-black text-electric">0{index + 1}</span><p className="mt-3 text-sm font-bold leading-6 text-navy">{step}</p></li>)}
+          </ol>
+          <div className="mt-8 flex flex-wrap gap-3"><Link href="/jak-dziala" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-electric px-5 text-sm font-bold text-white">Poznaj proces <ArrowRight size={17} /></Link><Link href="/dla-partnerow" className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-300 px-5 text-sm font-bold text-navy"><BriefcaseBusiness size={17} /> Dla partnerów</Link></div>
+        </Container>
+      </section>
     </main>
   );
+}
+
+function PathBlock({ icon: Icon, eyebrow, title, text, href, action }: { icon: typeof Search; eyebrow: string; title: string; text: string; href: string; action: string }) {
+  return <article className="border-t-4 border-electric pt-6"><div className="flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-md bg-electric/10 text-electric"><Icon size={23} /></span><p className="text-xs font-black uppercase tracking-[0.18em] text-teal">{eyebrow}</p></div><h2 className="mt-5 text-3xl font-black text-navy">{title}</h2><p className="mt-3 max-w-xl text-base leading-8 text-slate-600">{text}</p><Link href={href} className="mt-6 inline-flex items-center gap-2 text-sm font-black text-electric hover:text-navy">{action} <ArrowRight size={17} /></Link></article>;
 }

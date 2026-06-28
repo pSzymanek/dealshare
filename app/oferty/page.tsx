@@ -1,61 +1,16 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/Button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/Container";
 import { OfferCard } from "@/components/OfferCard";
-import { PartnerOfferCard } from "@/components/PartnerOfferCard";
-import { SectionHeading } from "@/components/SectionHeading";
-import { offers } from "@/lib/offers";
+import { guidedOffers, publicOffers } from "@/lib/offers";
 
-export const metadata: Metadata = {
-  title: "Oferty biznesowe",
-  description: "Oferty biznesowe Dealshare: finansowanie, inwestycje, energia, restrukturyzacja, kontrakty i sprawy kredytowe.",
-  alternates: {
-    canonical: "/oferty"
-  }
-};
+export const metadata: Metadata = { title: "Oferty i indywidualny dobór", description: "Jawne oferty biznesowe oraz indywidualny dobór rozwiązań przez Dealshare.", alternates: { canonical: "/oferty" } };
 
 export default function OffersPage() {
-  return (
-    <main>
-      <section className="bg-white py-20">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_0.72fr] lg:items-end">
-            <div className="max-w-4xl">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Oferty</p>
-              <h1 className="heading-title-enter mt-4 text-4xl font-black tracking-tight text-navy sm:text-6xl">Oferty biznesowe w uporządkowanej formie</h1>
-              <p className="heading-copy-enter mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-                Wybierz obszar, który pasuje do Twojej sytuacji: finansowanie, inwestycje, energia, restrukturyzacja, kontrakty B2B albo sprawy kredytowe.
-                Dealshare pomaga szybko sprawdzić, czy dana możliwość ma sens i jaki powinien być kolejny krok.
-              </p>
-            </div>
-            <div className="rounded-lg border border-electric/15 bg-electric/5 p-6">
-              <h2 className="text-xl font-black text-navy">Nie wiesz, od której oferty zacząć?</h2>
-              <p className="mt-3 text-sm leading-7 text-slate-600">Opisz krótko sytuację. Wskażemy, który kierunek warto sprawdzić w pierwszej kolejności.</p>
-              <div className="mt-5">
-                <Button href="/kontakt" variant="ghost">
-                  Opisz swoją sytuację
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-mist py-16">
-        <Container>
-          <SectionHeading
-            eyebrow="Aktualne oferty"
-            title="Wybierz konkretny obszar"
-            description="Każda oferta prowadzi do uporządkowanej podstrony: problem, zakres, proces, dokumenty, punkty kontrolne i kolejny krok."
-          />
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {offers.map((offer) => (
-              <OfferCard key={offer.slug} offer={offer} />
-            ))}
-            <PartnerOfferCard />
-          </div>
-        </Container>
-      </section>
-    </main>
-  );
+  return <main>
+    <section className="bg-navy py-16 text-white"><Container><p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Dwie drogi</p><h1 className="mt-4 max-w-4xl text-4xl font-black sm:text-6xl">Sprawdź konkretną ofertę albo opisz potrzebę firmy.</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-white/75">Dealshare porządkuje możliwości bez tworzenia przypadkowego katalogu. Jawne oferty możesz ocenić od razu, a w pozostałych obszarach prowadzimy indywidualny dobór.</p></Container></section>
+    <section id="jawne-oferty" className="scroll-mt-28 bg-white py-14 sm:py-20"><Container><p className="text-sm font-black uppercase tracking-[0.18em] text-teal">Jawne oferty</p><h2 className="mt-3 text-3xl font-black text-navy sm:text-4xl">Konkretne projekty i możliwości</h2><p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">Oferty, których zakres możesz sprawdzić przed rozmową i utworzyć sprawę powiązaną z wybraną propozycją.</p><div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{publicOffers.map((offer) => <OfferCard key={offer.slug} offer={offer} />)}</div></Container></section>
+    <section id="indywidualny-dobor" className="scroll-mt-28 bg-mist py-14 sm:py-20"><Container><p className="text-sm font-black uppercase tracking-[0.18em] text-teal">Indywidualny dobór przez Dealshare</p><h2 className="mt-3 text-3xl font-black text-navy sm:text-4xl">Zacznij od sytuacji firmy, nie od wyboru partnera</h2><p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">Nie musisz wiedzieć, którego partnera wybrać. Opisz sytuację firmy, a Dealshare dobierze właściwą ścieżkę.</p><div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{guidedOffers.map((offer) => <OfferCard key={offer.slug} offer={offer} />)}</div><Link href="/potrzeba" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-md bg-electric px-5 text-sm font-bold text-white">Opisz inną potrzebę <ArrowRight size={17} /></Link></Container></section>
+  </main>;
 }

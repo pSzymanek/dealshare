@@ -5,7 +5,8 @@ export const siteConfig = {
   nav: [
     { label: "Start", href: "/" },
     { label: "Oferty", href: "/oferty" },
-    { label: "O nas", href: "/o-nas" },
+    { label: "Jak działa", href: "/jak-dziala" },
+    { label: "Dla partnerów", href: "/dla-partnerow" },
     { label: "Kontakt", href: "/kontakt" }
   ],
   socials: [

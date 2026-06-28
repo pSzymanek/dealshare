@@ -79,13 +79,18 @@ Strona nie powinna wygladac jak przypadkowa landing page, katalog linkow, portal
 
 ## Stack techniczny
 
-- Next.js App Router
+- Next.js 16 App Router
+- React 19
 - TypeScript
 - Tailwind CSS
+- MySQL/MariaDB i Drizzle ORM
+- Better Auth: haslo, magic link i role
 - WordPress REST API jako zrodlo bloga
 - GitHub jako historia kodu i branchy
 - Vercel jako etap preview/weryfikacji
 - Paczka `export` dla hostingu Node/Next na faktyczny serwer produkcyjny
+
+Najwazniejszym obiektem platformy jest sprawa z Case ID. Konto jest sposobem dostepu do spraw. Jedno konto moze zostac rozszerzone o role partnera po akceptacji Dealshare.
 
 ## Sposob pracy i publikacji
 
@@ -111,4 +116,6 @@ Strona nie powinna wygladac jak przypadkowa landing page, katalog linkow, portal
 - Uporzadkowanie procesu Vercel preview.
 - Weryfikacja i pierwsze uzycie skryptu `npm run export:webd` po akceptacji wersji na Vercel.
 - Ewentualna automatyzacja uploadu na serwer Webd, ale tylko po osobnej decyzji i nigdy jako samodzielne dzialanie.
-- Dalsze doprecyzowanie architektury ofert, formularzy kontaktowych i roli bloga.
+- Potwierdzenie wersji Node 22 lub nowszej na Webd.
+- Konfiguracja MySQL/MariaDB i wykonanie pierwszej migracji.
+- Konfiguracja sekretow auth i polaczenia z baza na Vercel.

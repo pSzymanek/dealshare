@@ -23,14 +23,17 @@ export function CookieBanner() {
 
   useEffect(() => {
     const storedConsent = localStorage.getItem(consentKey);
-    setIsVisible(!storedConsent);
+    const timer = window.setTimeout(() => setIsVisible(!storedConsent), 0);
 
     function openBanner() {
       setIsVisible(true);
     }
 
     window.addEventListener("dealshare-open-cookie-banner", openBanner);
-    return () => window.removeEventListener("dealshare-open-cookie-banner", openBanner);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("dealshare-open-cookie-banner", openBanner);
+    };
   }, []);
 
   useEffect(() => {

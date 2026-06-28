@@ -22,35 +22,36 @@ const sections = [
   {
     title: "2. Jakie dane zbieramy",
     content: [
-      "Przez formularz kontaktowy możemy zbierać: imię i nazwisko, adres e-mail, numer telefonu, nazwę firmy oraz treść wiadomości.",
-      "Podanie danych jest dobrowolne, ale niezbędne do obsługi zapytania przesłanego przez formularz."
+      "W związku z kontem, sprawami i formularzami możemy zbierać: imię i nazwisko, adres e-mail, numer telefonu, nazwę firmy, NIP, adres strony internetowej, opis potrzeby lub oferty, preferencje kontaktu i odpowiedzi udzielone w briefie.",
+      "W panelu mogą być przetwarzane statusy spraw, historia działań, wiadomości, przypisania do partnerów oraz dokumenty przekazane w związku ze sprawą.",
+      "Podanie danych jest dobrowolne, ale niezbędne do utworzenia konta, sprawy, zgłoszenia oferenta albo obsługi wybranej funkcji."
     ]
   },
   {
     title: "3. Cele przetwarzania danych",
     content: [
-      "Dane przetwarzamy w celu udzielenia odpowiedzi na zapytanie, prowadzenia korespondencji biznesowej, obsługi potencjalnej współpracy oraz zabezpieczenia ewentualnych roszczeń.",
+      "Dane przetwarzamy w celu prowadzenia konta użytkownika, utworzenia i obsługi sprawy z Case ID, indywidualnego doboru rozwiązania, obsługi zapytań o oferty, weryfikacji oferentów, komunikacji oraz zabezpieczenia ewentualnych roszczeń.",
       "Dane mogą być wykorzystywane także do obsługi newslettera albo systemu CRM, jeżeli użytkownik wyrazi wymaganą zgodę."
     ]
   },
   {
     title: "4. Podstawy prawne",
     content: [
-      "Podstawą przetwarzania danych z formularza jest prawnie uzasadniony interes administratora polegający na obsłudze zapytań i prowadzeniu komunikacji biznesowej.",
+      "Podstawą przetwarzania jest podjęcie działań na żądanie użytkownika przed zawarciem umowy, wykonanie umowy, prawnie uzasadniony interes administratora polegający na obsłudze spraw i współpracy biznesowej oraz obowiązki prawne administratora, zależnie od celu i etapu sprawy.",
       "W przypadku newslettera lub działań marketingowych wymagających zgody, podstawą przetwarzania będzie zgoda użytkownika."
     ]
   },
   {
     title: "5. Odbiorcy danych",
     content: [
-      "Dane mogą być przetwarzane przez dostawców usług technicznych, hostingowych, poczty e-mail, narzędzi analitycznych, narzędzi marketingowych oraz podmioty wspierające obsługę serwisu.",
-      "Aktualnie wiadomości z formularza są przekazywane na adres e-mail wskazany do kontaktu z serwisem."
+      "Dane mogą być przetwarzane przez dostawców hostingu, bazy danych, poczty e-mail, narzędzi analitycznych i podmioty wspierające obsługę serwisu na podstawie odpowiednich umów.",
+      "Dane związane z konkretną sprawą mogą zostać udostępnione zaakceptowanemu partnerowi dopiero po przypisaniu sprawy przez Dealshare i zgodnie z zakresem niezbędnym do realizacji kontaktu. Partner nie otrzymuje dostępu do całej bazy klientów ani spraw innych partnerów."
     ]
   },
   {
     title: "6. Okres przechowywania",
     content: [
-      "Dane z formularza przechowujemy przez okres potrzebny do obsługi korespondencji i realizacji celu kontaktu, a następnie przez czas wymagany do zabezpieczenia ewentualnych roszczeń.",
+      "Dane konta i spraw przechowujemy przez okres prowadzenia sprawy i korzystania z konta, a następnie przez czas potrzebny do realizacji obowiązków prawnych i zabezpieczenia ewentualnych roszczeń.",
       "Dane przetwarzane na podstawie zgody będą przechowywane do czasu jej wycofania, chyba że przepisy prawa pozwalają na dłuższe przechowywanie."
     ]
   },
@@ -65,6 +66,7 @@ const sections = [
     title: "8. Pliki cookies",
     content: [
       "Serwis wykorzystuje pliki cookies niezbędne do prawidłowego działania strony, w tym do zapamiętania wyboru dotyczącego zgody na cookies.",
+      "Po zalogowaniu serwis wykorzystuje niezbędne, bezpieczne cookies sesyjne służące do utrzymania dostępu do konta i ochrony panelu użytkownika.",
       "Za zgodą użytkownika serwis wykorzystuje cookies analityczne i marketingowe, w szczególności związane z narzędziami takimi jak Google Analytics, Google Tag Manager, Meta Pixel, LinkedIn Insight Tag lub podobne rozwiązania.",
       "Użytkownik może zmienić decyzję dotyczącą cookies przez przycisk „Ustawienia cookies” dostępny w stopce strony."
     ]
@@ -90,7 +92,7 @@ export default function PrivacyPolicyPage() {
         <Container>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Dokumenty</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Polityka prywatności i cookies</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">Ostatnia aktualizacja: 28 maja 2026 r.</p>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">Ostatnia aktualizacja: 28 czerwca 2026 r.</p>
         </Container>
       </section>
       <section className="py-16">

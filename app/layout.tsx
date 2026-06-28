@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ContactPrompt } from "@/components/ContactPrompt";
 import { CookieBanner } from "@/components/CookieBanner";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
@@ -18,7 +17,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "dealshare | Nowoczesna platforma ofertowa dla biznesu",
+    default: "dealshare | Od potrzeby do właściwego rozwiązania",
     template: "%s | dealshare"
   },
   description: siteConfig.description,
@@ -54,7 +53,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         {children}
         <Footer />
-        <ContactPrompt />
         <CookieBanner />
         <GoogleAnalytics />
         <ScrollAnimations />

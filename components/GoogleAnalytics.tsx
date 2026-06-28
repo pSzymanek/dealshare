@@ -33,7 +33,7 @@ export function GoogleAnalytics() {
   const [canTrack, setCanTrack] = useState(false);
 
   useEffect(() => {
-    setCanTrack(hasAnalyticsConsent());
+    const timer = window.setTimeout(() => setCanTrack(hasAnalyticsConsent()), 0);
 
     function handleConsent(event: Event) {
       const consent = (event as CustomEvent<"accepted" | "rejected">).detail;
@@ -48,7 +48,10 @@ export function GoogleAnalytics() {
     }
 
     window.addEventListener("dealshare-cookie-consent", handleConsent);
-    return () => window.removeEventListener("dealshare-cookie-consent", handleConsent);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("dealshare-cookie-consent", handleConsent);
+    };
   }, []);
 
   useEffect(() => {

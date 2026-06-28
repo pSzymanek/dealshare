@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { UserRound } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 import { Button } from "./Button";
 import { Container } from "./Container";
@@ -19,9 +20,12 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <div className="hidden lg:block">
-          <Button href="/kontakt" variant="ghost">
-            Porozmawiajmy!
+        <div className="hidden items-center gap-2 lg:flex">
+          <Link href="/panel" aria-label="Panel użytkownika" title="Panel użytkownika" className="grid h-11 w-11 place-items-center rounded-md border border-slate-200 text-navy transition hover:border-electric/30 hover:text-electric">
+            <UserRound size={19} />
+          </Link>
+          <Button href="/potrzeba" variant="ghost">
+            Opisz potrzebę
           </Button>
         </div>
         <MobileMenu />

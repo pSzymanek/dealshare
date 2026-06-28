@@ -9,9 +9,9 @@ export function Footer() {
     <footer className="bg-navy text-white">
       <Container className="grid gap-10 py-14 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
-          <Image src="/logo-dark.png" alt="dealshare" width={480} height={179} className="h-14 w-auto sm:h-16" />
+          <Image src="/logo-dark.png" alt="dealshare" width={172} height={64} />
           <p className="mt-5 max-w-md text-sm leading-7 text-white/68">
-            Platforma B2B pomagająca firmom odkrywać wybrane oferty, partnerów i rozwiązania biznesowe w bardziej uporządkowany sposób.
+            Platforma B2B prowadząca firmę od potrzeby lub jawnej oferty do właściwego rozwiązania, partnera i konkretnego wyniku.
           </p>
         </div>
         <div>

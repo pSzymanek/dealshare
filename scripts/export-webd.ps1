@@ -72,13 +72,19 @@ try {
     Run-Step "Kopiowanie plikow aplikacji" {
         Copy-Item -LiteralPath (Join-Path $projectRoot ".next") -Destination $exportDir -Recurse
         Copy-Item -LiteralPath (Join-Path $projectRoot "public") -Destination $exportDir -Recurse
+        Copy-Item -LiteralPath (Join-Path $projectRoot "db") -Destination $exportDir -Recurse
+        New-Item -ItemType Directory -Path (Join-Path $exportDir "scripts") | Out-Null
+        Copy-Item -LiteralPath (Join-Path $projectRoot "scripts\bootstrap-admin.mjs") -Destination (Join-Path $exportDir "scripts")
 
         @(
+            ".nvmrc"
             ".env.example"
+            "drizzle.config.ts"
             "next.config.mjs"
             "package-lock.json"
             "package.json"
             "server.js"
+            "tsconfig.json"
         ) | ForEach-Object {
             Copy-Item -LiteralPath (Join-Path $projectRoot $_) -Destination $exportDir
         }
@@ -90,14 +96,18 @@ Wgraj plik `dealshare-webd.zip` na serwer i rozpakuj go w katalogu aplikacji.
 Archiwum zawiera:
 - `.next`
 - `public`
+- `db` z migracjami MySQL/MariaDB
+- `scripts/bootstrap-admin.mjs`
 - `package.json`
 - `package-lock.json`
+- `drizzle.config.ts`
 - `next.config.mjs`
 - `server.js`
+- `tsconfig.json`
 - `.env.example` jako wzor wymaganych zmiennych
 
 Prawdziwe zmienne srodowiskowe pozostaja skonfigurowane osobno w aplikacji Node na hostingu.
-Po rozpakowaniu uruchom instalacje zaleznosci i start aplikacji zgodnie z panelem hostingu.
+Po rozpakowaniu uruchom `npm install`, `npm run db:migrate` i start aplikacji zgodnie z panelem hostingu.
 '@ | Set-Content -LiteralPath (Join-Path $exportDir "README.md") -Encoding ASCII
     }
 

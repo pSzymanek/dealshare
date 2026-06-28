@@ -2,18 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/lib/site";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
 
@@ -56,7 +49,8 @@ export function MobileMenu() {
         />
         <aside
           id="mobile-menu"
-          className={`absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[calc(100dvw-32px)] max-w-[340px] flex-col overflow-y-auto overflow-x-hidden border-l border-white/65 bg-white/78 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          style={{ transform: isOpen ? "translateX(0)" : "translateX(100%)" }}
+          className="absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[calc(100dvw-32px)] max-w-[340px] flex-col overflow-y-auto overflow-x-hidden border-l border-white/65 bg-white/78 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5"
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(0,209,209,0.08),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.68),rgba(243,248,252,0.52))]" />
 
@@ -80,6 +74,7 @@ export function MobileMenu() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setIsOpen(false)}
                 className="group flex items-center justify-between rounded-md border border-slate-200 bg-white/88 px-4 py-2.5 text-sm font-bold text-navy shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-electric/25 hover:bg-electric/5 hover:text-electric hover:shadow-card sm:py-3 sm:text-base"
               >
                 {item.label}
@@ -90,15 +85,13 @@ export function MobileMenu() {
             ))}
           </nav>
 
-          <Link
-            href="/kontakt"
-            className="button-glass relative z-10 isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow"
-          >
-            <span className="relative z-10">Porozmawiajmy!</span>
-          </Link>
+          <div className="relative z-10 mt-6 grid grid-cols-2 gap-2">
+            <Link href="/panel" onClick={() => setIsOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-sm font-bold text-navy">Panel</Link>
+            <Link href="/potrzeba" onClick={() => setIsOpen(false)} className="button-glass isolate inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-3 text-sm font-bold text-white shadow-glow"><span className="relative z-10">Opisz potrzebę</span></Link>
+          </div>
 
-          <Link href="/" aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
-            <Image src="/logo-dark.png" alt="dealshare" width={204} height={76} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
+          <Link href="/" onClick={() => setIsOpen(false)} aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
+            <Image src="/logo-dark.png" alt="dealshare" width={204} height={76} className="opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
           </Link>
         </aside>
       </div>

@@ -1,12 +1,22 @@
+const wordpressUrl = process.env.WORDPRESS_API_URL;
+const wordpressPattern = (() => {
+  if (!wordpressUrl) return null;
+
+  try {
+    const url = new URL(wordpressUrl);
+    return {
+      protocol: url.protocol.replace(":", ""),
+      hostname: url.hostname
+    };
+  } catch {
+    return null;
+  }
+})();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**"
-      }
-    ]
+    remotePatterns: wordpressPattern ? [wordpressPattern] : []
   },
   async redirects() {
     return [
