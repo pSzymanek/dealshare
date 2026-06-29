@@ -14,6 +14,10 @@ export/
 .env*.local
 .env*.zip
 
+# private operational documentation
+.private/
+docs/private/
+
 # logs
 npm-debug.log*
 yarn-debug.log*
@@ -25,3 +29,4 @@ pnpm-debug.log*
 # system
 .DS_Store
 Thumbs.db
+.codex-remote-attachments/

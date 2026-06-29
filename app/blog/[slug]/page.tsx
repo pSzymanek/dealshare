@@ -8,24 +8,26 @@ import { CTASection } from "@/components/CTASection";
 import { getPostBySlug } from "@/lib/wordpress";
 
 type BlogPostPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   return {
     title: post?.title ?? "Wpis blogowy",
     description: post?.excerpt ?? "Wpis blogowy dealshare.",
     alternates: {
-      canonical: `/blog/${params.slug}`
+      canonical: `/blog/${slug}`
     }
   };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();

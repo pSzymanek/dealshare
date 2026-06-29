@@ -21,12 +21,12 @@ export default function HomePage() {
       <section className="bg-navy py-16 text-white sm:py-20 lg:py-24">
         <Container>
           <div className="max-w-5xl">
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Biznes bez kompleksów</p>
-            <h1 className="mt-5 text-4xl font-black leading-tight sm:text-6xl lg:text-7xl">Znajdź właściwą możliwość dla swojej firmy.</h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78 sm:text-xl">Przeglądaj konkretne propozycje biznesowe albo opowiedz nam, czego potrzebuje Twoja firma. Pomożemy Ci znaleźć rozwiązanie i dotrzeć do właściwych ludzi.</p>
+            <p className="text-sm font-black uppercase tracking-[0.18em] text-cyan">Oferty i rozwiązania dla firm</p>
+            <h1 className="mt-5 text-4xl font-black leading-tight sm:text-6xl lg:text-7xl">Od potrzeby do właściwego rozwiązania.</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78 sm:text-xl">Przeglądaj konkretne propozycje biznesowe albo opisz, czego potrzebuje Twoja firma. Dealshare pomaga znaleźć właściwy kierunek, partnera i kolejny krok.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/oferty#jawne-oferty" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-cyan px-6 text-sm font-black text-navy transition hover:bg-white">Przeglądaj możliwości <ArrowRight size={18} /></Link>
-              <Link href="/potrzeba" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/30 px-6 text-sm font-black text-white transition hover:bg-white/10">Porozmawiajmy o Twojej firmie <ArrowRight size={18} /></Link>
+              <Link href="/oferty#jawne-oferty" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-cyan px-6 text-sm font-black text-navy transition hover:bg-white">Sprawdź oferty <ArrowRight size={18} /></Link>
+              <Link href="/potrzeba" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/30 px-6 text-sm font-black text-white transition hover:bg-white/10">Opisz potrzebę <ArrowRight size={18} /></Link>
             </div>
           </div>
         </Container>
@@ -57,7 +57,7 @@ export default function HomePage() {
           <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-slate-200 bg-slate-200 md:grid-cols-5">
             {processSteps.map((step, index) => <li key={step} className="bg-white p-5"><span className="font-mono text-sm font-black text-electric">0{index + 1}</span><p className="mt-3 text-sm font-bold leading-6 text-navy">{step}</p></li>)}
           </ol>
-          <div className="mt-8 flex flex-wrap gap-3"><Link href="/jak-dziala" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-electric px-5 text-sm font-bold text-white">Zobacz, jak to działa <ArrowRight size={17} /></Link><Link href="/dla-partnerow" className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-300 px-5 text-sm font-bold text-navy"><BriefcaseBusiness size={17} /> Współpraca z Dealshare</Link></div>
+          <div className="mt-8 flex flex-wrap gap-3"><Link href="/jak-dzialamy" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-electric px-5 text-sm font-bold text-white">Zobacz, jak działamy <ArrowRight size={17} /></Link><Link href="/dla-partnerow" className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-300 px-5 text-sm font-bold text-navy"><BriefcaseBusiness size={17} /> Współpraca z Dealshare</Link></div>
         </Container>
       </section>
     </main>

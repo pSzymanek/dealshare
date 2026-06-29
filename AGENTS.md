@@ -89,6 +89,15 @@
 - Nie pracuj bezposrednio na `main`, chyba ze uzytkownik wyraznie o to poprosi.
 - `main` traktuj jako decyzje produkcyjna, a nie miejsce eksperymentow.
 
+## Bezpieczenstwo repozytorium
+
+- Repozytorium GitHub jest publiczne. Traktuj kazdy sledzony plik jako informacje dostepna dla osob trzecich.
+- Nigdy nie zapisuj w repozytorium prawdziwych sekretow, hasel, tokenow, kluczy, danych SMTP, polaczen bazodanowych ani danych dostepowych do hostingu.
+- Publiczne `.env.example` moze zawierac nazwy zmiennych i jednoznaczne placeholdery, ale nigdy wartosci uzywane w jakimkolwiek srodowisku.
+- Runbooki produkcyjne, procedury nadawania uprawnien administratora, szczegoly hostingu, sciezki serwerowe i procedury awaryjne przechowuj poza publicznym repozytorium.
+- README publicznego repozytorium ma opisywac projekt i podstawowe uruchomienie developerskie, bez instrukcji administracyjnych i produkcyjnych.
+- Przed kazdym pushem sprawdz zmiany pod katem sekretow i przypadkowo dodanych plikow lokalnych.
+
 ## Weryfikacja
 
 - Po zmianach w kodzie uruchom `npm run build`, chyba ze uzytkownik wyraznie poprosi tylko o analize bez zmian.

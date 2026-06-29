@@ -1,33 +1,26 @@
 # Dealshare
 
-Platforma B2B prowadzaca firme od potrzeby lub jawnej oferty do sprawy z Case ID, dopasowania partnera i konkretnego wyniku.
+Dealshare laczy polskie firmy z konkretnymi ofertami, partnerami i rozwiazaniami biznesowymi.
 
-## Stack
+## Technology
 
-- Next.js 16 App Router i React 19
-- TypeScript i Tailwind CSS 3
-- MySQL/MariaDB, Drizzle ORM i migracje SQL
-- Better Auth: haslo, weryfikacja e-mail, reset hasla i magic link
-- Nodemailer
-- WordPress REST API jako zrodlo bloga
+- Next.js and React
+- TypeScript and Tailwind CSS
+- MySQL/MariaDB and Drizzle ORM
+- Better Auth
 
-Wymagany Node.js: 22 lub nowszy.
+## Local development
 
-## Uruchomienie
+Requires Node.js 22 or newer.
 
 ```bash
 npm install
-npm run db:migrate
 npm run dev
 ```
 
-Skopiuj `.env.example` do `.env.local` i ustaw prawdziwe wartosci. Wygeneruj sekret:
+Use local environment variables based on `.env.example`. Never commit real credentials or environment files.
 
-```bash
-node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
-```
-
-## Kontrola jakosci
+## Quality checks
 
 ```bash
 npm run typecheck
@@ -35,14 +28,4 @@ npm run lint
 npm run build
 ```
 
-## Pierwszy administrator
-
-Najpierw zarejestruj i potwierdz konto, a nastepnie uruchom:
-
-```bash
-npm run admin:bootstrap -- adres@dealshare.pl
-```
-
-## Wdrozenie
-
-Pelna instrukcja konfiguracji MySQL, Vercel i Webd znajduje sie w `docs/PLATFORM_DEPLOYMENT.md`.
+See [SECURITY.md](SECURITY.md) for responsible disclosure information.

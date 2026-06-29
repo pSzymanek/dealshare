@@ -21,6 +21,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/jak-dziala",
+        destination: "/jak-dzialamy",
+        permanent: true
+      },
+      {
         source: "/:path*",
         has: [
           {

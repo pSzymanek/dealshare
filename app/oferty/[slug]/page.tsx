@@ -8,17 +8,18 @@ import { Container } from "@/components/Container";
 import { getOfferBySlug, getOfferVisibility, offerStaticSlugs, type Offer, type OfferCardItem } from "@/lib/offers";
 
 type OfferDetailPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export function generateStaticParams() {
   return offerStaticSlugs.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: OfferDetailPageProps): Metadata {
-  const offer = getOfferBySlug(params.slug);
+export async function generateMetadata({ params }: OfferDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const offer = getOfferBySlug(slug);
 
   return {
     title: offer?.seo.title ?? "Oferta",
@@ -29,8 +30,9 @@ export function generateMetadata({ params }: OfferDetailPageProps): Metadata {
   };
 }
 
-export default function OfferDetailPage({ params }: OfferDetailPageProps) {
-  const offer = getOfferBySlug(params.slug);
+export default async function OfferDetailPage({ params }: OfferDetailPageProps) {
+  const { slug } = await params;
+  const offer = getOfferBySlug(slug);
 
   if (!offer) {
     notFound();
