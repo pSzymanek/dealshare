@@ -8,6 +8,8 @@ const staticRoutes = [
   "/jak-dzialamy",
   "/dla-partnerow",
   "/potrzeba",
+  "/umowy-na-energie",
+  "/sankcja-kredytu-darmowego",
   "/moc-obliczeniowa",
   "/o-nas",
   "/kontakt",
