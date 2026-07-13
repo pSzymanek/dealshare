@@ -5,6 +5,8 @@ import { siteConfig } from "@/lib/site";
 const staticRoutes = [
   "",
   "/oferty",
+  "/umowy-na-energie",
+  "/sankcja-kredytu-darmowego",
   "/moc-obliczeniowa",
   "/o-nas",
   "/kontakt",

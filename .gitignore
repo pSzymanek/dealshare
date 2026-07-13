@@ -4,6 +4,7 @@ node_modules/
 # next.js
 .next/
 out/
+tsconfig.tsbuildinfo
 
 # production
 build/
@@ -20,7 +21,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .next-dev*.log
+.next-start*.log
 
 # system
 .DS_Store
 Thumbs.db
+
+# local Codex/browser attachments
+.codex-remote-attachments/
