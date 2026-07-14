@@ -99,8 +99,11 @@ export async function POST(request: Request) {
   const offerId = clean(String(formData.get("offerId") ?? ""));
   const offerTitle = clean(String(formData.get("offerTitle") ?? ""));
   const sourceUrl = clean(String(formData.get("sourceUrl") ?? ""));
+  const sourceForm = clean(String(formData.get("sourceForm") ?? ""));
   const contact = parseJsonField<LandingContact>(formData.get("contact"), {});
   const preferredContactMethod = parseJsonField<string[]>(formData.get("preferredContactMethod"), []);
+  const preferredContactTime = parseJsonField<string[]>(formData.get("preferredContactTime"), []);
+  const customContactDateTime = clean(String(formData.get("customContactDateTime") ?? ""));
   const answers = parseJsonField<LandingAnswer[]>(formData.get("answers"), []);
   const fullName = clean(contact.fullName);
   const phone = clean(contact.phone);
@@ -136,6 +139,8 @@ export async function POST(request: Request) {
   const attachmentSummary = files.length ? files.map((file) => `${file.name} (${Math.round(file.size / 1024)} KB)`).join(", ") : "Nie załączono plików";
   const consentText = "Użytkownik zaakceptował regulamin i wyraził zgodę na przetwarzanie danych z formularza oraz kontakt telefoniczny, mailowy, SMS lub przez komunikator w celu obsługi zgłoszenia.";
 
+  const sourceLabel = sourceForm === "brief-modal" ? "popup briefu" : sourceForm === "brief-inline" ? "formularz na stronie oferty" : "landing page";
+
   const text = [
     "Nowe zgłoszenie z landing page Dealshare",
     "",
@@ -152,6 +157,10 @@ export async function POST(request: Request) {
     "",
     "Preferowany kontakt:",
     preferredContactMethod.join(", "),
+    "",
+    "Preferowany termin kontaktu:",
+    preferredContactTime.length ? preferredContactTime.join(", ") : "Nie podano",
+    ...(customContactDateTime ? ["Konkretna data/godzina:", customContactDateTime] : []),
     "",
     "Informacje z formularza:",
     ...filteredAnswers.flatMap((answer) => [
@@ -172,6 +181,7 @@ export async function POST(request: Request) {
     consentText,
     "",
     "Informacje techniczne:",
+    `Typ formularza: ${sourceLabel}`,
     `Data wysłania: ${sentAt}`,
     `Adres strony / źródło formularza: ${sourceUrl || "Nie podano"}`
   ].join("\n");
@@ -208,6 +218,9 @@ export async function POST(request: Request) {
       </table>
       <h2 style="margin:24px 0 8px;color:#001f4d;">Preferowany kontakt</h2>
       <p>${escapeHtml(preferredContactMethod.join(", "))}</p>
+      <h2 style="margin:24px 0 8px;color:#001f4d;">Preferowany termin kontaktu</h2>
+      <p>${escapeHtml(preferredContactTime.length ? preferredContactTime.join(", ") : "Nie podano")}</p>
+      ${customContactDateTime ? `<p><strong>Konkretna data/godzina:</strong> ${escapeHtml(customContactDateTime)}</p>` : ""}
       <h2 style="margin:24px 0 8px;color:#001f4d;">Informacje z formularza</h2>
       ${answerHtml || "<p>Nie podano dodatkowych odpowiedzi.</p>"}
       <h2 style="margin:24px 0 8px;color:#001f4d;">Dodatkowe informacje</h2>
@@ -217,6 +230,7 @@ export async function POST(request: Request) {
       <h2 style="margin:24px 0 8px;color:#001f4d;">Zgoda</h2>
       <p>${escapeHtml(consentText)}</p>
       <h2 style="margin:24px 0 8px;color:#001f4d;">Informacje techniczne</h2>
+      <p><strong>Typ formularza:</strong> ${escapeHtml(sourceLabel)}</p>
       <p><strong>Data wysłania:</strong> ${escapeHtml(sentAt)}</p>
       <p><strong>Adres strony / źródło formularza:</strong> ${escapeHtml(sourceUrl || "Nie podano")}</p>
     </div>
@@ -235,7 +249,7 @@ export async function POST(request: Request) {
       from: mailer.smtpFrom,
       to: contactEmail,
       replyTo: email,
-      subject: `[Dealshare] Landing: ${offerTitle || offerId || "zgłoszenie"} — ${fullName}`,
+      subject: `[Dealshare] ${sourceLabel}: ${offerTitle || offerId || "zgłoszenie"} — ${fullName}`,
       text,
       html,
       attachments

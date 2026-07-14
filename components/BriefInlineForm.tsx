@@ -159,6 +159,7 @@ export function BriefInlineForm({ config, title, text }: BriefInlineFormProps) {
     formData.append("contact", JSON.stringify(contact));
     formData.append("preferredContactMethod", JSON.stringify(preferredContactMethod));
     formData.append("answers", JSON.stringify(submittedAnswers));
+    formData.append("sourceForm", "brief-inline");
     formData.append("sourceUrl", window.location.href);
     files.forEach((file) => formData.append("files", file));
 

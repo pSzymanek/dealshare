@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { BriefConfig } from "@/lib/briefs";
@@ -21,9 +22,10 @@ type ContactValues = {
   nip: string;
   customContactDateTime: string;
   additionalInfo: string;
+  consent: boolean;
 };
 
-type ContactErrors = Partial<Record<keyof ContactValues | "preferredContactMethod" | "preferredContactTime", string>>;
+type ContactErrors = Partial<Record<keyof ContactValues | "preferredContactMethod" | "preferredContactTime" | "files", string>>;
 
 const contactInitialState: ContactValues = {
   fullName: "",
@@ -32,18 +34,22 @@ const contactInitialState: ContactValues = {
   companyName: "",
   nip: "",
   customContactDateTime: "",
-  additionalInfo: ""
+  additionalInfo: "",
+  consent: false
 };
 
 const preferredContactMethods = ["Telefon", "E-mail", "WhatsApp", "SMS", "Wszystko jedno"];
 const preferredContactTimes = ["9:00-12:00", "12:00-16:00", "16:00-18:00", "Konkretna data i godzina"];
+const maxFiles = 5;
+const maxTotalFileSize = 12 * 1024 * 1024;
 
 function cx(...classes: Array<string | false | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-function validateContact(values: ContactValues, preferredContactMethod: string[], preferredContactTime: string[]) {
+function validateContact(values: ContactValues, preferredContactMethod: string[], preferredContactTime: string[], files: File[]) {
   const errors: ContactErrors = {};
+  const totalFileSize = files.reduce((sum, file) => sum + file.size, 0);
 
   if (!values.fullName.trim()) errors.fullName = "Wpisz imię i nazwisko.";
   if (!values.phone.trim()) errors.phone = "Wpisz numer telefonu.";
@@ -58,6 +64,10 @@ function validateContact(values: ContactValues, preferredContactMethod: string[]
     errors.customContactDateTime = "Wpisz preferowaną datę i godzinę kontaktu.";
   }
 
+  if (!values.consent) errors.consent = "Zaakceptuj regulamin i zgodę na kontakt.";
+  if (files.length > maxFiles) errors.files = `Możesz dodać maksymalnie ${maxFiles} plików.`;
+  if (totalFileSize > maxTotalFileSize) errors.files = "Łączny rozmiar załączników nie może przekroczyć 12 MB.";
+
   return errors;
 }
 
@@ -68,6 +78,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
   const [contact, setContact] = useState(contactInitialState);
   const [preferredContactMethod, setPreferredContactMethod] = useState<string[]>([]);
   const [preferredContactTime, setPreferredContactTime] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [showErrors, setShowErrors] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
@@ -80,7 +91,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
   const currentStep = config.steps[stepIndex];
   const activeStepSelectedOptions = currentStep ? answers[currentStep.question] ?? [] : [];
   const canGoNext = isContactStep || activeStepSelectedOptions.length > 0;
-  const finalErrors = validateContact(contact, preferredContactMethod, preferredContactTime);
+  const finalErrors = validateContact(contact, preferredContactMethod, preferredContactTime, files);
   const canSubmit = Object.keys(finalErrors).length === 0 && status !== "loading";
   const contactErrors = isContactStep || showErrors ? finalErrors : {};
 
@@ -142,8 +153,16 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
     setPreferredContactMethod(withoutAny.includes(value) ? withoutAny.filter((item) => item !== value) : [...withoutAny, value]);
   }
 
-  function updateContact(name: keyof ContactValues, value: string) {
+  function updateContact<K extends keyof ContactValues>(name: K, value: ContactValues[K]) {
     setContact({ ...contact, [name]: value });
+    if (status !== "idle") {
+      setStatus("idle");
+      setFeedback("");
+    }
+  }
+
+  function updateFiles(nextFiles: File[]) {
+    setFiles(nextFiles);
     if (status !== "idle") {
       setStatus("idle");
       setFeedback("");
@@ -156,6 +175,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
     setContact(contactInitialState);
     setPreferredContactMethod([]);
     setPreferredContactTime([]);
+    setFiles([]);
     setShowErrors(false);
   }
 
@@ -163,7 +183,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
     event.preventDefault();
     setShowErrors(true);
 
-    const errors = validateContact(contact, preferredContactMethod, preferredContactTime);
+    const errors = validateContact(contact, preferredContactMethod, preferredContactTime, files);
 
     if (Object.keys(errors).length > 0) {
       setStatus("error");
@@ -174,22 +194,22 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
     setStatus("loading");
     setFeedback("");
 
+    const formData = new FormData();
+    formData.append("offerId", config.offerId);
+    formData.append("offerTitle", config.offerTitle);
+    formData.append("contact", JSON.stringify(contact));
+    formData.append("preferredContactMethod", JSON.stringify(preferredContactMethod));
+    formData.append("preferredContactTime", JSON.stringify(preferredContactTime));
+    formData.append("customContactDateTime", contact.customContactDateTime);
+    formData.append("answers", JSON.stringify(submittedAnswers));
+    formData.append("sourceForm", "brief-modal");
+    formData.append("sourceUrl", window.location.href);
+    files.forEach((file) => formData.append("files", file));
+
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/landing-leads", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "brief",
-          offerId: config.offerId,
-          offerTitle: config.offerTitle,
-          answers: submittedAnswers,
-          contact,
-          preferredContactMethod,
-          preferredContactTime,
-          customContactDateTime: contact.customContactDateTime,
-          additionalInfo: contact.additionalInfo,
-          sourceUrl: window.location.href
-        })
+        body: formData
       });
       const data = (await response.json()) as { message?: string };
 
@@ -261,9 +281,11 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
                           errors={contactErrors}
                           preferredContactMethod={preferredContactMethod}
                           preferredContactTime={preferredContactTime}
+                          files={files}
                           onValueChange={updateContact}
                           onMethodToggle={toggleContactMethod}
                           onTimeToggle={(value) => toggleListValue(value, preferredContactTime, setPreferredContactTime)}
+                          onFilesChange={updateFiles}
                         />
                       ) : currentStep ? (
                         <div>
@@ -339,12 +361,14 @@ type ContactStepProps = {
   errors: ContactErrors;
   preferredContactMethod: string[];
   preferredContactTime: string[];
-  onValueChange: (name: keyof ContactValues, value: string) => void;
+  files: File[];
+  onValueChange: <K extends keyof ContactValues>(name: K, value: ContactValues[K]) => void;
   onMethodToggle: (value: string) => void;
   onTimeToggle: (value: string) => void;
+  onFilesChange: (files: File[]) => void;
 };
 
-function ContactStep({ values, errors, preferredContactMethod, preferredContactTime, onValueChange, onMethodToggle, onTimeToggle }: ContactStepProps) {
+function ContactStep({ values, errors, preferredContactMethod, preferredContactTime, files, onValueChange, onMethodToggle, onTimeToggle, onFilesChange }: ContactStepProps) {
   return (
     <div>
       <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan">Kontakt</p>
@@ -370,6 +394,20 @@ function ContactStep({ values, errors, preferredContactMethod, preferredContactT
       ) : null}
 
       <label className="mt-5 block">
+        <span className="text-sm font-bold text-navy">Załączniki</span>
+        <input
+          type="file"
+          multiple
+          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
+          onChange={(event) => onFilesChange(Array.from(event.target.files ?? []))}
+          className="mt-2 block w-full rounded-md border border-slate-300 px-4 py-3 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-electric file:px-4 file:py-2 file:text-sm file:font-bold file:text-white hover:border-slate-400 focus:border-electric focus:ring-4 focus:ring-electric/10"
+        />
+        <span className="mt-2 block text-xs font-semibold text-slate-500">Maksymalnie 5 plików, łącznie do 12 MB. PDF, JPG, PNG, DOC, DOCX, XLS, XLSX.</span>
+        {files.length ? <span className="mt-2 block text-xs font-semibold text-slate-500">Wybrane pliki: {files.map((file) => file.name).join(", ")}</span> : null}
+        {errors.files ? <p className="mt-2 text-xs font-semibold text-teal">{errors.files}</p> : null}
+      </label>
+
+      <label className="mt-5 block">
         <span className="text-sm font-bold text-navy">Dodatkowe informacje</span>
         <textarea
           value={values.additionalInfo}
@@ -378,6 +416,18 @@ function ContactStep({ values, errors, preferredContactMethod, preferredContactT
           className="mt-2 min-h-28 w-full rounded-md border border-slate-300 px-4 py-3 text-sm outline-none transition hover:border-slate-400 focus:border-electric focus:ring-4 focus:ring-electric/10"
         />
       </label>
+
+      <label className="mt-5 flex items-start gap-3 rounded-lg border border-slate-200 bg-mist/70 p-4 text-sm leading-6 text-slate-700">
+        <input type="checkbox" checked={values.consent} onChange={(event) => onValueChange("consent", event.target.checked)} className="mt-1 h-4 w-4 accent-electric" required />
+        <span>
+          Akceptuję{" "}
+          <Link href="/regulamin#formularze-i-zgody" className="font-bold text-electric underline underline-offset-4">
+            regulamin
+          </Link>{" "}
+          i wyrażam zgodę na przetwarzanie danych z formularza oraz kontakt ze strony Dealshare telefonicznie, mailowo, SMS-em lub przez komunikator w celu obsługi zgłoszenia.
+        </span>
+      </label>
+      {errors.consent ? <p className="mt-2 text-xs font-semibold text-teal">{errors.consent}</p> : null}
     </div>
   );
 }
