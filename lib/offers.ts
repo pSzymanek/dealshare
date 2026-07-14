@@ -1,4 +1,4 @@
-export type OfferStatus = "Dostępne" | "Nowe" | "Premium" | "Analiza indywidualna" | "Dla osób fizycznych";
+export type OfferStatus = "Dostępne" | "Nowe" | "Premium" | "Analiza indywidualna" | "Dla osób fizycznych" | "Przyjmowanie zgłoszeń zakończone";
 
 export type OfferCategoryTag = {
   name: string;
@@ -89,6 +89,13 @@ const categories = {
   energy: { name: "Energia i optymalizacja kosztów", slug: "energia" },
   individual: { name: "Inne/Indywidualne", slug: "inne-indywidualne" }
 } satisfies Record<string, OfferCategoryTag>;
+
+export const closedOfferStatus: OfferStatus = "Przyjmowanie zgłoszeń zakończone";
+export const closedOfferSlugs = ["infrastruktura-gpu", "kontrakty-flotowe"] as const;
+
+export function isOfferClosed(offer: Pick<Offer, "slug" | "status">) {
+  return offer.status === closedOfferStatus || closedOfferSlugs.includes(offer.slug as (typeof closedOfferSlugs)[number]);
+}
 
 export const offers: Offer[] = [
   {
@@ -225,7 +232,7 @@ export const offers: Offer[] = [
     category: categories.investments.name,
     categorySlug: categories.investments.slug,
     categories: [categories.investments],
-    status: "Nowe",
+    status: closedOfferStatus,
     headline: "Wejdź w zaplecze obliczeniowe potrzebne dla AI, renderingu i zaawansowanych usług cyfrowych.",
     description: "Inwestycja w zaplecze obliczeniowe dla rynku AI. Model oparty na realnej infrastrukturze, obsłudze technicznej po stronie partnera i warunkach kontraktowych.",
     lead: "Model inwestycyjny opiera się na infrastrukturze GPU pracującej na potrzeby rynku AI i usług obliczeniowych. Inwestor finansuje aktywo, a obsługa techniczna i komercyjna znajduje się po stronie partnerów projektu.",
@@ -311,7 +318,7 @@ export const offers: Offer[] = [
     category: categories.contracts.name,
     categorySlug: categories.contracts.slug,
     categories: [categories.contracts],
-    status: "Dostępne",
+    status: closedOfferStatus,
     headline: "Zainwestuj w działający sektor mobilności, wynajmu i zarządzania flotą.",
     description: "Model oparty na pojazdach pracujących w zarządzanej flocie. Operator odpowiada za obsługę, serwis i wykorzystanie pojazdów, a inwestor korzysta z warunków kontraktu.",
     lead: "Zainwestuj w pojazdy pracujące w profesjonalnie zarządzanej flocie. Operator bierze na siebie obsługę, serwis, kierowców, rozliczenia i bieżące wykorzystanie pojazdów, a inwestor działa w oparciu o warunki zapisane w kontrakcie.",

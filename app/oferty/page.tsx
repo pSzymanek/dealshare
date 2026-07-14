@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { OfferCard } from "@/components/OfferCard";
 import { PartnerOfferCard } from "@/components/PartnerOfferCard";
 import { SectionHeading } from "@/components/SectionHeading";
-import { offers } from "@/lib/offers";
+import { isOfferClosed, offers } from "@/lib/offers";
 
 export const metadata: Metadata = {
   title: "Oferty biznesowe",
@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 };
 
 export default function OffersPage() {
+  const sortedOffers = [...offers].sort((firstOffer, secondOffer) => Number(isOfferClosed(firstOffer)) - Number(isOfferClosed(secondOffer)));
+
   return (
     <main>
       <section className="bg-white py-20">
@@ -49,7 +51,7 @@ export default function OffersPage() {
             description="Każda oferta prowadzi do uporządkowanej podstrony: problem, zakres, proces, dokumenty, punkty kontrolne i kolejny krok."
           />
           <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {offers.map((offer) => (
+            {sortedOffers.map((offer) => (
               <OfferCard key={offer.slug} offer={offer} />
             ))}
             <PartnerOfferCard />

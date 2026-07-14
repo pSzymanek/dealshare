@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Offer } from "@/lib/offers";
+import { isOfferClosed, type Offer } from "@/lib/offers";
 import { Badge } from "./Badge";
 
 type OfferCardProps = {
@@ -19,9 +19,10 @@ const offerIcons: Record<string, string> = {
 
 export function OfferCard({ offer }: OfferCardProps) {
   const icon = offerIcons[offer.slug];
+  const isClosed = isOfferClosed(offer);
 
   return (
-    <article className="card-glass offer-card soft-lift group flex min-h-full flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm hover:border-electric/30 hover:shadow-card">
+    <article className={`card-glass offer-card soft-lift group flex min-h-full flex-col rounded-lg border bg-white p-6 shadow-sm hover:shadow-card ${isClosed ? "border-slate-300/80 opacity-90 hover:border-slate-400" : "border-slate-200 hover:border-electric/30"}`}>
       <div className="pointer-events-none !absolute right-4 top-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
       {icon ? <Image src={icon} alt="" width={72} height={72} className="offer-card-icon relative h-16 w-16 object-contain" /> : null}
 
@@ -38,7 +39,13 @@ export function OfferCard({ offer }: OfferCardProps) {
             </span>
           ))}
         </div>
-        <Badge tone={offer.status === "Premium" || offer.status === "Nowe" ? "blue" : "dark"}>{offer.status}</Badge>
+        {isClosed ? (
+          <span className="inline-flex max-w-[180px] rounded border border-slate-300 bg-slate-100 px-2.5 py-1 text-right text-[11px] font-black uppercase leading-4 tracking-wide text-slate-600">
+            {offer.status}
+          </span>
+        ) : (
+          <Badge tone={offer.status === "Premium" || offer.status === "Nowe" ? "blue" : "dark"}>{offer.status}</Badge>
+        )}
       </div>
 
       <div className="relative flex flex-col">
@@ -58,7 +65,7 @@ export function OfferCard({ offer }: OfferCardProps) {
 
       <div className="relative mt-auto flex flex-col pt-6">
         <Link href={`/oferty/${offer.slug}`} className="arrow-link inline-flex text-sm font-bold text-electric transition hover:text-teal">
-          Sprawdź szczegóły
+          {isClosed ? "Zobacz archiwalną ofertę" : "Sprawdź szczegóły"}
           <span aria-hidden="true" className="arrow-mark ml-2">
             →
           </span>

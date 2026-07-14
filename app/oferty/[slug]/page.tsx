@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
+import { BriefInlineForm } from "@/components/BriefInlineForm";
 import { Button } from "@/components/Button";
+import { BriefModal } from "@/components/BriefModal";
+import { ClosedOfferOverlay } from "@/components/ClosedOfferOverlay";
 import { Container } from "@/components/Container";
-import { LandingLeadForm } from "@/components/LandingLeadForm";
 import { getBriefConfig } from "@/lib/briefs";
-import { getOfferBySlug, offerStaticSlugs, offers, type Offer, type OfferCardItem } from "@/lib/offers";
+import { getOfferBySlug, isOfferClosed, offerStaticSlugs, offers, type Offer, type OfferCardItem } from "@/lib/offers";
 
 type OfferDetailPageProps = {
   params: Promise<{
@@ -40,6 +42,7 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
   }
 
   const briefConfig = getBriefConfig(offer.slug);
+  const isClosed = isOfferClosed(offer);
 
   return (
     <main className="bg-white text-ink">
@@ -55,7 +58,7 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
                     {category.name}
                   </Badge>
                 ))}
-                <Badge tone="teal">{offer.status}</Badge>
+                <Badge tone={isClosed ? "dark" : "teal"}>{offer.status}</Badge>
               </div>
               <h1 className="mt-5 text-4xl font-black tracking-tight text-navy sm:text-6xl">{offer.title}</h1>
               <p className="mt-5 max-w-2xl text-xl font-semibold leading-8 text-slate-700">{offer.headline}</p>
@@ -69,7 +72,7 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-4">
-                <Button href={briefConfig ? "#formularz" : "/kontakt"}>{briefConfig ? briefConfig.cta : offer.ctaPrimary}</Button>
+                {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} /> : <Button href="/kontakt">{offer.ctaPrimary}</Button>}
                 <Button href="#proces" variant="ghost">
                   {offer.ctaSecondary} <span className="ml-2">→</span>
                 </Button>
@@ -86,9 +89,7 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
                 ))}
               </ul>
               {briefConfig ? (
-                <Button href="#formularz" className="mt-6 w-full">
-                  {offer.sidePanel.cta}
-                </Button>
+                <BriefModal config={briefConfig} buttonLabel={offer.sidePanel.cta} buttonClassName="mt-6 w-full" />
               ) : (
                 <Button href="/kontakt" className="mt-6 w-full">
                   {offer.sidePanel.cta}
@@ -191,7 +192,7 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
       </section>
 
       {briefConfig ? (
-        <LandingLeadForm config={briefConfig} title={offer.finalCta.title} text={offer.finalCta.text} />
+        <BriefInlineForm config={briefConfig} title={offer.finalCta.title} text={offer.finalCta.text} />
       ) : (
         <section id="formularz" className="bg-white pb-16">
           <Container>
@@ -205,6 +206,7 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
           </Container>
         </section>
       )}
+      {isClosed ? <ClosedOfferOverlay offerId={offer.slug} offerTitle={offer.title} /> : null}
     </main>
   );
 }
