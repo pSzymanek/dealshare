@@ -7,12 +7,9 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "@/lib/site";
 
 export function MobileMenu() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openedPathname, setOpenedPathname] = useState<string | null>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  const isOpen = openedPathname === pathname;
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -23,7 +20,11 @@ export function MobileMenu() {
   }, [isOpen]);
 
   function openMenu() {
-    setIsOpen(true);
+    setOpenedPathname(pathname);
+  }
+
+  function closeMenu() {
+    setOpenedPathname(null);
   }
 
   return (
@@ -51,7 +52,7 @@ export function MobileMenu() {
         <button
           type="button"
           aria-label="Zamknij menu"
-          onClick={() => setIsOpen(false)}
+          onClick={closeMenu}
           className={`absolute inset-0 bg-navy/30 backdrop-blur-sm transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
         />
         <aside
@@ -67,7 +68,7 @@ export function MobileMenu() {
             <button
               type="button"
               aria-label="Zamknij menu"
-              onClick={() => setIsOpen(false)}
+              onClick={closeMenu}
               className="button-glass relative inline-flex h-11 w-11 items-center justify-center rounded-md bg-deal-gradient text-white shadow-glow transition hover:-translate-y-0.5 hover:shadow-card"
             >
               <span className="absolute h-0.5 w-4 rotate-45 rounded-full bg-current" />
@@ -80,6 +81,7 @@ export function MobileMenu() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={closeMenu}
                 className="group flex items-center justify-between rounded-md border border-slate-200 bg-white/88 px-4 py-2.5 text-sm font-bold text-navy shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-electric/25 hover:bg-electric/5 hover:text-electric hover:shadow-card sm:py-3 sm:text-base"
               >
                 {item.label}
@@ -92,12 +94,13 @@ export function MobileMenu() {
 
           <Link
             href="/kontakt"
+            onClick={closeMenu}
             className="button-glass relative z-10 isolate mt-6 inline-flex min-h-11 items-center justify-center overflow-hidden rounded-md bg-deal-gradient px-5 py-3 text-sm font-bold text-white shadow-glow"
           >
             <span className="relative z-10">Porozmawiajmy!</span>
           </Link>
 
-          <Link href="/" aria-label="dealshare - strona główna" className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
+          <Link href="/" aria-label="dealshare - strona główna" onClick={closeMenu} className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
             <Image src="/logo-dark.png" alt="dealshare" width={204} height={76} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
           </Link>
         </aside>

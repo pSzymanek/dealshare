@@ -22,8 +22,10 @@ export function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const storedConsent = localStorage.getItem(consentKey);
-    setIsVisible(!storedConsent);
+    queueMicrotask(() => {
+      const storedConsent = localStorage.getItem(consentKey);
+      setIsVisible(!storedConsent);
+    });
 
     function openBanner() {
       setIsVisible(true);

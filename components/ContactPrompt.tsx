@@ -18,8 +18,8 @@ export function ContactPrompt() {
   const [isCookieConsentResolved, setIsCookieConsentResolved] = useState(false);
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const pathname = usePathname();
-  const hideTimerRef = useRef<number>();
-  const removeTimerRef = useRef<number>();
+  const hideTimerRef = useRef<number | undefined>(undefined);
+  const removeTimerRef = useRef<number | undefined>(undefined);
 
   const closePrompt = useCallback(() => {
     window.clearTimeout(hideTimerRef.current);
@@ -31,7 +31,9 @@ export function ContactPrompt() {
   }, []);
 
   useEffect(() => {
-    setIsCookieConsentResolved(Boolean(localStorage.getItem(cookieConsentKey)));
+    queueMicrotask(() => {
+      setIsCookieConsentResolved(Boolean(localStorage.getItem(cookieConsentKey)));
+    });
 
     function handleConsent() {
       setIsCookieConsentResolved(true);

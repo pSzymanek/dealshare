@@ -2,24 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
-import { BriefModal } from "@/components/BriefModal";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
+import { LandingLeadForm } from "@/components/LandingLeadForm";
 import { getBriefConfig } from "@/lib/briefs";
 import { getOfferBySlug, offerStaticSlugs, offers, type Offer, type OfferCardItem } from "@/lib/offers";
 
 type OfferDetailPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export function generateStaticParams() {
   return offerStaticSlugs.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: OfferDetailPageProps): Metadata {
-  const offer = getOfferBySlug(params.slug);
+export async function generateMetadata({ params }: OfferDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const offer = getOfferBySlug(slug);
 
   return {
     title: offer?.seo.title ?? "Oferta",
@@ -30,8 +31,9 @@ export function generateMetadata({ params }: OfferDetailPageProps): Metadata {
   };
 }
 
-export default function OfferDetailPage({ params }: OfferDetailPageProps) {
-  const offer = getOfferBySlug(params.slug);
+export default async function OfferDetailPage({ params }: OfferDetailPageProps) {
+  const { slug } = await params;
+  const offer = getOfferBySlug(slug);
 
   if (!offer) {
     notFound();
@@ -67,7 +69,7 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-4">
-                {briefConfig ? <BriefModal config={briefConfig} buttonLabel={briefConfig.cta} /> : <Button href="/kontakt">{offer.ctaPrimary}</Button>}
+                <Button href={briefConfig ? "#formularz" : "/kontakt"}>{briefConfig ? briefConfig.cta : offer.ctaPrimary}</Button>
                 <Button href="#proces" variant="ghost">
                   {offer.ctaSecondary} <span className="ml-2">→</span>
                 </Button>
@@ -84,7 +86,9 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
                 ))}
               </ul>
               {briefConfig ? (
-                <BriefModal config={briefConfig} buttonLabel={offer.sidePanel.cta} buttonClassName="mt-6 w-full" />
+                <Button href="#formularz" className="mt-6 w-full">
+                  {offer.sidePanel.cta}
+                </Button>
               ) : (
                 <Button href="/kontakt" className="mt-6 w-full">
                   {offer.sidePanel.cta}
@@ -186,23 +190,21 @@ export default function OfferDetailPage({ params }: OfferDetailPageProps) {
         </Container>
       </section>
 
-      <section className="bg-white pb-16">
-        <Container>
-          <div className="rounded-lg bg-navy-gradient p-8 text-white shadow-glow sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-8">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-black tracking-tight">{offer.finalCta.title}</h2>
-              <p className="mt-3 text-base leading-8 text-white/72">{offer.finalCta.text}</p>
-            </div>
-            {briefConfig ? (
-              <BriefModal config={briefConfig} buttonLabel={offer.finalCta.buttonLabel} buttonVariant="secondary" buttonClassName="mt-7 lg:mt-0" />
-            ) : (
-              <Button href="/kontakt" variant="secondary" className="mt-7 lg:mt-0">
+      {briefConfig ? (
+        <LandingLeadForm config={briefConfig} title={offer.finalCta.title} text={offer.finalCta.text} />
+      ) : (
+        <section id="formularz" className="bg-white pb-16">
+          <Container>
+            <div className="rounded-lg border border-slate-200 bg-mist p-8 shadow-sm sm:p-10">
+              <h2 className="text-3xl font-black tracking-tight text-navy">{offer.finalCta.title}</h2>
+              <p className="mt-3 max-w-2xl text-base leading-8 text-slate-600">{offer.finalCta.text}</p>
+              <Button href="/kontakt" className="mt-7">
                 {offer.finalCta.buttonLabel} <span className="ml-2">→</span>
               </Button>
-            )}
-          </div>
-        </Container>
-      </section>
+            </div>
+          </Container>
+        </section>
+      )}
     </main>
   );
 }

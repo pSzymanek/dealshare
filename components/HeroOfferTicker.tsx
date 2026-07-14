@@ -37,8 +37,8 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
   const isFocusedWithinRef = useRef(false);
   const isHoveringRef = useRef(false);
   const movedRef = useRef(false);
-  const hintTimerRef = useRef<number>();
-  const linkPauseTimerRef = useRef<number>();
+  const hintTimerRef = useRef<number | undefined>(undefined);
+  const linkPauseTimerRef = useRef<number | undefined>(undefined);
   const [isDragging, setIsDragging] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [showMobileHint, setShowMobileHint] = useState(false);

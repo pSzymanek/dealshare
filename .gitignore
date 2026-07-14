@@ -21,6 +21,9 @@ yarn-error.log*
 pnpm-debug.log*
 .next-dev*.log
 
+# typecheck
+tsconfig.tsbuildinfo
+
 # system
 .DS_Store
 Thumbs.db

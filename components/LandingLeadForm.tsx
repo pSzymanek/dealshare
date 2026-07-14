@@ -114,6 +114,14 @@ export function LandingLeadForm({ config, title, text }: LandingLeadFormProps) {
     setPreferredContactMethod(withoutAny.includes(value) ? withoutAny.filter((item) => item !== value) : [...withoutAny, value]);
   }
 
+  function updateFiles(nextFiles: File[]) {
+    setFiles(nextFiles);
+    if (status !== "idle") {
+      setStatus("idle");
+      setFeedback("");
+    }
+  }
+
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setShowErrors(true);
@@ -231,7 +239,7 @@ export function LandingLeadForm({ config, title, text }: LandingLeadFormProps) {
                 type="file"
                 multiple
                 accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
-                onChange={(event) => setFiles(Array.from(event.target.files ?? []))}
+                onChange={(event) => updateFiles(Array.from(event.target.files ?? []))}
                 className="mt-2 block w-full rounded-md border border-slate-300 px-4 py-3 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-electric file:px-4 file:py-2 file:text-sm file:font-bold file:text-white hover:border-slate-400 focus:border-electric focus:ring-4 focus:ring-electric/10"
               />
               <span className="mt-2 block text-xs font-semibold text-slate-500">Maksymalnie 5 plików, łącznie do 12 MB. PDF, JPG, PNG, DOC, DOCX, XLS, XLSX.</span>

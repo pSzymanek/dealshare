@@ -15,14 +15,15 @@ export const metadata: Metadata = {
 };
 
 type BlogPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     category?: string;
-  };
+  }>;
 };
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const resolvedSearchParams = await searchParams;
   const categories = await getCategories();
-  const category = categories.find((item) => item.slug === searchParams?.category);
+  const category = categories.find((item) => item.slug === resolvedSearchParams?.category);
   const posts = category ? await getPostsByCategory(category.id) : await getAllPosts();
 
   return (

@@ -62,7 +62,6 @@ function validateContact(values: ContactValues, preferredContactMethod: string[]
 }
 
 export function BriefModal({ config, buttonLabel, buttonVariant = "primary", buttonClassName = "" }: BriefModalProps) {
-  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
@@ -100,10 +99,6 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
       })).filter((answer) => answer.selectedOptions.length > 0),
     [answers, config.steps]
   );
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -223,7 +218,7 @@ export function BriefModal({ config, buttonLabel, buttonVariant = "primary", but
         <span className="relative z-10">{buttonLabel ?? config.cta}</span>
       </button>
 
-      {isMounted && isOpen
+      {isOpen && typeof document !== "undefined"
         ? createPortal(
             <div className={cx("fixed inset-0 z-[120] transition", isOpen ? "pointer-events-auto" : "pointer-events-none")}>
               <div className={cx("absolute inset-0 bg-navy/55 backdrop-blur-sm transition-opacity", isOpen ? "opacity-100" : "opacity-0")} />

@@ -33,7 +33,9 @@ export function GoogleAnalytics() {
   const [canTrack, setCanTrack] = useState(false);
 
   useEffect(() => {
-    setCanTrack(hasAnalyticsConsent());
+    queueMicrotask(() => {
+      setCanTrack(hasAnalyticsConsent());
+    });
 
     function handleConsent(event: Event) {
       const consent = (event as CustomEvent<"accepted" | "rejected">).detail;
