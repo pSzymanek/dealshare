@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FocusEvent, PointerEvent, useEffect, useRef, useState } from "react";
-import type { Offer } from "@/lib/offers";
+import { isOfferClosed, type Offer } from "@/lib/offers";
 
 type HeroOfferTickerProps = {
   offers: Offer[];
@@ -260,6 +260,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
       <div ref={trackRef} className="grid gap-4 will-change-transform">
         {loopedOffers.map((offer, index) => {
           const isDuplicate = index >= offers.length;
+          const isClosed = isOfferClosed(offer);
 
           return (
             <article
@@ -272,7 +273,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
                   <p className={`text-xs font-black uppercase tracking-[0.14em] ${offer.isIndividual ? "text-fuchsia-300" : "text-cyan"}`}>{offer.category}</p>
                   <h3 className="mt-2 text-lg font-black tracking-tight">{offer.title}</h3>
                 </div>
-                <span className="shrink-0 rounded border border-white/12 bg-white/10 px-2 py-1 text-xs font-bold text-white/72">{offer.status}</span>
+                <span className="shrink-0 rounded border border-white/12 bg-white/10 px-2 py-1 text-xs font-bold text-white/72">{isClosed ? "Zamknięte" : offer.status}</span>
               </div>
               <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/68">{offer.description}</p>
               <Link
@@ -286,7 +287,7 @@ export function HeroOfferTicker({ offers }: HeroOfferTickerProps) {
                 }}
                 className="mt-3 inline-flex text-sm font-bold text-cyan transition hover:text-white focus-visible:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
               >
-                Sprawdź szczegóły <span aria-hidden="true" className="arrow-mark ml-2 transition group-hover:translate-x-1">&rarr;</span>
+                {isClosed ? "Zobacz ofertę" : "Sprawdź szczegóły"} <span aria-hidden="true" className="arrow-mark ml-2 transition group-hover:translate-x-1">&rarr;</span>
               </Link>
             </article>
           );

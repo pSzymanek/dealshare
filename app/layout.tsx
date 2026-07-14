@@ -5,6 +5,7 @@ import { CookieBanner } from "@/components/CookieBanner";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Header } from "@/components/Header";
+import { MetaPixel } from "@/components/MetaPixel";
 import { ScrollAnimations } from "@/components/ScrollAnimations";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ContactPrompt />
         <CookieBanner />
         <GoogleAnalytics />
+        <MetaPixel />
         <ScrollAnimations />
       </body>
     </html>

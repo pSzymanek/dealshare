@@ -8,8 +8,22 @@ import { siteConfig } from "@/lib/site";
 
 export function MobileMenu() {
   const [openedPathname, setOpenedPathname] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
   const isOpen = openedPathname === pathname;
+
+  useEffect(() => {
+    if (isOpen) {
+      return;
+    }
+
+    if (!isMounted) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => setIsMounted(false), 300);
+    return () => window.clearTimeout(timer);
+  }, [isMounted, isOpen]);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -20,6 +34,7 @@ export function MobileMenu() {
   }, [isOpen]);
 
   function openMenu() {
+    setIsMounted(true);
     setOpenedPathname(pathname);
   }
 
@@ -48,18 +63,19 @@ export function MobileMenu() {
         <span className="hidden min-[380px]:inline">Menu</span>
       </button>
 
-      <div className={`fixed inset-0 z-[100] max-w-[100dvw] overflow-hidden transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
-        <button
-          type="button"
-          aria-label="Zamknij menu"
-          onClick={closeMenu}
-          className={`absolute inset-0 bg-navy/30 backdrop-blur-sm transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
-        />
-        <aside
-          id="mobile-menu"
-          className={`absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[calc(100dvw-32px)] max-w-[340px] flex-col overflow-y-auto overflow-x-hidden border-l border-white/65 bg-white/78 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(0,209,209,0.08),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.68),rgba(243,248,252,0.52))]" />
+      {isMounted ? (
+        <div className={`fixed inset-0 z-[100] max-w-[100dvw] overflow-hidden transition ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}>
+          <button
+            type="button"
+            aria-label="Zamknij menu"
+            onClick={closeMenu}
+            className={`absolute inset-0 bg-navy/30 backdrop-blur-sm transition-opacity ${isOpen ? "opacity-100" : "opacity-0"}`}
+          />
+          <aside
+            id="mobile-menu"
+            className={`absolute right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-[calc(100dvw-32px)] max-w-[340px] flex-col overflow-y-auto overflow-x-hidden border-l border-white/65 bg-white/78 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 shadow-glow backdrop-blur-2xl transition-transform duration-300 ease-out sm:px-5 sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pt-5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(0,209,209,0.08),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.68),rgba(243,248,252,0.52))]" />
 
           <div className="relative z-10 flex items-center justify-between gap-4">
             <div>
@@ -103,8 +119,9 @@ export function MobileMenu() {
           <Link href="/" aria-label="dealshare - strona główna" onClick={closeMenu} className="relative z-10 mt-auto flex justify-center pb-2 pt-10">
             <Image src="/logo-dark.png" alt="dealshare" width={204} height={76} className="h-auto w-[204px] opacity-95 drop-shadow-[0_8px_18px_rgba(0,31,77,0.24)]" />
           </Link>
-        </aside>
-      </div>
+          </aside>
+        </div>
+      ) : null}
     </div>
   );
 }

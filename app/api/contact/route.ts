@@ -34,6 +34,15 @@ type BriefPayload = {
   sourceUrl?: string;
 };
 
+type ClosedOfferNotifyPayload = {
+  type?: "closed-offer-notify";
+  offerId?: string;
+  offerTitle?: string;
+  email?: string;
+  consent?: boolean;
+  sourceUrl?: string;
+};
+
 const contactEmail = process.env.CONTACT_TO_EMAIL ?? "biuro@dealshare.pl";
 
 function clean(value?: string) {
@@ -192,8 +201,43 @@ function buildBriefEmail(payload: BriefPayload) {
   return { text, html, fullName, email, offerTitle, isPartnerOffer };
 }
 
+function buildClosedOfferEmail(payload: ClosedOfferNotifyPayload) {
+  const offerTitle = clean(payload.offerTitle) || "Nie podano";
+  const offerId = clean(payload.offerId) || "Nie podano";
+  const email = clean(payload.email);
+  const sourceUrl = clean(payload.sourceUrl) || "Nie podano";
+  const sentAt = new Date().toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" });
+
+  const text = [
+    "Powiadomienie o zainteresowaniu zamkniętą ofertą",
+    "",
+    `Oferta: ${offerTitle}`,
+    `ID oferty: ${offerId}`,
+    `E-mail zainteresowanego: ${email}`,
+    "",
+    "Informacje techniczne:",
+    `Data wysłania: ${sentAt}`,
+    `Adres strony / źródło formularza: ${sourceUrl}`
+  ].join("\n");
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;color:#10233f;line-height:1.55;max-width:720px;">
+      <h1 style="margin:0 0 18px;color:#001f4d;">Powiadomienie o zainteresowaniu zamkniętą ofertą</h1>
+      <table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;border:1px solid #dbe4ef;">
+        <tr><td style="border:1px solid #dbe4ef;"><strong>Oferta</strong></td><td style="border:1px solid #dbe4ef;">${escapeHtml(offerTitle)}</td></tr>
+        <tr><td style="border:1px solid #dbe4ef;"><strong>ID oferty</strong></td><td style="border:1px solid #dbe4ef;">${escapeHtml(offerId)}</td></tr>
+        <tr><td style="border:1px solid #dbe4ef;"><strong>E-mail</strong></td><td style="border:1px solid #dbe4ef;">${escapeHtml(email)}</td></tr>
+        <tr><td style="border:1px solid #dbe4ef;"><strong>Data wysłania</strong></td><td style="border:1px solid #dbe4ef;">${escapeHtml(sentAt)}</td></tr>
+        <tr><td style="border:1px solid #dbe4ef;"><strong>Źródło</strong></td><td style="border:1px solid #dbe4ef;">${escapeHtml(sourceUrl)}</td></tr>
+      </table>
+    </div>
+  `;
+
+  return { text, html, email, offerTitle };
+}
+
 export async function POST(request: Request) {
-  let payload: ContactPayload | BriefPayload;
+  let payload: ContactPayload | BriefPayload | ClosedOfferNotifyPayload;
 
   try {
     payload = (await request.json()) as ContactPayload | BriefPayload;
@@ -233,6 +277,33 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Dziękujemy — brief został wysłany. Skontaktujemy się z Tobą z konkretną strategią działania." });
     } catch {
       return NextResponse.json({ message: "Nie udało się wysłać briefu. Spróbuj ponownie później." }, { status: 500 });
+    }
+  }
+
+  if ("type" in payload && payload.type === "closed-offer-notify") {
+    const email = clean(payload.email);
+    const offerTitle = clean(payload.offerTitle);
+    const offerId = clean(payload.offerId);
+
+    if (!isValidEmail(email) || !offerTitle || !offerId || payload.consent !== true) {
+      return NextResponse.json({ message: "Wpisz poprawny adres e-mail i zaakceptuj regulamin." }, { status: 400 });
+    }
+
+    const closedOfferEmail = buildClosedOfferEmail(payload);
+
+    try {
+      await mailer.transporter.sendMail({
+        from: mailer.smtpFrom,
+        to: contactEmail,
+        replyTo: closedOfferEmail.email,
+        subject: `[Dealshare] Powiadomienie o zamkniętej ofercie: ${closedOfferEmail.offerTitle}`,
+        text: closedOfferEmail.text,
+        html: closedOfferEmail.html
+      });
+
+      return NextResponse.json({ message: "Dziękujemy. Damy znać, kiedy oferta wróci albo pojawi się podobna możliwość." });
+    } catch {
+      return NextResponse.json({ message: "Nie udało się zapisać adresu e-mail. Spróbuj ponownie później." }, { status: 500 });
     }
   }
 
