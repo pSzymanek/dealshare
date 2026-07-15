@@ -82,10 +82,18 @@ Strona nie powinna wygladac jak przypadkowa landing page, katalog linkow, portal
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
-- WordPress REST API jako zrodlo bloga
+- Statyczny blog w repozytorium z warstwa providera przygotowana pod przyszly headless WordPress
 - GitHub jako historia kodu i branchy
 - Vercel jako etap preview/weryfikacji
 - Paczka `export` dla hostingu Node/Next na faktyczny serwer produkcyjny
+
+## Blog i przyszly WordPress
+
+- Publiczne adresy artykulow maja stabilny format `/blog/[slug]`.
+- Aktualnym domyslnym zrodlem tresci jest statyczny provider czytajacy `content/posts` i manifesty w `content`.
+- WordPress moze pozniej dzialac jako headless CMS po ustawieniu `BLOG_PROVIDER=wordpress` oraz `WORDPRESS_API_URL`.
+- Migracja do WordPressa nie powinna zmieniac slugow, canonicali ani struktury frontendu.
+- HTML z WordPressa musi przechodzic przez sanityzacje przed renderowaniem.
 
 ## Sposob pracy i publikacji
 

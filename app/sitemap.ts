@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getStaticBlogPosts } from "@/lib/blog";
 import { offers } from "@/lib/offers";
 import { siteConfig } from "@/lib/site";
 
@@ -35,5 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8
   }));
 
-  return [...pages, ...offerPages];
+  const blogPages = getStaticBlogPosts().map((post) => ({
+    url: `${siteConfig.url}/blog/${post.slug}`,
+    lastModified: new Date(post.updatedAt),
+    changeFrequency: monthly,
+    priority: 0.7
+  }));
+
+  return [...pages, ...offerPages, ...blogPages];
 }

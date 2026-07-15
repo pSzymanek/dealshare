@@ -1,12 +1,12 @@
-import { BlogPost, unavailableMessage } from "@/lib/wordpress";
+import { blogUnavailableMessage, type BlogPostSummary } from "@/lib/blog";
 import { BlogCard } from "./BlogCard";
 
 type WordPressPostGridProps = {
-  posts: BlogPost[];
+  posts: BlogPostSummary[];
   emptyMessage?: string;
 };
 
-export function WordPressPostGrid({ posts, emptyMessage = unavailableMessage }: WordPressPostGridProps) {
+export function WordPressPostGrid({ posts, emptyMessage = blogUnavailableMessage }: WordPressPostGridProps) {
   if (!posts.length) {
     return (
       <div className="card-glass rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-sm font-semibold text-slate-600">

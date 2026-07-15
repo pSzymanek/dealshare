@@ -4,13 +4,21 @@ import { Container } from "@/components/Container";
 import { CTASection } from "@/components/CTASection";
 import { SectionHeading } from "@/components/SectionHeading";
 import { WordPressPostGrid } from "@/components/WordPressPostGrid";
-import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/wordpress";
+import { getBlogCategories, getBlogPosts } from "@/lib/blog";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Artykuły dealshare dla firm szukających kontekstu, ofert i partnerstw B2B.",
+  title: "Blog Dealshare",
+  description: "Praktyczne artykuły dla firm o finansowaniu, restrukturyzacji, analizie umów kredytowych i projektach energetycznych.",
   alternates: {
     canonical: "/blog"
+  },
+  openGraph: {
+    title: "Blog Dealshare",
+    description: "Konkretna wiedza dla przedsiębiorców szukających właściwego kierunku działania.",
+    url: `${siteConfig.url}/blog`,
+    siteName: siteConfig.name,
+    type: "website"
   }
 };
 
@@ -22,25 +30,25 @@ type BlogPageProps = {
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const resolvedSearchParams = await searchParams;
-  const categories = await getCategories();
-  const category = categories.find((item) => item.slug === resolvedSearchParams?.category);
-  const posts = category ? await getPostsByCategory(category.id) : await getAllPosts();
+  const categories = await getBlogCategories();
+  const category = categories.find((item) => item === resolvedSearchParams?.category);
+  const posts = await getBlogPosts(category ? { category } : undefined);
 
   return (
     <main>
       <section className="bg-navy-gradient py-20 text-white">
         <Container>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Blog</p>
-          <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Wiedza i kontekst dla decyzji B2B.</h1>
+          <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Konkretna wiedza dla decyzji firmowych.</h1>
           <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
-            Artykuły, inspiracje i komentarze dla firm szukających możliwości.
+            Finansowanie, restrukturyzacja, analiza umów i energia opisane prostym językiem, z myślą o przedsiębiorcy, który chce przejść od problemu do działania.
           </p>
         </Container>
       </section>
 
       <section className="bg-white py-16">
         <Container>
-          <SectionHeading title="Kategorie" description="Wybierz temat, który Cię interesuje. Kolejne kategorie pojawią się już wkrótce." />
+          <SectionHeading title="Kategorie" description="Wybierz obszar, który najlepiej pasuje do aktualnej sytuacji firmy." />
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/blog"
@@ -50,11 +58,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </Link>
             {categories.map((item) => (
               <Link
-                key={item.id}
-                href={`/blog?category=${item.slug}`}
-                className={`soft-lift rounded-md border px-4 py-2 text-sm font-bold transition ${category?.id === item.id ? "border-electric bg-electric text-white" : "border-slate-200 bg-white text-navy hover:border-electric hover:bg-electric/5"}`}
+                key={item}
+                href={`/blog?category=${encodeURIComponent(item)}`}
+                className={`soft-lift rounded-md border px-4 py-2 text-sm font-bold transition ${category === item ? "border-electric bg-electric text-white" : "border-slate-200 bg-white text-navy hover:border-electric hover:bg-electric/5"}`}
               >
-                {item.name}
+                {item}
               </Link>
             ))}
           </div>
@@ -63,7 +71,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
       <section className="py-16">
         <Container>
-          <SectionHeading eyebrow={category?.name ?? "Wszystkie wpisy"} title="Artykuły" />
+          <SectionHeading eyebrow={category ?? "Wszystkie wpisy"} title="Artykuły" />
           <div className="mt-8">
             <WordPressPostGrid posts={posts} />
           </div>

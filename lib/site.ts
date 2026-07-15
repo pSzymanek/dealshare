@@ -6,6 +6,7 @@ export const siteConfig = {
     { label: "Start", href: "/" },
     { label: "Oferty", href: "/oferty" },
     { label: "O nas", href: "/o-nas" },
+    { label: "Blog", href: "/blog" },
     { label: "Kontakt", href: "/kontakt" }
   ],
   socials: [
