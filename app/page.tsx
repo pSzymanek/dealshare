@@ -53,13 +53,14 @@ function hashSlug(value: string) {
 
 function getHeroBlogPosts(): BlogPostSummary[] {
   return getStaticBlogPosts()
-    .map(({ id, slug, title, excerpt, category, tags, publishedAt, updatedAt, readingTime, heroImage, imageAlt }) => ({
+    .map(({ id, slug, title, excerpt, category, tags, author, publishedAt, updatedAt, readingTime, heroImage, imageAlt }) => ({
       id,
       slug,
       title,
       excerpt,
       category,
       tags,
+      author,
       publishedAt,
       updatedAt,
       readingTime,

@@ -23,6 +23,7 @@ export function BlogCard({ post }: BlogCardProps) {
           <time dateTime={post.publishedAt} className="text-xs font-semibold text-slate-500">
             {date}
           </time>
+          <span className="text-xs font-semibold text-slate-500">Autor: {post.author}</span>
           <span className="text-xs font-semibold text-slate-500">{post.readingTime} min czytania</span>
         </div>
         <h3 className="mt-4 text-xl font-black tracking-tight text-navy">

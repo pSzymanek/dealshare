@@ -153,6 +153,7 @@ function toSummary(post: BlogPost): BlogPostSummary {
     excerpt: post.excerpt,
     category: post.category,
     tags: post.tags,
+    author: post.author,
     publishedAt: post.publishedAt,
     updatedAt: post.updatedAt,
     readingTime: post.readingTime,

@@ -20,6 +20,7 @@ export type BlogPostSummary = {
   excerpt: string;
   category: string;
   tags: string[];
+  author: string;
   publishedAt: string;
   updatedAt: string;
   readingTime: number;

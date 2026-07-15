@@ -60,6 +60,14 @@ function validateFrontmatter(source: string, post: ManifestPost) {
   }
 }
 
+function readFrontmatterString(source: string, field: string, slug: string) {
+  const match = new RegExp(`^${field}:\\s*(.+)$`, "m").exec(source);
+  const value = match?.[1]?.trim().replace(/^['"]|['"]$/g, "");
+
+  assertString(value, field, slug);
+  return value;
+}
+
 function validatePosts(posts: BlogPost[]) {
   const slugs = new Set<string>();
   const seoTitles = new Set<string>();
@@ -141,7 +149,7 @@ function loadPosts() {
 
       return {
         ...post,
-        author: "Zespół Dealshare",
+        author: readFrontmatterString(source, "author", post.slug),
         content: stripFrontmatter(source),
         contentFormat: "mdx",
         stateOfInformation: post.updatedAt
@@ -157,8 +165,7 @@ function loadPosts() {
 }
 
 function toSummary(post: BlogPost): BlogPostSummary {
-  const { author, seoTitle, seoDescription, canonicalUrl, ogImage, content, contentFormat, faq, relatedSlugs, ctaVariant, legalReviewRequired, showUpdatedAt, reviewAfter, stateOfInformation, sources, schemaType, searchIntent, primaryKeyword, ...summary } = post;
-  void author;
+  const { seoTitle, seoDescription, canonicalUrl, ogImage, content, contentFormat, faq, relatedSlugs, ctaVariant, legalReviewRequired, showUpdatedAt, reviewAfter, stateOfInformation, sources, schemaType, searchIntent, primaryKeyword, ...summary } = post;
   void seoTitle;
   void seoDescription;
   void canonicalUrl;

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
 import { Container } from "@/components/Container";
 import { BlogCta } from "@/components/blog/BlogCta";
+import { BlogFloatingNav } from "@/components/blog/BlogFloatingNav";
 import { BlogJsonLd } from "@/components/blog/BlogJsonLd";
 import { HtmlRenderer } from "@/components/blog/HtmlRenderer";
 import { MarkdownRenderer } from "@/components/blog/MarkdownRenderer";
@@ -94,6 +95,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-6xl">{post.title}</h1>
               <p className="mt-6 max-w-3xl text-lg leading-8 text-white/74">{post.excerpt}</p>
               <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-white/66">
+                <span>Autor: {post.author}</span>
                 <time dateTime={post.publishedAt}>Opublikowano: {publishedDate}</time>
                 {post.showUpdatedAt ? <time dateTime={post.updatedAt}>Aktualizacja: {updatedDate}</time> : null}
                 <span>{post.readingTime} min czytania</span>
@@ -189,6 +191,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Container>
         </section>
       ) : null}
+      <BlogFloatingNav />
     </main>
   );
 }
