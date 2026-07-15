@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { CTASection } from "@/components/CTASection";
-import { HeroOfferTicker } from "@/components/HeroOfferTicker";
+import { HeroBlogSlideshow } from "@/components/HeroBlogSlideshow";
 import { HeroRotatingWord } from "@/components/HeroRotatingWord";
 import { OfferCard } from "@/components/OfferCard";
 import { SectionHeading } from "@/components/SectionHeading";
+import { getStaticBlogPosts, type BlogPostSummary } from "@/lib/blog";
 import { offers } from "@/lib/offers";
 
 const benefits = [
@@ -33,15 +34,45 @@ const benefits = [
   }
 ];
 
-const heroOffers = offers.slice(0, 7);
-
 export const metadata: Metadata = {
   alternates: {
     canonical: "/"
   }
 };
 
+function hashSlug(value: string) {
+  let hash = 2166136261;
+
+  for (const character of value) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
+function getHeroBlogPosts(): BlogPostSummary[] {
+  return getStaticBlogPosts()
+    .map(({ id, slug, title, excerpt, category, tags, publishedAt, updatedAt, readingTime, heroImage, imageAlt }) => ({
+      id,
+      slug,
+      title,
+      excerpt,
+      category,
+      tags,
+      publishedAt,
+      updatedAt,
+      readingTime,
+      heroImage,
+      imageAlt
+    }))
+    .sort((a, b) => hashSlug(`home-hero-blog:${a.slug}`) - hashSlug(`home-hero-blog:${b.slug}`))
+    .slice(0, 7);
+}
+
 export default function HomePage() {
+  const heroBlogPosts = getHeroBlogPosts();
+
   return (
     <main>
       <section className="relative overflow-hidden bg-navy-gradient text-white">
@@ -60,23 +91,9 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="reveal-on-load reveal-delay-1 relative">
+          <div className="relative">
             <div className="absolute -inset-8 rounded-full bg-cyan/10 blur-3xl" />
-            <div className="hero-panel relative overflow-hidden rounded-lg border border-white/16 bg-white/8 p-5 shadow-glow backdrop-blur sm:p-6">
-              <div className="pointer-events-none absolute -right-10 -top-12 h-44 w-44 rounded-full bg-cyan/10 blur-3xl" />
-              <div className="relative flex items-center justify-between gap-5">
-                <div className="flex items-center gap-4">
-                  <Image src="/sygnet-white.png" alt="" width={72} height={72} className="h-14 w-14 opacity-88 sm:h-16 sm:w-16" />
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan">Najnowsze oferty</p>
-                  </div>
-                </div>
-                <Link href="/oferty" className="arrow-link hidden text-sm font-bold text-cyan transition hover:text-white sm:inline-flex">
-                  Sprawdź więcej <span aria-hidden="true" className="arrow-mark ml-1">&rarr;</span>
-                </Link>
-              </div>
-              <HeroOfferTicker offers={heroOffers} />
-            </div>
+            <HeroBlogSlideshow posts={heroBlogPosts} />
           </div>
         </Container>
       </section>

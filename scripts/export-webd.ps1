@@ -71,6 +71,7 @@ try {
 
     Run-Step "Kopiowanie plikow aplikacji" {
         Copy-Item -LiteralPath (Join-Path $projectRoot ".next") -Destination $exportDir -Recurse
+        Copy-Item -LiteralPath (Join-Path $projectRoot "content") -Destination $exportDir -Recurse
         Copy-Item -LiteralPath (Join-Path $projectRoot "public") -Destination $exportDir -Recurse
 
         @(
@@ -89,6 +90,7 @@ Ten folder zawiera aktualna paczke do wgrania na hosting Node/Next.
 Wgraj plik `dealshare-webd.zip` na serwer i rozpakuj go w katalogu aplikacji.
 Archiwum zawiera:
 - `.next`
+- `content`
 - `public`
 - `package.json`
 - `package-lock.json`
