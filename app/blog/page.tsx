@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { CTASection } from "@/components/CTASection";
-import { SectionHeading } from "@/components/SectionHeading";
 import { WordPressPostGrid } from "@/components/WordPressPostGrid";
 import { getBlogCategories, getBlogPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/site";
@@ -39,8 +38,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <section className="bg-navy-gradient py-20 text-white">
         <Container>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan">Blog</p>
-          <h1 className="heading-title-enter mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Konkretna wiedza dla decyzji firmowych.</h1>
-          <p className="heading-copy-enter mt-6 max-w-2xl text-lg leading-8 text-white/74">
+          <h1 className="mt-4 max-w-4xl text-4xl font-black tracking-tight sm:text-6xl">Konkretna wiedza dla decyzji firmowych.</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/74">
             Finansowanie, restrukturyzacja, analiza umów i energia opisane prostym językiem, z myślą o przedsiębiorcy, który chce przejść od problemu do działania.
           </p>
         </Container>
@@ -48,7 +47,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
       <section className="bg-white py-16">
         <Container>
-          <SectionHeading title="Kategorie" description="Wybierz obszar, który najlepiej pasuje do aktualnej sytuacji firmy." />
+          <div className="max-w-3xl">
+            <h2 className="text-3xl font-black tracking-tight text-navy sm:text-4xl">Kategorie</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">Wybierz obszar, który najlepiej pasuje do aktualnej sytuacji firmy.</p>
+          </div>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/blog"
@@ -71,7 +73,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
       <section className="py-16">
         <Container>
-          <SectionHeading eyebrow={category ?? "Wszystkie wpisy"} title="Artykuły" />
+          <div className="max-w-3xl">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-teal">{category ?? "Wszystkie wpisy"}</p>
+            <h2 className="text-3xl font-black tracking-tight text-navy sm:text-4xl">Artykuły</h2>
+          </div>
           <div className="mt-8">
             <WordPressPostGrid posts={posts} />
           </div>

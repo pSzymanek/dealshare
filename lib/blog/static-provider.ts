@@ -19,7 +19,7 @@ type GraphicManifestItem = {
 
 const postsDirectory = path.join(process.cwd(), "content", "posts");
 const requiredTextFields = ["id", "slug", "title", "excerpt", "category", "publishedAt", "updatedAt", "seoTitle", "seoDescription", "canonicalUrl", "heroImage", "ogImage", "imageAlt"] as const;
-const requiredFrontmatterFields = [...requiredTextFields, "tags", "relatedSlugs", "ctaVariant", "sources", "author", "readingTime", "legalReviewRequired", "faq", "contentFormat", "schemaType", "status"] as const;
+const requiredFrontmatterFields = [...requiredTextFields, "tags", "relatedSlugs", "ctaVariant", "sources", "author", "readingTime", "legalReviewRequired", "showUpdatedAt", "faq", "contentFormat", "schemaType", "status"] as const;
 
 let cachedPosts: BlogPost[] | null = null;
 
@@ -157,7 +157,7 @@ function loadPosts() {
 }
 
 function toSummary(post: BlogPost): BlogPostSummary {
-  const { author, seoTitle, seoDescription, canonicalUrl, ogImage, content, contentFormat, faq, relatedSlugs, ctaVariant, legalReviewRequired, reviewAfter, stateOfInformation, sources, schemaType, searchIntent, primaryKeyword, ...summary } = post;
+  const { author, seoTitle, seoDescription, canonicalUrl, ogImage, content, contentFormat, faq, relatedSlugs, ctaVariant, legalReviewRequired, showUpdatedAt, reviewAfter, stateOfInformation, sources, schemaType, searchIntent, primaryKeyword, ...summary } = post;
   void author;
   void seoTitle;
   void seoDescription;
@@ -169,6 +169,7 @@ function toSummary(post: BlogPost): BlogPostSummary {
   void relatedSlugs;
   void ctaVariant;
   void legalReviewRequired;
+  void showUpdatedAt;
   void reviewAfter;
   void stateOfInformation;
   void sources;

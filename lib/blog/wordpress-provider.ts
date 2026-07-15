@@ -114,6 +114,7 @@ function mapPost(post: RawWordPressPost): BlogPost {
     relatedSlugs: readStringArrayMeta(meta, "relatedSlugs"),
     ctaVariant: "kontakt",
     legalReviewRequired: Boolean(meta?.legalReviewRequired ?? meta?.legal_review_required ?? false),
+    showUpdatedAt: true,
     reviewAfter: readStringMeta(meta, ["reviewAfter", "review_after"]),
     stateOfInformation: readStringMeta(meta, ["stateOfInformation", "state_of_information"], updatedAt),
     sources: readStringArrayMeta(meta, "sources"),

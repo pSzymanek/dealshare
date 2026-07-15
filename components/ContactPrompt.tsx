@@ -6,20 +6,40 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const promptStorageKey = "dealshare-contact-prompt-shown";
+const promptSessionCounterKey = "dealshare-contact-prompt-session-count";
+const promptSessionCountedKey = "dealshare-contact-prompt-session-counted";
 const cookieConsentKey = "dealshare-cookie-consent";
 const desktopScrollThreshold = 320;
 const mobileScrollThreshold = 900;
 const desktopPromptDelay = 9000;
 const mobilePromptDelay = 14000;
+const postCookieConsentPromptDelay = 10000;
+const promptSessionFrequency = 3;
+
+function getStoredSessionNumber() {
+  const countedSession = sessionStorage.getItem(promptSessionCountedKey);
+
+  if (countedSession) {
+    return Number(countedSession);
+  }
+
+  const currentCount = Number(localStorage.getItem(promptSessionCounterKey) ?? "0");
+  const nextCount = Number.isFinite(currentCount) ? currentCount + 1 : 1;
+  localStorage.setItem(promptSessionCounterKey, String(nextCount));
+  sessionStorage.setItem(promptSessionCountedKey, String(nextCount));
+  return nextCount;
+}
 
 export function ContactPrompt() {
   const [isVisible, setIsVisible] = useState(false);
   const [isEntered, setIsEntered] = useState(false);
   const [isCookieConsentResolved, setIsCookieConsentResolved] = useState(false);
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
+  const [isPromptSessionEligible, setIsPromptSessionEligible] = useState(false);
   const pathname = usePathname();
   const hideTimerRef = useRef<number | undefined>(undefined);
   const removeTimerRef = useRef<number | undefined>(undefined);
+  const wasCookieConsentJustResolvedRef = useRef(false);
 
   const closePrompt = useCallback(() => {
     window.clearTimeout(hideTimerRef.current);
@@ -36,6 +56,7 @@ export function ContactPrompt() {
     });
 
     function handleConsent() {
+      wasCookieConsentJustResolvedRef.current = true;
       setIsCookieConsentResolved(true);
       setIsCookieBannerVisible(false);
     }
@@ -59,13 +80,26 @@ export function ContactPrompt() {
   }, [closePrompt]);
 
   useEffect(() => {
-    if (pathname === "/kontakt" || !isCookieConsentResolved || isCookieBannerVisible || sessionStorage.getItem(promptStorageKey)) {
+    if (!isCookieConsentResolved) {
+      return;
+    }
+
+    queueMicrotask(() => {
+      const sessionNumber = getStoredSessionNumber();
+      setIsPromptSessionEligible(sessionNumber % promptSessionFrequency === 0);
+    });
+  }, [isCookieConsentResolved]);
+
+  useEffect(() => {
+    if (pathname === "/kontakt" || !isCookieConsentResolved || !isPromptSessionEligible || isCookieBannerVisible || sessionStorage.getItem(promptStorageKey)) {
       return;
     }
 
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const scrollThreshold = isMobile ? mobileScrollThreshold : desktopScrollThreshold;
-    const promptDelay = isMobile ? mobilePromptDelay : desktopPromptDelay;
+    const shouldUsePostConsentDelay = wasCookieConsentJustResolvedRef.current;
+    const promptDelay = shouldUsePostConsentDelay ? postCookieConsentPromptDelay : isMobile ? mobilePromptDelay : desktopPromptDelay;
+    wasCookieConsentJustResolvedRef.current = false;
 
     const showPrompt = () => {
       if (!isCookieBannerVisible && !sessionStorage.getItem(promptStorageKey)) {
@@ -76,6 +110,14 @@ export function ContactPrompt() {
         });
       }
     };
+
+    if (shouldUsePostConsentDelay) {
+      const timer = window.setTimeout(showPrompt, promptDelay);
+
+      return () => {
+        window.clearTimeout(timer);
+      };
+    }
 
     const handleScroll = () => {
       if (window.scrollY > scrollThreshold) {
@@ -91,7 +133,7 @@ export function ContactPrompt() {
       window.clearTimeout(timer);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isCookieBannerVisible, isCookieConsentResolved, pathname]);
+  }, [isCookieBannerVisible, isCookieConsentResolved, isPromptSessionEligible, pathname]);
 
   useEffect(() => {
     if (!isVisible || !isEntered) {

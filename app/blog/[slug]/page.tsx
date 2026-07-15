@@ -91,11 +91,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </nav>
             <div className="mt-8 max-w-4xl">
               <Badge tone="teal">{post.category}</Badge>
-              <h1 className="heading-title-enter mt-6 text-4xl font-black tracking-tight sm:text-6xl">{post.title}</h1>
-              <p className="heading-copy-enter mt-6 max-w-3xl text-lg leading-8 text-white/74">{post.excerpt}</p>
+              <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-6xl">{post.title}</h1>
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-white/74">{post.excerpt}</p>
               <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-white/66">
                 <time dateTime={post.publishedAt}>Opublikowano: {publishedDate}</time>
-                <time dateTime={post.updatedAt}>Aktualizacja: {updatedDate}</time>
+                {post.showUpdatedAt ? <time dateTime={post.updatedAt}>Aktualizacja: {updatedDate}</time> : null}
                 <span>{post.readingTime} min czytania</span>
               </div>
             </div>

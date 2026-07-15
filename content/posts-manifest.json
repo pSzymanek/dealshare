@@ -11,7 +11,7 @@
       "przygotowanie wniosku"
     ],
     "publishedAt": "2026-03-09",
-    "updatedAt": "2026-07-15",
+    "updatedAt": "2026-06-18",
     "readingTime": 4,
     "seoTitle": "Jak przygotować firmę do kredytu? 10 rzeczy do sprawdzenia",
     "seoDescription": "Sprawdź, co bank analizuje przed udzieleniem kredytu firmowego i jak przygotować finanse, dokumenty, BIK oraz cel finansowania.",
@@ -50,7 +50,8 @@
         "question": "Czy warto składać wnioski do kilku banków jednocześnie?",
         "answer": "Najpierw warto porównać polityki i dopasowanie produktów. Chaotyczne składanie wielu wniosków nie naprawia słabego profilu i może utrudnić kontrolę procesu."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-002",
@@ -102,7 +103,8 @@
         "question": "Czy taki kredyt jest droższy?",
         "answer": "Często tak, ponieważ finansujący nie ma zabezpieczenia rzeczowego i mocniej wycenia ryzyko w marży, prowizji lub dostępnej kwocie."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-003",
@@ -154,7 +156,8 @@
         "question": "Czy można usunąć prawidłowe opóźnienia z BIK?",
         "answer": "Nie ma legalnego automatycznego czyszczenia wszystkich danych. Można korygować błędy i korzystać z praw dotyczących przetwarzania danych w określonych sytuacjach."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-004",
@@ -206,7 +209,8 @@
         "question": "Czy amortyzacja może zostać dodana do dochodu?",
         "answer": "Część banków dokonuje własnych korekt o wybrane pozycje niegotówkowe. Nie jest to automatyczne i zależy od produktu."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-005",
@@ -260,7 +264,8 @@
         "question": "Ile miesięcy wyciągów przygotować?",
         "answer": "Najczęściej warto zacząć od sześciu pełnych miesięcy, a przy sezonowości lub bardziej złożonej analizie przygotować dwanaście."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-006",
@@ -311,7 +316,8 @@
         "question": "Czy można połączyć oba rodzaje kredytu?",
         "answer": "Tak. Inwestycja może wymagać finansowania aktywa oraz osobnego kapitału obrotowego na zapasy lub dłuższy cykl należności."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-007",
@@ -325,7 +331,7 @@
       "analiza kredytowa"
     ],
     "publishedAt": "2026-01-23",
-    "updatedAt": "2026-07-15",
+    "updatedAt": "2026-06-18",
     "readingTime": 4,
     "seoTitle": "Dlaczego bank odrzucił kredyt firmowy? 10 przyczyn",
     "seoDescription": "Poznaj najczęstsze przyczyny odmowy kredytu firmowego i sprawdź, co zrobić po decyzji negatywnej bez składania chaotycznych wniosków.",
@@ -363,7 +369,8 @@
         "question": "Czy odmowa oznacza brak zdolności wszędzie?",
         "answer": "Nie. Polityki banków i modele liczenia różnią się, ale negatywnej decyzji nie należy ignorować bez diagnozy."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-008",
@@ -377,7 +384,7 @@
       "finansowanie firmy"
     ],
     "publishedAt": "2026-06-17",
-    "updatedAt": "2026-07-15",
+    "updatedAt": "2026-06-18",
     "readingTime": 4,
     "seoTitle": "Finansowanie firmy z krótką historią – możliwości",
     "seoDescription": "Sprawdź, jakie finansowanie może być dostępne dla młodej firmy i jak przygotować kontrakty, prognozy, wkład własny, BIK i zabezpieczenia.",
@@ -415,7 +422,8 @@
         "question": "Czy leasing jest łatwiejszy dla młodej firmy?",
         "answer": "Bywa łatwiej dostępny przy standardowym aktywie, ponieważ przedmiot finansowania ogranicza ryzyko, lecz nadal obowiązuje ocena klienta i wkład własny."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-009",
@@ -429,7 +437,7 @@
       "kredyt firmowy"
     ],
     "publishedAt": "2026-04-09",
-    "updatedAt": "2026-07-15",
+    "updatedAt": "2026-06-18",
     "readingTime": 4,
     "seoTitle": "Jak czytać ofertę kredytu firmowego i nie przepłacić",
     "seoDescription": "Dowiedz się, jak porównywać oferty kredytu firmowego: oprocentowanie, prowizje, ubezpieczenia, rachunek, zabezpieczenia i koszt całkowity.",
@@ -465,7 +473,8 @@
         "question": "Czy niższa rata zawsze oznacza lepszą ofertę?",
         "answer": "Nie. Może wynikać z dłuższego okresu, karencji lub raty balonowej i prowadzić do wyższego kosztu całkowitego."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-010",
@@ -517,7 +526,8 @@
         "question": "Czy faktoring jest alternatywą?",
         "answer": "Może być, jeżeli problemem jest długi termin płatności wiarygodnych odbiorców, a nie trwała nierentowność."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-011",
@@ -569,7 +579,8 @@
         "question": "Czy firma musi być rentowna?",
         "answer": "Powinna mieć realną możliwość osiągnięcia dodatnich przepływów po wdrożeniu zmian. Samo rozłożenie rat nie naprawi trwałej straty."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-012",
@@ -622,7 +633,8 @@
         "question": "Czy samo złożenie wniosku zatrzymuje egzekucję?",
         "answer": "Nie należy tego zakładać. Skutek zależy od rodzaju wniosku, etapu egzekucji i decyzji organu."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-013",
@@ -674,7 +686,8 @@
         "question": "Czy można złożyć wniosek restrukturyzacyjny i upadłościowy?",
         "answer": "Procedury przewidują zasady zbiegu wniosków. Strategię i terminy trzeba pilnie skonsultować prawnie."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-014",
@@ -726,7 +739,8 @@
         "question": "Czy środki już przekazane wierzycielowi wracają automatycznie?",
         "answer": "Nie należy tego zakładać. Trzeba sprawdzić daty, etap egzekucji i podstawę prawną konkretnych czynności."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-015",
@@ -779,7 +793,8 @@
         "question": "Czy zatwierdzenie kończy restrukturyzację?",
         "answer": "Nie. Firma musi wykonać układ przez cały okres spłat i realizować działania naprawcze."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-016",
@@ -830,7 +845,8 @@
         "question": "Czy kredyt rozwiązuje utratę płynności?",
         "answer": "Tylko gdy finansuje określoną lukę i istnieje źródło spłaty. Dług nie naprawia trwałej nierentowności."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-017",
@@ -882,7 +898,8 @@
         "question": "Co, jeśli firma nie wykonuje układu?",
         "answer": "Może dojść do uchylenia układu i powrotu możliwości dochodzenia wierzytelności według zasad prawa."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-018",
@@ -934,7 +951,8 @@
         "question": "Czy restrukturyzacja jest publiczna?",
         "answer": "Informacje o formalnych postępowaniach i obwieszczeniach są dostępne w odpowiednich rejestrach."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-019",
@@ -986,7 +1004,8 @@
         "question": "Czy zamknięcie JDG usuwa zobowiązania?",
         "answer": "Nie. Wykreślenie działalności nie powoduje automatycznego wygaśnięcia długów przedsiębiorcy."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-020",
@@ -1037,7 +1056,8 @@
         "question": "Kiedy przestać dokładać prywatne środki?",
         "answer": "Trzeba ustalić limit i warunki dalszego finansowania. Dopłaty bez planu mogą przenieść kryzys firmy na majątek osobisty."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-021",
@@ -1089,7 +1109,8 @@
         "question": "Czy można przestać płacić raty po wysłaniu oświadczenia?",
         "answer": "Nie należy robić tego bez indywidualnej strategii prawnej. Błędne wstrzymanie spłat może wywołać zaległości i wypowiedzenie."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-022",
@@ -1141,7 +1162,8 @@
         "question": "Czy zapis podobny do klauzuli niedozwolonej zawsze jest nieważny?",
         "answer": "Ocena zależy od pełnej treści umowy, sposobu uzgodnienia, skutku dla konsumenta i aktualnego orzecznictwa."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-023",
@@ -1193,7 +1215,8 @@
         "question": "Czy sprzedaż roszczenia jest opłacalna?",
         "answer": "Daje szybszą płatność, ale zwykle niższą niż potencjalna wartość. Trzeba porównać cenę, ryzyko i warunki cesji."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-024",
@@ -1245,7 +1268,8 @@
         "question": "Czy każdy kredyt frankowy jest nieważny?",
         "answer": "Nie należy tak zakładać. Decyduje treść umowy, status konsumenta, informacje o ryzyku i aktualne prawo."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-025",
@@ -1297,7 +1321,8 @@
         "question": "Czy propozycję banku można negocjować?",
         "answer": "Czasem tak, zależnie od banku i etapu sprawy. Warto mieć własną kalkulację zamiast negocjować wyłącznie procent umorzenia."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-026",
@@ -1350,7 +1375,8 @@
         "question": "Czy można wysłać dokumenty zwykłym linkiem?",
         "answer": "Nie jest to zalecane. Pakiet zawiera dane finansowe i osobowe, dlatego powinien trafić bezpiecznym, kontrolowanym kanałem."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-027",
@@ -1403,7 +1429,8 @@
         "question": "Czy prosty okres zwrotu wystarczy?",
         "answer": "Nie. Trzeba uwzględnić degradację, koszt kapitału, serwis, straty i scenariusze cenowe."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-028",
@@ -1417,7 +1444,7 @@
       "inwestor"
     ],
     "publishedAt": "2026-02-25",
-    "updatedAt": "2026-07-15",
+    "updatedAt": "2026-06-18",
     "readingTime": 4,
     "seoTitle": "Finansowanie farmy fotowoltaicznej – kredyt czy inwestor?",
     "seoDescription": "Porównaj kredyt inwestycyjny, project finance, leasing, pożyczkę i inwestora dla farmy PV. Sprawdź wymagania bankowalności projektu.",
@@ -1456,7 +1483,8 @@
         "question": "Czy inwestor jest droższy od kredytu?",
         "answer": "Kapitał oczekuje wyższej stopy zwrotu, ale przejmuje ryzyko, którego bank często nie finansuje."
       }
-    ]
+    ],
+    "showUpdatedAt": true
   },
   {
     "id": "ds-blog-029",
@@ -1509,7 +1537,8 @@
         "question": "Jak wycenić projekt?",
         "answer": "Według etapu, praw, zamkniętych ryzyk i przyszłych przepływów, nie wyłącznie sumy poniesionych kosztów."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   },
   {
     "id": "ds-blog-030",
@@ -1563,6 +1592,7 @@
         "question": "Czy dotacja zastępuje wkład własny?",
         "answer": "Zależy od programu i struktury finansowania. Dotacja może być refundacyjna i wymagać wcześniejszego poniesienia kosztów."
       }
-    ]
+    ],
+    "showUpdatedAt": false
   }
 ]

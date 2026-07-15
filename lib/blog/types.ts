@@ -39,6 +39,7 @@ export type BlogPost = BlogPostSummary & {
   relatedSlugs: string[];
   ctaVariant: BlogCtaVariant;
   legalReviewRequired: boolean;
+  showUpdatedAt: boolean;
   reviewAfter?: string;
   stateOfInformation?: string;
   sources: string[] | BlogSourceRef[];
