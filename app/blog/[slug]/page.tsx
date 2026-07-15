@@ -116,7 +116,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="min-w-0">
                 <div className="mb-8 rounded-lg border border-cyan/20 bg-cyan/10 p-5 text-sm leading-7 text-navy">
                   Materiał ma charakter informacyjny i nie zastępuje indywidualnej analizy prawnej, finansowej, podatkowej ani technicznej.
-                  {post.reviewAfter ? <span className="mt-2 block font-bold">Zalecany przegląd treści: {new Intl.DateTimeFormat("pl-PL", { dateStyle: "long" }).format(new Date(post.reviewAfter))}.</span> : null}
                 </div>
 
                 {post.contentFormat === "html" ? <HtmlRenderer content={post.content} /> : <MarkdownRenderer content={post.content} />}

@@ -148,8 +148,7 @@ function loadPosts() {
       } satisfies BlogPost;
     })
     .sort((a, b) => {
-      const dateDiff = new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-      return dateDiff || a.title.localeCompare(b.title, "pl");
+      return a.title.localeCompare(b.title, "pl");
     });
 
   validatePosts(posts);

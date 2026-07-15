@@ -5,31 +5,36 @@ type BlogCtaProps = {
   variant: BlogCtaVariant;
 };
 
-const ctaCopy: Record<BlogCtaVariant, { title: string; description: string; button: string }> = {
+const ctaCopy: Record<BlogCtaVariant, { title: string; description: string; button: string; href: string }> = {
   finansowanie: {
     title: "Zanim złożysz wniosek, sprawdź sytuację firmy",
     description: "Zbierzmy dane finansowe, zobowiązania i raporty BIK, aby wstępnie ocenić możliwe kierunki finansowania i potrzebne dokumenty.",
-    button: "Przejdź do wstępnej analizy"
+    button: "Przejdź do wstępnej analizy",
+    href: "/oferty/kredyty-dla-firm"
   },
   restrukturyzacja: {
     title: "Im wcześniej pojawią się liczby, tym więcej zostaje możliwości",
     description: "Uporządkuj listę wierzycieli, egzekucje i przepływy. Sprawa może następnie zostać oceniona z udziałem właściwego specjalisty restrukturyzacyjnego.",
-    button: "Omów sytuację firmy"
+    button: "Omów sytuację firmy",
+    href: "/oferty/restrukturyzacje"
   },
   "analiza-umowy": {
     title: "Umowę trzeba ocenić razem z historią rozliczeń",
     description: "Przygotuj umowę, aneksy, harmonogramy i historię spłat. Wstępna analiza wskaże, czy istnieją podstawy do dalszych działań.",
-    button: "Sprawdź wymagane dokumenty"
+    button: "Sprawdź wymagane dokumenty",
+    href: "/oferty/sankcja-kredytu-darmowego"
   },
   energia: {
     title: "Przygotuj projekt do rozmowy o finansowaniu",
     description: "Uporządkuj status gruntu, przyłączenia, pozwolenia, model finansowy i data room, aby rozmawiać z inwestorem lub finansującym na konkretnych danych.",
-    button: "Omów projekt"
+    button: "Omów projekt",
+    href: "/oferty/optymalizacja-kosztow-energii"
   },
   kontakt: {
     title: "Porozmawiajmy o możliwym kolejnym kroku",
     description: "Opisz sytuację firmy, a pomożemy ustalić, czy Dealshare może połączyć Cię z właściwym rozwiązaniem.",
-    button: "Skontaktuj się"
+    button: "Zobacz oferty",
+    href: "/oferty"
   }
 };
 
@@ -45,7 +50,7 @@ export function BlogCta({ variant }: BlogCtaProps) {
         Kontakt i przekazanie dokumentów nie oznaczają gwarancji finansowania, rozstrzygnięcia prawnego ani zawarcia transakcji. Zakres dalszych działań zależy od analizy konkretnej sprawy.
       </p>
       <div className="mt-6">
-        <Button href="/kontakt" variant="cyan">
+        <Button href={copy.href} variant="cyan">
           {copy.button}
         </Button>
       </div>
