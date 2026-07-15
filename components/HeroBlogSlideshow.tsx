@@ -20,7 +20,7 @@ export function HeroBlogSlideshow({ posts }: HeroBlogSlideshowProps) {
 
     const timer = window.setInterval(() => {
       setActiveIndex((currentIndex) => (currentIndex + 1) % visiblePosts.length);
-    }, 4200);
+    }, 6000);
 
     return () => window.clearInterval(timer);
   }, [visiblePosts.length]);
