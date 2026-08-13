@@ -444,6 +444,143 @@ export const offers: Offer[] = [
     intro: "Oferta pomaga firmom szybciej przejść od kosztów energii do rozmowy o możliwych rozwiązaniach.",
     audience: ["Firmy z rosnącymi kosztami energii", "Organizacje wielooddziałowe", "Przedsiębiorcy szukający porównania opcji"],
     benefits: ["Lepsza widoczność kosztów", "Priorytetyzacja działań", "Dostęp do właściwych specjalistów"]
+  },
+  {
+    slug: "yamura-pro",
+    title: "YAMURA PRO",
+    category: categories.contracts.name,
+    categorySlug: categories.contracts.slug,
+    categories: [categories.contracts],
+    status: "Dostępne",
+    headline: "Partner wykonawczy dla biur architektonicznych i projektantów wnętrz.",
+    description:
+      "Weryfikacja techniczna, wycena, produkcja i montaż mebli na wymiar z poszanowaniem autorstwa projektu i relacji pracowni z klientem.",
+    lead:
+      "YAMURA PRO łączy warsztat wykonawczy z procesem pracy projektanta. Przejmujemy odpowiedzialność za techniczne przygotowanie, produkcję, logistykę i montaż, a pracownia zachowuje prowadzenie projektu oraz relacji z klientem.",
+    highlights: [
+      "Współpraca przy pojedynczych projektach lub w modelu stałym",
+      "Czytelny podział odpowiedzialności i kontrola zmian",
+      "Realizacje mieszkaniowe, biurowe i komercyjne"
+    ],
+    heroBenefits: ["Weryfikacja dokumentacji", "Wycena i harmonogram", "Produkcja, montaż i opieka po realizacji"],
+    ctaPrimary: "Zgłoś projekt do YAMURA PRO",
+    ctaSecondary: "Zobacz model współpracy",
+    sidePanel: {
+      title: "Dobry start współpracy",
+      items: ["Krótki brief projektowy", "Ustalenie zasad komunikacji", "Weryfikacja dokumentacji", "Konkretny następny krok"],
+      note:
+        "Nie narzucamy jednego modelu kontaktu. Zasady współpracy ustalamy tak, aby pracownia zachowała kontrolę nad projektem i relacją ze swoim klientem.",
+      cta: "Wypełnij brief"
+    },
+    problemTitle: "Dobra koncepcja potrzebuje równie dobrego wykonania",
+    problemText: [
+      "Najwięcej napięć w realizacji wnętrza pojawia się na styku projektu i wykonawstwa. Braki w dokumentacji, niepotwierdzone materiały, zmiany bez kontroli i rozproszona komunikacja potrafią naruszyć budżet, termin oraz zaufanie klienta do pracowni.",
+      "Projektant nie powinien tracić czasu na koordynowanie każdego detalu produkcyjnego. Potrzebuje partnera, który rozumie intencję projektu, potrafi zgłosić ryzyko odpowiednio wcześnie i bierze odpowiedzialność za powierzony zakres."
+    ],
+    problemCards: [
+      { title: "Rozproszona odpowiedzialność", text: "Kilku wykonawców i brak jednej osoby odpowiedzialnej za cały zakres meblowy." },
+      { title: "Zmiany bez kontroli", text: "Korekty wprowadzane już podczas produkcji zwiększają koszt i ryzyko opóźnień." },
+      { title: "Utrata czasu pracowni", text: "Projektant zamiast prowadzić projekt zajmuje się bieżącą koordynacją wykonawczą." }
+    ],
+    solutionTitle: "YAMURA jako zaplecze wykonawcze Twojej pracowni",
+    solutionText: [
+      "Zaczynamy od zakresu, dokumentacji i zasad komunikacji. Sprawdzamy rozwiązania techniczne, wskazujemy miejsca wymagające decyzji i przygotowujemy wycenę opartą na uzgodnionym standardzie wykonania.",
+      "Po akceptacji przechodzimy przez przygotowanie produkcji, wykonanie, logistykę, montaż i odbiór. Pracownia otrzymuje czytelne informacje o postępie oraz zmianach wymagających zatwierdzenia."
+    ],
+    solutionCards: [
+      { title: "Czytamy dokumentację", text: "Pracujemy na rzutach, przekrojach, rysunkach mebli, wizualizacjach i zestawieniach materiałów." },
+      { title: "Weryfikujemy wykonalność", text: "Sprawdzamy konstrukcję, materiały, okucia, dostęp serwisowy i warunki montażowe." },
+      { title: "Porządkujemy decyzje", text: "Wskazujemy, co wymaga akceptacji przed produkcją i dokumentujemy ustalone zmiany." },
+      { title: "Dowozimy realizację", text: "Odpowiadamy za produkcję, logistykę, montaż i uzgodnione działania po odbiorze." }
+    ],
+    forWhomTitle: "Dla kogo",
+    forWhom: [
+      "Biura architektoniczne",
+      "Projektanci wnętrz",
+      "Pracownie projektowe",
+      "Architekci prowadzący inwestycje prywatne",
+      "Zespoły realizujące biura i lokale komercyjne",
+      "Pracownie szukające stałego partnera wykonawczego"
+    ],
+    scopeTitle: "Co obejmuje współpraca",
+    scope: [
+      { title: "Konsultacja techniczna", text: "Omówienie założeń, materiałów, detali i ograniczeń jeszcze przed zamknięciem projektu." },
+      { title: "Wycena zakresu", text: "Kosztorys oparty na dokumentacji, uzgodnionych materiałach i warunkach realizacji." },
+      { title: "Przygotowanie produkcji", text: "Doprecyzowanie rozwiązań wykonawczych i zebranie decyzji wymaganych przed startem." },
+      { title: "Produkcja i kontrola jakości", text: "Wykonanie mebli zgodnie z zaakceptowanym standardem oraz dokumentacją." },
+      { title: "Logistyka i montaż", text: "Koordynacja dostawy, montażu, odbioru i listy ewentualnych poprawek." },
+      { title: "Opieka po realizacji", text: "Obsługa uzgodnionych regulacji, uzupełnień i zgłoszeń po odbiorze." }
+    ],
+    valueTitle: "Co zyskuje pracownia",
+    valueText: [
+      "Celem YAMURA PRO nie jest zastępowanie projektanta w relacji z klientem. Celem jest odciążenie go w technicznym przygotowaniu i wykonaniu zakresu meblowego.",
+      "Model może obejmować jeden projekt, cykliczne wyceny albo stałe zaplecze wykonawcze. Szczegóły komunikacji, raportowania i kontaktu z inwestorem ustalamy przed rozpoczęciem prac."
+    ],
+    valueCards: [
+      { title: "Zachowane autorstwo", text: "Koncepcja i decyzje estetyczne pozostają po stronie pracowni." },
+      { title: "Mniej koordynacji", text: "Jeden zespół odpowiada za pełny uzgodniony zakres meblowy." },
+      { title: "Większa przewidywalność", text: "Zakres, decyzje, koszt i harmonogram są porządkowane przed produkcją." }
+    ],
+    processTitle: "Jak wygląda proces",
+    process: [
+      { step: "1", title: "Brief w Dealshare", text: "Pracownia opisuje projekt, etap dokumentacji i oczekiwany model współpracy." },
+      { step: "2", title: "Rozmowa kwalifikacyjna", text: "Ustalamy zakres, role, zasady komunikacji oraz materiały potrzebne do analizy." },
+      { step: "3", title: "Weryfikacja techniczna", text: "Sprawdzamy dokumentację i przygotowujemy listę pytań, ryzyk oraz decyzji." },
+      { step: "4", title: "Wycena i plan", text: "Przedstawiamy koszt, założenia oraz kolejność etapów realizacji." },
+      { step: "5", title: "Produkcja i montaż", text: "Realizujemy zaakceptowany zakres i raportujemy uzgodnione punkty kontrolne." },
+      { step: "6", title: "Odbiór i opieka", text: "Zamykamy listę odbiorową i pozostajemy dostępni w uzgodnionym zakresie." }
+    ],
+    documentsTitle: "Co warto przygotować",
+    documents: [
+      "Rzuty i przekroje",
+      "Rysunki mebli lub zabudów",
+      "Wizualizacje",
+      "Zestawienie materiałów i okuć",
+      "Wymiary z inwentaryzacji",
+      "Informacje o miejscu i warunkach montażu",
+      "Budżet lub oczekiwany standard realizacji",
+      "Planowany termin"
+    ],
+    checkpointTitle: "Co ustalamy przed pierwszą wyceną",
+    checkpointText: [
+      "Dobra współpraca zaczyna się od jasnych zasad. Przed analizą projektu ustalamy, kto podejmuje decyzje, jak komunikujemy zmiany i jaki zakres ma zostać objęty odpowiedzialnością YAMURA."
+    ],
+    checkpoints: [
+      "Zakres mebli i pomieszczeń.",
+      "Etap oraz kompletność dokumentacji.",
+      "Standard materiałów, okuć i wykończenia.",
+      "Sposób komunikacji z pracownią i inwestorem.",
+      "Budżet albo oczekiwany poziom realizacji.",
+      "Termin, kolejność prac i warunki montażu.",
+      "Zasady akceptowania zmian.",
+      "Zakres odbioru i opieki po realizacji."
+    ],
+    risksTitle: "Najważniejsze zasady bezpiecznej współpracy",
+    risks: [
+      { title: "Jedno źródło decyzji", text: "Ustalamy osoby uprawnione do zatwierdzania materiałów, kosztów i zmian projektowych." },
+      { title: "Zmiany przed produkcją", text: "Kluczowe decyzje zamykamy przed startem, aby ograniczyć kosztowne korekty w trakcie wykonania." },
+      { title: "Przejrzysta komunikacja", text: "Pracownia wie, na jakim etapie jest realizacja i które kwestie wymagają jej decyzji." }
+    ],
+    faq: [
+      { question: "Czy YAMURA kontaktuje się bezpośrednio z klientem pracowni?", answer: "Model kontaktu ustalamy wspólnie przed rozpoczęciem prac. Pracownia może pozostać głównym punktem komunikacji, a kontakt YAMURA z inwestorem może ograniczać się do uzgodnionych kwestii technicznych, pomiarów i montażu." },
+      { question: "Czy można zgłosić projekt jeszcze bez pełnej dokumentacji?", answer: "Tak. Wczesna konsultacja techniczna pomaga ocenić materiały, konstrukcję i potencjalne ryzyka przed zamknięciem dokumentacji. Do wiążącej wyceny potrzebny będzie jednak uzgodniony zakres i odpowiedni poziom szczegółowości." },
+      { question: "Czy współpraca dotyczy tylko projektów mieszkaniowych?", answer: "Nie. YAMURA realizuje zabudowy do domów i mieszkań, a także meble do biur, lokali usługowych oraz innych przestrzeni komercyjnych." },
+      { question: "Czy mogę zgłosić tylko jeden projekt?", answer: "Tak. Możemy zacząć od pojedynczej realizacji i po jej zakończeniu zdecydować, czy stały model współpracy ma sens dla obu stron." },
+      { question: "Czy na stronie znajduje się stały cennik?", answer: "Nie, ponieważ koszt zależy od dokumentacji, materiałów, okuć, wymiarów i warunków montażu. Po wstępnej kwalifikacji wskażemy materiały potrzebne do przygotowania wyceny." }
+    ],
+    finalCta: {
+      title: "Zacznijmy od projektu lub potrzeb Twojej pracowni",
+      text: "Wypełnij krótki brief. Ustalimy właściwy model współpracy i poprosimy tylko o materiały potrzebne do konkretnego następnego kroku.",
+      buttonLabel: "Zgłoś projekt do YAMURA PRO"
+    },
+    seo: {
+      title: "YAMURA PRO - wykonawstwo mebli dla architektów i projektantów | Dealshare",
+      description:
+        "Współpraca B2B dla biur architektonicznych i projektantów wnętrz: weryfikacja dokumentacji, wycena, produkcja i montaż mebli na wymiar."
+    },
+    intro: "YAMURA PRO to zaplecze wykonawcze dla pracowni, które chcą zachować kontrolę nad projektem i zyskać odpowiedzialnego partnera do realizacji mebli na wymiar.",
+    audience: ["Biura architektoniczne", "Projektanci wnętrz", "Pracownie projektowe"],
+    benefits: ["Weryfikacja techniczna", "Przejrzysty proces", "Produkcja i montaż"]
   }
 ];
 

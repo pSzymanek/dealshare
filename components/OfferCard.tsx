@@ -14,7 +14,8 @@ const offerIcons: Record<string, string> = {
   "kredyty-dla-firm": "/dealshare_kredyty_dla_firm_banknot.svg",
   restrukturyzacje: "/dealshare_restrukturyzacje_naprawa.svg",
   "optymalizacja-kosztow-energii": "/dealshare_umowy_na_energie_bolt.svg",
-  "sankcja-kredytu-darmowego": "/dealshare_uniewaznienia_kredytow_cancel.svg"
+  "sankcja-kredytu-darmowego": "/dealshare_uniewaznienia_kredytow_cancel.svg",
+  "yamura-pro": "/yamura-logo-dark.png"
 };
 
 export function OfferCard({ offer }: OfferCardProps) {
@@ -24,7 +25,15 @@ export function OfferCard({ offer }: OfferCardProps) {
   return (
     <article className={`card-glass offer-card soft-lift group flex min-h-full flex-col rounded-lg border bg-white p-6 shadow-sm hover:shadow-card ${isClosed ? "border-slate-300/80 opacity-90 hover:border-slate-400" : "border-slate-200 hover:border-electric/30"}`}>
       <div className="pointer-events-none !absolute right-4 top-4 !z-0 h-20 w-20 bg-[url('/sygnet.png')] bg-contain bg-center bg-no-repeat opacity-[0.035] transition group-hover:opacity-[0.08]" />
-      {icon ? <Image src={icon} alt="" width={72} height={72} className="offer-card-icon relative h-16 w-16 object-contain" /> : null}
+      {icon ? (
+        <Image
+          src={icon}
+          alt=""
+          width={offer.slug === "yamura-pro" ? 260 : 72}
+          height={72}
+          className={`offer-card-icon relative object-contain ${offer.slug === "yamura-pro" ? "h-auto w-40" : "h-16 w-16"}`}
+        />
+      ) : null}
 
       <div className="relative mt-4 flex items-start justify-between gap-4">
         <div className="flex flex-wrap gap-2">

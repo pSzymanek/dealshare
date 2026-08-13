@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/Badge";
@@ -78,7 +79,18 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
                 </Button>
               </div>
             </div>
-            <aside className="rounded-lg border border-slate-200 bg-white p-6 shadow-card">
+            <div>
+              {offer.slug === "yamura-pro" ? (
+                <Image
+                  src="/yamura-logo-dark.png"
+                  alt="YAMURA"
+                  width={520}
+                  height={54}
+                  priority
+                  className="mx-auto mb-7 h-auto w-52 object-contain sm:w-64"
+                />
+              ) : null}
+              <aside className="rounded-lg border border-slate-200 bg-white p-6 shadow-card">
               <h2 className="text-2xl font-black tracking-tight text-navy">{offer.sidePanel.title}</h2>
               <ul className="mt-5 grid gap-4">
                 {offer.sidePanel.items.map((item) => (
@@ -97,7 +109,8 @@ export default async function OfferDetailPage({ params }: OfferDetailPageProps) 
               )}
               <p className="mt-3 text-center text-xs font-semibold text-slate-500">Wstępna analiza jest całkowicie darmowa</p>
               <p className="mt-4 text-xs leading-6 text-slate-500">{offer.sidePanel.note}</p>
-            </aside>
+              </aside>
+            </div>
           </div>
         </Container>
       </section>

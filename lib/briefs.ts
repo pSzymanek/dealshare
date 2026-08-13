@@ -181,6 +181,48 @@ export const briefConfigs: Record<string, BriefConfig> = {
       { stepTitle: "Dokumenty", question: "Czy masz aktualne faktury za prąd?", type: "multi", options: ["Tak, mam ostatnią fakturę", "Tak, mam kilka faktur", "Mam umowę i faktury", "Nie mam teraz pod ręką", "Mogę dosłać później", "Nie wiem, co będzie potrzebne"] },
       { stepTitle: "Etap", question: "Na jakim jesteś etapie?", type: "multi", options: ["Chcę sprawdzić, czy przepłacam", "Szukam lepszej oferty", "Kończy mi się obecna umowa", "Mam wysokie rachunki", "Ktoś już proponował mi zmianę", "Chcę, żebyście to za mnie przeanalizowali"] }
     ]
+  },
+  "yamura-pro": {
+    offerId: "yamura-pro",
+    offerTitle: "YAMURA PRO",
+    heading: "Porozmawiajmy o współpracy wykonawczej",
+    description:
+      "Odpowiedz na kilka krótkich pytań. Ustalimy, czy potrzebujesz wyceny konkretnego projektu, konsultacji technicznej czy stałego partnera do realizacji mebli na wymiar.",
+    microcopy:
+      "Brief pomaga nam od razu zaangażować właściwe osoby i przygotować konkretny kolejny krok, bez odbierania Ci kontroli nad projektem i relacją z klientem.",
+    cta: "Zgłoś projekt do YAMURA PRO",
+    steps: [
+      {
+        stepTitle: "Profil pracowni",
+        question: "W jakiej roli zgłaszasz projekt?",
+        type: "single",
+        options: ["Biuro architektoniczne", "Projektant wnętrz", "Pracownia projektowa", "Inwestor zastępczy", "Inna rola"]
+      },
+      {
+        stepTitle: "Model współpracy",
+        question: "Jakiej współpracy potrzebujesz?",
+        type: "multi",
+        options: ["Wycena konkretnego projektu", "Konsultacja techniczna", "Produkcja i montaż", "Stała obsługa wykonawcza", "Realizacja komercyjna", "Chcę omówić możliwości"]
+      },
+      {
+        stepTitle: "Etap projektu",
+        question: "Na jakim etapie jest projekt?",
+        type: "single",
+        options: ["Wstępna koncepcja", "Projekt w opracowaniu", "Gotowa dokumentacja", "Projekt gotowy do wyceny", "Realizacja już trwa", "Nie dotyczy - szukam stałego partnera"]
+      },
+      {
+        stepTitle: "Zakres",
+        question: "Jakiego zakresu dotyczy współpraca?",
+        type: "multi",
+        options: ["Kuchnia", "Zabudowy stałe", "Salon lub sypialnia", "Łazienka", "Biuro", "Lokal komercyjny", "Całe wnętrze", "Inny zakres"]
+      },
+      {
+        stepTitle: "Dokumentacja",
+        question: "Jakie materiały możesz udostępnić?",
+        type: "multi",
+        options: ["Rzuty i przekroje", "Rysunki mebli", "Wizualizacje", "Zestawienie materiałów", "Wymiary z inwentaryzacji", "Budżet lub widełki", "Na razie tylko opis projektu"]
+      }
+    ]
   }
 };
 
