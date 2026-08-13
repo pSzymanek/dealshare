@@ -7,7 +7,7 @@
     "build": "next build",
     "export:webd": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/export-webd.ps1",
     "webd:start": "node server.js",
-    "start": "next start",
+    "start": "node server.js",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit"
   },
